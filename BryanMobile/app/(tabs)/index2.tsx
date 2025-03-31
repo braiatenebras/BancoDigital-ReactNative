@@ -14,44 +14,35 @@ export default function HomeScreen() {
       headerImage={
         <View style={styles.headerContainer}>
           <Image
-            source={require('@/assets/images/images.png')} // foto do Pocoyo
-            style={styles.reactLogo}
+            source={require('@/assets/images/maidel.png')} // foto do Maidel
+            style={styles.secondImage}
           />
 
           <View style={styles.headerTextContainer}>
             <ThemedText type="title" style={styles.headerTitle}>
-              😉 Bryan Kauan
+              🤪 Olha quem tá aqui!
             </ThemedText>
             <ThemedText type="defaultSemiBold" style={styles.headerSubtitle}>
-              Estudante & Dev Iniciante (e macho)
+              O professor lá 👉 (ele é gay)
             </ThemedText>
           </View>
         </View>
       }>
       <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Olá</ThemedText>
+        <ThemedText type="title">Oláááá (pela ultima vez, eu juro)</ThemedText>
         <HelloWave />
       </ThemedView>
       <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Bem Vindo ao meu site! </ThemedText>
+        <ThemedText type="subtitle">Que??? </ThemedText>
+        <ThemedText>Quem é o doido no cantinho?? Aaaaaaata </ThemedText>
         <ThemedText>
-          <ThemedText type="defaultSemiBold">
-            Meu nome é Bryan Kauan e atualmente estou cursando o 3° ano do Ensino Médio no Colégio Estadual Cívico Militar Professor Guido Arzua
+          <ThemedText>
+            O maluco no canto direito é o Mateus Maidel, é um professor que da aulas ai (e não só aulas rs...)
           </ThemedText>{' '}
         </ThemedText>
       </ThemedView>
       <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Sobre mim 😂 </ThemedText>
-        <ThemedText>Atualmente tenho 16 anos (15/09/08) e busco me especializar na área de programação!  </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Uma foto do bonitão aqui 👇🔥 </ThemedText>
-        <View style={isLargeScreen ? styles.imageContainerLarge : styles.imageContainerSmall}>
-          <Image
-            source={require('@/assets/images/eu.jpg')}
-            style={styles.eu}
-          />
-        </View>
+        <ThemedText> (é porque ele é gay, entendeu???)  </ThemedText>
       </ThemedView>
     </ParallaxScrollView>
   );
@@ -72,55 +63,37 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 245,
   },
-  reactLogo: {
-    height: 400,
+  secondImage: {
+    height: 350,
     width: 300,
-    bottom: -100,
-    left: 0,
     position: 'absolute',
+    right: -10,
+    top: -45,
   },
 
   headerTextContainer: {
     position: 'absolute',
     top: '50%',
-    left: '50%',
+    left: 100,
     transform: [{ translateX: -50 }, { translateY: -50 }],
     alignItems: 'center',
     zIndex: 2,
     width: '100%',
   },
-  headerTitle: { // texto de cima
+  headerTitle: {
     color: 'white',
-    fontSize: 34,
+    fontSize: 30,
     fontWeight: 'bold',
     textShadowColor: 'rgba(0, 0, 0, 0.8)',
     textShadowOffset: { width: 2, height: 2 },
     textShadowRadius: 6,
     marginBottom: 5,
-    left: -850,
   },
-  headerSubtitle: { // texto de baixo
+  headerSubtitle: {
     color: 'white',
-    fontSize: 18,
+    fontSize: 16,
     textShadowColor: 'rgba(0, 0, 0, 0.6)',
     textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 4,
-    left: -845,
-  },
-
-  imageContainerLarge: {
-    alignItems: 'flex-start',
-    marginLeft: -5,
-  },
-  imageContainerSmall: {
-    alignItems: 'center',
-  },
-  eu: {
-    width: '100%',
-    maxWidth: 500,
-    height: 400,
-    resizeMode: 'contain',
-    borderRadius: 8,
-    marginVertical: 16,
   },
 });

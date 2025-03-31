@@ -1,109 +1,155 @@
-import { StyleSheet, Image, Platform } from 'react-native';
-
-import { Collapsible } from '@/components/Collapsible';
-import { ExternalLink } from '@/components/ExternalLink';
+import { Image, StyleSheet, View, Dimensions } from 'react-native';
+import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import { IconSymbol } from '@/components/ui/IconSymbol';
 
-export default function TabTwoScreen() {
+const screenWidth = Dimensions.get('window').width;
+const isLargeScreen = screenWidth > 768; // para telas grandes
+
+export default function HomeScreen() {
   return (
     <ParallaxScrollView
-      headerBackgroundColor={{ light: '#D0D0D0', dark: '#353636' }}
+      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
       headerImage={
-        <IconSymbol
-          size={310}
-          color="#808080"
-          name="chevron.left.forwardslash.chevron.right"
-          style={styles.headerImage}
-        />
+        <View style={styles.headerContainer}>
+          <Image
+            source={require('@/assets/images/pocoyo.png')}
+            style={styles.reactLogo}
+          />
+
+          {isLargeScreen && (
+            <View style={styles.headerTextContainer}>
+              <ThemedText type="title" style={styles.headerText}>
+                👈😎 Eu
+              </ThemedText>
+              <ThemedText type="defaultSemiBold" style={styles.headerSubText}>
+                Você 🤓👉
+              </ThemedText>
+            </View>
+          )}
+
+          <Image
+            source={require('@/assets/images/images2.png')}
+            style={styles.secondImage}
+          />
+        </View>
       }>
       <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">teste </ThemedText>
+        <ThemedText type="title"> Olá de novo!</ThemedText>
+        <HelloWave />
       </ThemedView>
-      <ThemedText>This app includes example code to help you get started.</ThemedText>
-      <Collapsible title="File-based routing">
+      <ThemedView style={styles.stepContainer}>
+        <ThemedText type="subtitle">Como eu to sem nada e sem ideias para adicionar aqui, lá vai uma receita de pudim!</ThemedText>
+        <Image
+          source={require('@/assets/images/pudim.webp')}
+          style={[
+            styles.pudim,
+            isLargeScreen ? styles.pudimLarge : styles.pudimSmall
+          ]}
+        />
         <ThemedText>
-          This app has two screens:{' '}
-          <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> and{' '}
-          <ThemedText type="defaultSemiBold">app/(tabs)/explore.tsx</ThemedText>
-        </ThemedText>
-        <ThemedText>
-          The layout file in <ThemedText type="defaultSemiBold">app/(tabs)/_layout.tsx</ThemedText>{' '}
-          sets up the tab navigator.
-        </ThemedText>
-        <ExternalLink href="https://docs.expo.dev/router/introduction">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Android, iOS, and web support">
-        <ThemedText>
-          You can open this project on Android, iOS, and the web. To open the web version, press{' '}
-          <ThemedText type="defaultSemiBold">w</ThemedText> in the terminal running this project.
-        </ThemedText>
-      </Collapsible>
-      <Collapsible title="Images">
-        <ThemedText>
-          For static images, you can use the <ThemedText type="defaultSemiBold">@2x</ThemedText> and{' '}
-          <ThemedText type="defaultSemiBold">@3x</ThemedText> suffixes to provide files for
-          different screen densities
-        </ThemedText>
-        <Image source={require('@/assets/images/react-logo.png')} style={{ alignSelf: 'center' }} />
-        <ExternalLink href="https://reactnative.dev/docs/images">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Custom fonts">
-        <ThemedText>
-          Open <ThemedText type="defaultSemiBold">app/_layout.tsx</ThemedText> to see how to load{' '}
-          <ThemedText style={{ fontFamily: 'SpaceMono' }}>
-            custom fonts such as this one.
+          <ThemedText type="defaultSemiBold">
+            * Pudim de Leite Condensado
+          </ThemedText>
+          <ThemedText>
+            {"\n"}Ingredientes:{"\n\n"}
+            1 xícara (chá) de açúcar (para a calda){"\n"}
+            1 lata de leite condensado{"\n"}
+            2 medidas (da lata) de leite integral{"\n"}
+            3 ovos{"\n\n"}
+            Modo de Preparo:{"\n\n"}
+            Calda: Derreta o açúcar em fogo médio até ficar dourado. Despeje na forma de pudim e espalhe. Reserve.{"\n\n"}
+            Pudim: Bata no liquidificador o leite condensado, o leite e os ovos até ficar homogêneo.{"\n\n"}
+            Cozinhar: Despeje a mistura na forma com calda. Cubra com papel alumínio e leve ao forno em banho-maria (180°C) por cerca de 45 minutos.{"\n\n"}
+            Finalizar: Espere esfriar e leve à geladeira por 4 horas. Desenforme e sirva!{"\n\n"}
+            Dica: Use uma forma com furo central para assar mais uniformemente.{"\n\n"}
+            🍮 Prontinho! Se quiser, enfeite com calda extra ou frutas.
           </ThemedText>
         </ThemedText>
-        <ExternalLink href="https://docs.expo.dev/versions/latest/sdk/font">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Light and dark mode components">
-        <ThemedText>
-          This template has light and dark mode support. The{' '}
-          <ThemedText type="defaultSemiBold">useColorScheme()</ThemedText> hook lets you inspect
-          what the user's current color scheme is, and so you can adjust UI colors accordingly.
-        </ThemedText>
-        <ExternalLink href="https://docs.expo.dev/develop/user-interface/color-themes/">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Animations">
-        <ThemedText>
-          This template includes an example of an animated component. The{' '}
-          <ThemedText type="defaultSemiBold">components/HelloWave.tsx</ThemedText> component uses
-          the powerful <ThemedText type="defaultSemiBold">react-native-reanimated</ThemedText>{' '}
-          library to create a waving hand animation.
-        </ThemedText>
-        {Platform.select({
-          ios: (
-            <ThemedText>
-              The <ThemedText type="defaultSemiBold">components/ParallaxScrollView.tsx</ThemedText>{' '}
-              component provides a parallax effect for the header image.
-            </ThemedText>
-          ),
-        })}
-      </Collapsible>
+      </ThemedView>
     </ParallaxScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  headerImage: {
-    color: '#808080',
-    bottom: -90,
-    left: -35,
-    position: 'absolute',
-  },
   titleContainer: {
     flexDirection: 'row',
+    alignItems: 'center',
     gap: 8,
+  },
+  stepContainer: {
+    gap: 8,
+    marginBottom: 8,
+    paddingHorizontal: 16, 
+  },
+  headerContainer: {
+    position: 'relative',
+    width: '100%',
+    height: 245,
+  },
+  reactLogo: {
+    height: 280,
+    width: 300,
+    bottom: -10,
+    left: 0,
+    position: 'absolute',
+  },
+  secondImage: {
+    height: 350,
+    width: 300,
+    position: 'absolute',
+    right: -10,
+    top: -45,
+  },
+  headerTextContainer: {
+    position: 'absolute',
+    top: '55%',
+    left: '45%',
+    transform: [{ translateX: -50 }, { translateY: -50 }],
+    alignItems: 'center',
+    zIndex: 1,
+  },
+  headerText: {
+    color: 'white',
+    fontSize: 50,
+    fontWeight: 'bold',
+    textShadowColor: 'rgba(0, 0, 0, 0.5)',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 3,
+    bottom: -15,
+    left: -300,
+  },
+  headerSubText: {
+    color: 'white',
+    fontSize: 50,
+    fontWeight: 'bold',
+    textShadowColor: 'rgba(0, 0, 0, 0.5)',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 2,
+    bottom: 15,
+    left: 300,
+  },
+  pudim: {
+    resizeMode: 'contain',
+    alignSelf: 'center',
+    borderRadius: 12,
+    marginVertical: 20,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 6,
+    elevation: 6,
+  },
+  pudimLarge: { // PC
+    width: '100%',
+    height: 350,
+    maxWidth: 600,
+    left: -650,
+  },
+  pudimSmall: { // Celular
+    width: '100%',
+    height: 220,
+    maxWidth: 400,
   },
 });
