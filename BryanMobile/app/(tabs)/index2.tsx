@@ -23,7 +23,7 @@ export default function HomeScreen() {
               🤪 Olha quem tá aqui!
             </ThemedText>
             <ThemedText type="defaultSemiBold" style={styles.headerSubtitle}>
-              O professor lá 👉 (ele é gay)
+              O professor lá 👉 (e ele é gay)
             </ThemedText>
           </View>
         </View>
