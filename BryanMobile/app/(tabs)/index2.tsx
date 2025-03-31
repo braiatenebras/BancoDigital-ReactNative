@@ -15,8 +15,8 @@ export default function HomeScreen() {
 
   const backupJokes = [
     {
-      pergunta: "Por que react native é tao bosta?",
-      resposta: "Porque é uma merda "
+      pergunta: "Eu odeio",
+      resposta: "React Native"
     },
     {
       pergunta: "Porque a jiane foi dormir triste hoje? ",
