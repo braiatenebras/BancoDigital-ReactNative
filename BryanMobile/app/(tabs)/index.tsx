@@ -11,16 +11,15 @@ export default function HomeScreen() {
       headerImage={
         <View style={styles.headerContainer}>
           <Image
-            source={require('@/assets/images/images.png')}
+            source={require('@/assets/images/images.png')} // Pocoyo
             style={styles.reactLogo}
           />
           <Image
-            source={require('@/assets/images/images2.png')}
+            source={require('@/assets/images/images2.png')} //Maidel
             style={styles.secondImage}
           />
         </View>
       }>
-      {/* Resto do conteúdo */}
       <ThemedView style={styles.titleContainer}>
         <ThemedText type="title">Olá</ThemedText>
         <HelloWave />
