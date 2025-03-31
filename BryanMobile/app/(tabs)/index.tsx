@@ -105,7 +105,8 @@ const styles = StyleSheet.create({
     textShadowColor: 'rgba(0, 0, 0, 0.6)',
     textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 4,
-    left: -845,
+    left: -835,
+    top: 13,
   },
 
   imageContainerLarge: {
