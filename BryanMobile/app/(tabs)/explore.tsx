@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
   stepContainer: {
     gap: 8,
     marginBottom: 8,
-    paddingHorizontal: 16, 
+    paddingHorizontal: 16,
   },
   headerContainer: {
     position: 'relative',
