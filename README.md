@@ -43,9 +43,11 @@ App pessoal criado com React Native contendo:
 
 ## 🚀 COMO RODAR
 ```bash
+git clone <link do repositorio>
+abra o terminal do projeto e escreva os seguinte codigos!
 npm install
 npx expo start
-Escaneie o QR code pelo Expo Go no celular
+Escaneie o QR code pelo Expo Go para abrir no celular
 ou abre usando npm run web!
 ```
 ## 📝 OBSERVAÇÕES
