@@ -15,7 +15,7 @@ App pessoal criado com React Native contendo:
 - Escola: Colégio Estadual Cívico Militar Professor Guido Arzua
 - Minha foto
 - Objetivo: Me especializar em programação
-<img src="BryanMobile/assets/images/aba1.jpg" alt="imagemdaaba1">
+<img src="BryanMobile/assets/images/aba.jpg" alt="imagemdaaba1">
 
 ### 2️⃣ ABA 2 - RECEITA DE PUDIM
 - Ingredientes e modo de preparo completo
