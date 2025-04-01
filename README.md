@@ -9,7 +9,7 @@ App pessoal criado com React Native contendo:
 
 ## 🎯 FUNCIONALIDADES
 
-### 1️⃣ ABA 2 - SOBRE MIM
+### 1️⃣ ABA 1 - SOBRE MIM
 - Meu nome: Bryan Kauan
 - Idade: 16 anos (nascido em 15/09/2008)
 - Escola: Colégio Estadual Cívico Militar Professor Guido Arzua
