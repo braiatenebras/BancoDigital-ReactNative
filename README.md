@@ -16,7 +16,7 @@ App pessoal criado com React Native contendo:
 - Minha foto
 - Objetivo: Me especializar em programação
 
-### 2️⃣ ABA 1 - RECEITA DE PUDIM
+### 2️⃣ ABA 2 - RECEITA DE PUDIM
 - Ingredientes e modo de preparo completo
 - Imagem ilustrativa
 - Layout que se adapta a celulares e PCs
