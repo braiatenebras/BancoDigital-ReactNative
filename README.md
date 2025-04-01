@@ -9,14 +9,14 @@ App pessoal criado com React Native contendo:
 
 ## 🎯 FUNCIONALIDADES
 
-### 2️⃣ ABA 2 - SOBRE MIM
+### 1️⃣ ABA 2 - SOBRE MIM
 - Meu nome: Bryan Kauan
 - Idade: 16 anos (nascido em 15/09/2008)
 - Escola: Colégio Estadual Cívico Militar
 - Minha foto
 - Objetivo: Me especializar em programação
 
-### 1️⃣ ABA 1 - RECEITA DE PUDIM
+### 2️⃣ ABA 1 - RECEITA DE PUDIM
 - Ingredientes e modo de preparo completo
 - Imagem ilustrativa
 - Layout que se adapta a celulares e PCs
