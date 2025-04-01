@@ -9,17 +9,19 @@ App pessoal criado com React Native contendo:
 
 ## 🎯 FUNCIONALIDADES
 
-### 1️⃣ ABA 2 - SOBRE MIM
+### 1️⃣ ABA 1 - SOBRE MIM
 - Meu nome: Bryan Kauan
 - Idade: 16 anos (nascido em 15/09/2008)
 - Escola: Colégio Estadual Cívico Militar Professor Guido Arzua
 - Minha foto
 - Objetivo: Me especializar em programação
+<img src="BryanMobile/assets/images/aba1.jpg" alt="imagemdaaba1">
 
 ### 2️⃣ ABA 2 - RECEITA DE PUDIM
 - Ingredientes e modo de preparo completo
 - Imagem ilustrativa
 - Layout que se adapta a celulares e PCs
+<img src="BryanMobile/assets/images/aba2.jpg" alt="imagemdaaba2">
 
 
 ### 3️⃣ ABA 3 - PIADAS + PROFESSOR
@@ -30,6 +32,7 @@ App pessoal criado com React Native contendo:
   - "Nova Piada"
 - Seção humorada sobre o professor Maidel
 - Foto do professor
+<img src="BryanMobile/assets/images/aba3.jpg" alt="imagemdaaba2">
 
 ## 🛠 TECNOLOGIAS
 - React Native
@@ -55,4 +58,4 @@ Layout responsivo
 API com fallback para piadas locais
 
 # Por Bryan Kauan.
-![.](https://media.tenor.com/9A3TylQYHnAAAAAe/gato-joia-odi.png)
+![.](https://media.tenor.com/bwsMTQgoIw4AAAAe/gato-joia.png)
