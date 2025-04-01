@@ -1,4 +1,4 @@
-# 📱 MEU SITE PESSOAL - README
+# 📱 MEU SITE COM REACT NATIVE - README
 
 ## 🌟 SOBRE O PROJETO
 App pessoal criado com React Native contendo:
