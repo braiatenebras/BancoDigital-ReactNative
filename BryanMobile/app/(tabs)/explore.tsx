@@ -42,7 +42,7 @@ export default function HomeScreen() {
       <ThemedView style={styles.stepContainer}>
         <ThemedText type="subtitle">Como eu to sem nada e sem ideias para adicionar aqui, lá vai uma receita de pudim!</ThemedText>
         <Image
-          source={require('@/assets/images/pudim.webp')}
+          source={require('@/assets/images/pudim.webp')} //imgaem do pudim
           style={[
             styles.pudim,
             isLargeScreen ? styles.pudimLarge : styles.pudimSmall
@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 350,
     maxWidth: 600,
-    left: -650,
+    left: -450,
   },
   pudimSmall: { // Celular
     width: '100%',

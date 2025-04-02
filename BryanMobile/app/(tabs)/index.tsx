@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
     textShadowOffset: { width: 2, height: 2 },
     textShadowRadius: 6,
     marginBottom: 5,
-    left: -850,
+    left: -650,
   },
   headerSubtitle: { // texto de baixo
     color: 'white',
@@ -105,14 +105,14 @@ const styles = StyleSheet.create({
     textShadowColor: 'rgba(0, 0, 0, 0.6)',
     textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 4,
-    left: -835,
+    left: -635,
     top: 13,
   },
 
   imageContainerLarge: {
     alignItems: 'flex-start',
     marginLeft: -5,
-  },
+  },  
   imageContainerSmall: {
     alignItems: 'center',
   },
