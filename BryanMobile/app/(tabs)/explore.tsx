@@ -14,25 +14,23 @@ export default function HomeScreen() {
       headerImage={
         <View style={styles.headerContainer}>
           <Image
-            source={require('@/assets/images/pocoyo.png')}
+            source={require('@/assets/images/bank-building.png')}
             style={styles.reactLogo}
           />
+          <ThemedText type="defaultSemiBold"> 
+            Braia Banks
+          </ThemedText>
+
 
           {isLargeScreen && (
             <View style={styles.headerTextContainer}>
               <ThemedText type="title" style={styles.headerText}>
-                👈😎 Eu
               </ThemedText>
               <ThemedText type="defaultSemiBold" style={styles.headerSubText}>
-                Você 🤓👉
+
               </ThemedText>
             </View>
           )}
-
-          <Image
-            source={require('@/assets/images/images2.png')}
-            style={styles.secondImage}
-          />
         </View>
       }>
       <ThemedView style={styles.titleContainer}>
@@ -41,13 +39,6 @@ export default function HomeScreen() {
       </ThemedView>
       <ThemedView style={styles.stepContainer}>
         <ThemedText type="subtitle">Como eu to sem nada e sem ideias para adicionar aqui, lá vai uma receita de pudim!</ThemedText>
-        <Image
-          source={require('@/assets/images/pudim.webp')} //imgaem do pudim
-          style={[
-            styles.pudim,
-            isLargeScreen ? styles.pudimLarge : styles.pudimSmall
-          ]}
-        />
         <ThemedText>
           <ThemedText type="defaultSemiBold">
             * Pudim de Leite Condensado
@@ -89,11 +80,12 @@ const styles = StyleSheet.create({
     height: 245,
   },
   reactLogo: {
-    height: 280,
-    width: 300,
-    bottom: -10,
-    left: 0,
+    height: 20,
+    width: 20,
+    top: 10,
+    left: 100,
     position: 'absolute',
+    textAlign: 'center'
   },
   secondImage: {
     height: 350,
