@@ -23,29 +23,35 @@ export default function TabLayout() {
           },
           default: {},
         }),
-      }}>
+      }}
+    >
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Sobre mim',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
+          title: 'Início',
+          tabBarIcon: ({ color }) => (
+            <IconSymbol size={28} name="house.fill" color={color} />
+          ),
         }}
       />
       <Tabs.Screen
         name="explore"
         options={{
-          title: 'Inicio',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+          title: 'Cartões',
+          tabBarIcon: ({ color }) => (
+            <IconSymbol size={28} name="creditcard.fill" color={color} />
+          ),
         }}
       />
       <Tabs.Screen
         name="index2"
         options={{
-          title: 'Terceira',
-          tabBarIcon: ({ color }) => <MaterialCommunityIcons name="piggy-bank" size={24} color="white" />
+          title: 'Menu',
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="menu" size={24} color={color} />
+          ),
         }}
       />
-      
     </Tabs>
   );
 }
