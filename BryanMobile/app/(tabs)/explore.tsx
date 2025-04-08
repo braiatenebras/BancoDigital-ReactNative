@@ -10,14 +10,16 @@ const isLargeScreen = screenWidth > 768; // para telas grandes
 export default function HomeScreen() {
   return (
     <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
+      headerBackgroundColor={{ light: '#A1CEDC', dark: '#A020F0' }}
       headerImage={
         <View style={styles.headerContainer}>
           <Image
             source={require('@/assets/images/bank-building.png')}
             style={styles.reactLogo}
           />
-          <ThemedText type="defaultSemiBold"> 
+          <ThemedText type="defaultSemiBold" 
+          style={styles.bankName} 
+          >
             Braia Banks
           </ThemedText>
 
@@ -73,6 +75,13 @@ const styles = StyleSheet.create({
     gap: 8,
     marginBottom: 8,
     paddingHorizontal: 16,
+  },
+  bankName: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#ffffff',
+    left: 140,
+    bottom: -100,
   },
   headerContainer: {
     position: 'relative',
