@@ -5,7 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 export default function HomeScreen() {
   return (
     <ScrollView style={styles.container}>
-      {}
+      { }
       <View style={styles.header}>
         <TouchableOpacity>
           <Ionicons name="person-outline" size={28} color="#fff" />
@@ -16,7 +16,7 @@ export default function HomeScreen() {
         </TouchableOpacity>
       </View>
 
-      {}
+      { }
       <View style={styles.card}>
         <Text style={styles.label}>Conta</Text>
         <Text style={styles.balance}>R$ 1.234,56</Text>
@@ -42,7 +42,6 @@ export default function HomeScreen() {
         </TouchableOpacity>
       </ScrollView>
 
-      {/* Credit Card Section */}
       <View style={styles.card}>
         <Text style={styles.label}>Cartão de crédito</Text>
         <Text style={styles.subtitle}>Fatura atual</Text>

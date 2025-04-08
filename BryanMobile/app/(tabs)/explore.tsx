@@ -1,57 +1,60 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
 export default function HomeScreen() {
+  const [mostrar, setMostrar] = useState(true);
+
   return (
     <ScrollView style={styles.container}>
-      {}
       <View style={styles.header}>
         <TouchableOpacity>
           <Ionicons name="person-outline" size={28} color="#fff" />
         </TouchableOpacity>
-        <Text style={styles.username}>Olá, Bryan  </Text>
-        <TouchableOpacity>
-          <Ionicons name="eye-outline" size={28} color="#fff" />
+
+        <Text style={styles.meunome}>Olá, Bryan</Text>
+
+        <TouchableOpacity onPress={() => {
+          setMostrar(!mostrar);
+          console.log("Mostrar está agora:", !mostrar);
+        }}>
+          <Ionicons
+            name={mostrar ? "eye-outline" : "eye-off-outline"}
+            size={28}
+            color="#fff"
+          />
         </TouchableOpacity>
       </View>
-
-      {}
+      { }
       <View style={styles.card}>
-        <Text style={styles.label}>Conta</Text>
-        <Text style={styles.balance}>R$ 1.234,56</Text>
+        <Text style={styles.saldo}>Conta</Text>
+        <Text style={styles.valordosaldo}>
+          {mostrar ? 'R$ 69.069' : '*****'}
+        </Text>
+
       </View>
 
-      {/* Actions */}
+      {/* botoes de pix a recarga */}
       <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.actions}>
-        <TouchableOpacity style={styles.actionButton}>
-          <Ionicons name="cash-outline" size={24} color="#820ad1" />
-          <Text style={styles.actionText}>Pix</Text>
+        <TouchableOpacity style={styles.botoes}>
+          <FontAwesome6 name="pix" size={24} color="#820ad1" />
+          <Text style={styles.texto}>Pix</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.actionButton}>
+        <TouchableOpacity style={styles.botoes}>
           <Ionicons name="barcode-outline" size={24} color="#820ad1" />
-          <Text style={styles.actionText}>Pagar</Text>
+          <Text style={styles.texto}>Pagar</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.actionButton}>
+        <TouchableOpacity style={styles.botoes}>
           <Ionicons name="swap-horizontal-outline" size={24} color="#820ad1" />
-          <Text style={styles.actionText}>Transferir</Text>
+          <Text style={styles.texto}>Transferir</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.actionButton}>
-          <Ionicons name="cellular-outline" size={24} color="#820ad1" />
-          <Text style={styles.actionText}>Recarga</Text>
+        <TouchableOpacity style={styles.botoes}>
+        <MaterialIcons name="4g-mobiledata" size={24} color="#820ad1" />
+          <Text style={styles.texto}>Recarga</Text>
         </TouchableOpacity>
       </ScrollView>
-
-      {/* Credit Card Section */}
-      <View style={styles.card}>
-        <Text style={styles.label}>Cartão de crédito</Text>
-        <Text style={styles.subtitle}>Fatura atual</Text>
-        <Text style={styles.creditAmount}>R$ 567,89</Text>
-        <Text style={styles.availableLimit}>Limite disponível: R$ 2.000,00</Text>
-      </View>
-
-      {/* Footer Placeholder */}
-      <View style={{ height: 80 }} />
     </ScrollView>
   );
 }
@@ -69,9 +72,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 20,
   },
-  username: {
+  meunome: {
     color: '#fff',
-    fontSize: 18,
+    fontSize: 19,
     fontWeight: '600',
   },
   card: {
@@ -81,12 +84,12 @@ const styles = StyleSheet.create({
     padding: 20,
     marginBottom: 20,
   },
-  label: {
+  saldo: {
     color: '#aaa',
     fontSize: 14,
     marginBottom: 5,
   },
-  balance: {
+  valordosaldo: {
     fontSize: 28,
     fontWeight: 'bold',
     color: '#000',
@@ -95,33 +98,30 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     marginBottom: 20,
   },
-  actionButton: {
-    backgroundColor: '#fff',
+  botoes: {
+    backgroundColor: '#ffffff',
     borderRadius: 8,
     padding: 16,
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 10,
-    width: 90,
+    width: 87,
+    left: 0,
+    marginHorizontal: -1,
   },
-  actionText: {
+  texto: {
     marginTop: 8,
     color: '#820ad1',
     fontWeight: '600',
     fontSize: 14,
   },
-  subtitle: {
-    color: '#aaa',
-    marginTop: 8,
-    fontSize: 14,
-  },
-  creditAmount: {
+  valor: {
     fontSize: 22,
     fontWeight: 'bold',
     marginTop: 4,
     color: '#000',
   },
-  availableLimit: {
+  Limitedisponivel: {
     fontSize: 14,
     color: '#4caf50',
     marginTop: 4,
