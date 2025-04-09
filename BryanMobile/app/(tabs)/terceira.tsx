@@ -22,7 +22,7 @@ export default function HomeScreen() {
         <Text style={styles.balance}>R$ 1.234,56</Text>
       </View>
 
-      {/* Actions */}
+      {/* botoes principais */}
       <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.actions}>
         <TouchableOpacity style={styles.actionButton}>
           <Ionicons name="cash-outline" size={24} color="#820ad1" />
@@ -48,9 +48,6 @@ export default function HomeScreen() {
         <Text style={styles.creditAmount}>R$ 567,89</Text>
         <Text style={styles.availableLimit}>Limite disponível: R$ 2.000,00</Text>
       </View>
-
-      {/* Footer Placeholder */}
-      <View style={{ height: 80 }} />
     </ScrollView>
   );
 }

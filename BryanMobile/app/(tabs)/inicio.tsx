@@ -4,13 +4,14 @@ import { Ionicons } from '@expo/vector-icons';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
+
 const { width, height } = Dimensions.get('window');
 
 export default function HomeScreen() {
   const [mostrar, setMostrar] = useState(true);
   const [screen, setScreen] = useState('Home');
 
-  const navigateTo = (screenName) => {
+  const navigateTo = (screenName: React.SetStateAction<string>) => {
     setScreen(screenName); // muda para a tela clicada
   };
 
@@ -57,9 +58,16 @@ export default function HomeScreen() {
               </TouchableOpacity>
             </ScrollView>
           </View>
+
+          <View style={styles.cartoes}>
+            <Text style={styles.textcard}>Meus cartões</Text>
+            <Ionicons  name="card" size={30} color="#820ad1" style={styles.iconcard} />
+          </View>
+
         </>
+
       )}
-         {screen === 'Perfil' && ( // tela de quando clicarem no perfil
+      {screen === 'Perfil' && ( // tela de quando clicarem no perfil
         <View style={styles.screenContainer}>
           <Text style={styles.text}>Área do Perfil</Text>
           <TouchableOpacity onPress={() => setScreen('Home')}>
@@ -186,4 +194,21 @@ const styles = StyleSheet.create({
     color: '#820ad1',
     textDecorationLine: 'underline',
   },
+  cartoes: {
+    backgroundColor: '#fff',
+    marginHorizontal: width * 0.05,
+    borderRadius: 8,
+    padding: height * 0.02,
+    marginBottom: height * 0.035,
+  },
+  textcard: {
+    fontSize: 20,
+    left: 40,
+    bottom: -16,
+  },
+  iconcard: {
+top: -10,
+left: -5,
+  },
+
 });
