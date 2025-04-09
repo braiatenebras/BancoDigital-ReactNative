@@ -23,7 +23,7 @@ export default function HomeScreen() {
               😉 Bryan Kauan
             </ThemedText>
             <ThemedText type="defaultSemiBold" style={styles.headerSubtitle}>
-              Estudante & Dev Iniciante (e macho)
+              Estudante & Dev Iniciante!
             </ThemedText>
           </View>
         </View>

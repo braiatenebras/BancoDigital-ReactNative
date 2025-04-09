@@ -6,6 +6,7 @@ import { IconSymbol } from '@/components/ui/IconSymbol';
 import TabBarBackground from '@/components/ui/TabBarBackground';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
+import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -17,38 +18,36 @@ export default function TabLayout() {
         headerShown: false,
         tabBarButton: HapticTab,
         tabBarBackground: TabBarBackground,
-        tabBarStyle: Platform.select({
-          ios: {
-            position: 'absolute',
-          },
-          default: {},
-        }),
+        tabBarStyle: {
+          height: 60,
+          position: Platform.OS === 'ios' ? 'absolute' : 'relative',
+        },
       }}
     >
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Início',
+          title: 'Sobre mim',
           tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name="house.fill" color={color} />
+            <FontAwesome5 name="user" size={22} color={color} />
           ),
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="inicio"
         options={{
-          title: 'Cartões',
+          title: 'Inicio',
           tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name="creditcard.fill" color={color} />
+            <MaterialCommunityIcons name="piggy-bank-outline" size={22} color={color} />
           ),
         }}
       />
       <Tabs.Screen
-        name="index2"
+        name="terceira"
         options={{
           title: 'Menu',
           tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="menu" size={24} color={color} />
+            <MaterialCommunityIcons name="menu" size={22} color={color} />
           ),
         }}
       />
