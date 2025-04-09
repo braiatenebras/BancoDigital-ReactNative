@@ -1,89 +1,117 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Dimensions } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
 const { width, height } = Dimensions.get('window');
 
-export default function App() {
-  const [telaAtual, setTelaAtual] = useState('home'); // Controla a tela exibida
+export default function HomeScreen() {
+  const [mostrar, setMostrar] = useState(true);
+  const [screen, setScreen] = useState('Home');
 
-  // Funções para trocar de tela
-  const mostrarHome = () => setTelaAtual('home');
-  const mostrarConfiguracao = () => setTelaAtual('configuracao');
-  const mostrarSaldo = () => setTelaAtual('saldo');
+  const navigateTo = (screenName) => {
+    setScreen(screenName); // muda para a tela clicada
+  };
 
   return (
-    <View style={styles.container}>
-      {telaAtual === 'home' && (
-        <HomeScreen
-          mostrarConfiguracao={mostrarConfiguracao}
-          mostrarSaldo={mostrarSaldo}
-        />
-      )}
-      {telaAtual === 'configuracao' && (
-        <ConfiguracaoScreen mostrarHome={mostrarHome} />
-      )}
-      {telaAtual === 'saldo' && (
-        <SaldoScreen mostrarHome={mostrarHome} />
-      )}
-    </View>
-  );
-}
-
-const HomeScreen = ({ mostrarConfiguracao, mostrarSaldo }: any) => {
-  return (
-    <View style={styles.screenContainer}>
+    <ScrollView style={styles.container}>
       <View style={styles.header}>
+        <TouchableOpacity onPress={() => navigateTo('Perfil')}>
+          <Ionicons name="person-outline" size={28} color="#fff" />
+        </TouchableOpacity>
+
         <Text style={styles.meunome}>Olá, Bryan</Text>
-        <TouchableOpacity onPress={mostrarConfiguracao}>
-          <Ionicons name="settings-outline" size={28} color="#fff" />
+
+        <TouchableOpacity onPress={() => setMostrar(!mostrar)}>
+          <Ionicons name={mostrar ? "eye-outline" : "eye-off-outline"} size={28} color="#ffffff" />
         </TouchableOpacity>
       </View>
 
-      <View style={styles.saldototal}>
-        <Text style={styles.textsaldo}>Seu saldo</Text>
-        <Text style={styles.valordosaldo}>R$ 100.000</Text>
-      </View>
+      {screen === 'Home' && (
+        <>
+          <View style={styles.saldototal}>
+            <Text style={styles.textsaldo}>Seu saldo</Text>
+            <Text style={styles.valordosaldo}>
+              {mostrar ? 'R$ 100.000' : '******'}
+            </Text>
+          </View>
 
-      <TouchableOpacity onPress={mostrarSaldo} style={styles.button}>
-        <Text style={styles.buttonText}>Ver detalhes do saldo</Text>
-      </TouchableOpacity>
-    </View>
-  );
-};
+          <View style={styles.actions}>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.actionsContainer}>
+              <TouchableOpacity style={styles.botoes} onPress={() => navigateTo('Pix')}>
+                <FontAwesome6 name="pix" size={24} color="#820ad1" />
+                <Text style={styles.texto}>Pix</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.botoes} onPress={() => navigateTo('Pagar')}>
+                <Ionicons name="barcode-outline" size={24} color="#820ad1" />
+                <Text style={styles.texto}>Pagar</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.botoes} onPress={() => navigateTo('Transferir')}>
+                <Ionicons name="swap-horizontal-outline" size={24} color="#820ad1" />
+                <Text style={styles.texto}>Transferir</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.botoes} onPress={() => navigateTo('Recarga')}>
+                <MaterialIcons name="4g-mobiledata" size={24} color="#820ad1" />
+                <Text style={styles.texto}>Recarga</Text>
+              </TouchableOpacity>
+            </ScrollView>
+          </View>
+        </>
+      )}
+         {screen === 'Perfil' && ( // tela de quando clicarem no perfil
+        <View style={styles.screenContainer}>
+          <Text style={styles.text}>Área do Perfil</Text>
+          <TouchableOpacity onPress={() => setScreen('Home')}>
+            <Text style={styles.backButton}>Voltar</Text>
+          </TouchableOpacity>
+        </View>
+      )}
 
-const ConfiguracaoScreen = ({ mostrarHome }: any) => {
-  return (
-    <View style={styles.screenContainer}>
-      <Text style={styles.title}>Configurações</Text>
-      <TouchableOpacity onPress={mostrarHome} style={styles.button}>
-        <Text style={styles.buttonText}>Voltar para a Home</Text>
-      </TouchableOpacity>
-    </View>
-  );
-};
+      {screen === 'Pix' && ( // tela de quando clicarem no pix
+        <View style={styles.screenContainer}>
+          <Text style={styles.text}>Área Pix</Text>
+          <TouchableOpacity onPress={() => setScreen('Home')}>
+            <Text style={styles.backButton}>Voltar</Text>
+          </TouchableOpacity>
+        </View>
+      )}
 
-const SaldoScreen = ({ mostrarHome }: any) => {
-  return (
-    <View style={styles.screenContainer}>
-      <Text style={styles.title}>Detalhes do Saldo</Text>
-      <Text style={styles.valordosaldo}>R$ 100.000</Text>
-      <TouchableOpacity onPress={mostrarHome} style={styles.button}>
-        <Text style={styles.buttonText}>Voltar para a Home</Text>
-      </TouchableOpacity>
-    </View>
+      {screen === 'Pagar' && ( // tela de quando clicarem no pagar
+        <View style={styles.screenContainer}>
+          <Text style={styles.text}>Área de Pagamentos</Text>
+          <TouchableOpacity onPress={() => setScreen('Home')}>
+            <Text style={styles.backButton}>Voltar</Text>
+          </TouchableOpacity>
+        </View>
+      )}
+
+      {screen === 'Transferir' && ( // tela de quando clicarem no transferir
+        <View style={styles.screenContainer}>
+          <Text style={styles.text}>Área de Transferências</Text>
+          <TouchableOpacity onPress={() => setScreen('Home')}>
+            <Text style={styles.backButton}>Voltar</Text>
+          </TouchableOpacity>
+        </View>
+      )}
+
+      {screen === 'Recarga' && ( // tela de quando clicarem na recarga
+        <View style={styles.screenContainer}>
+          <Text style={styles.text}>Área de Recarga</Text>
+          <TouchableOpacity onPress={() => setScreen('Home')}>
+            <Text style={styles.backButton}>Voltar</Text>
+          </TouchableOpacity>
+        </View>
+      )}
+
+    </ScrollView>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#820ad1',
-  },
-  screenContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   header: {
     flexDirection: 'row',
@@ -115,22 +143,47 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#000',
   },
-  button: {
-    marginTop: 20,
-    backgroundColor: '#fff',
+  actions: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: height * 0.03,
+  },
+  actionsContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: width * 0.05,
+  },
+  botoes: {
+    backgroundColor: '#ffffff',
     padding: 10,
     borderRadius: 25,
-    width: width * 0.7,
     alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 10,
+    width: width * 0.2,
+    left: 5,
+    marginHorizontal: -1,
   },
-  buttonText: {
+  texto: {
+    marginTop: 8,
     color: '#820ad1',
     fontWeight: '600',
   },
-  title: {
+  screenContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    padding: 20,
+  },
+  text: {
     fontSize: 24,
-    fontWeight: '600',
     color: '#820ad1',
     marginBottom: 20,
+  },
+  backButton: {
+    fontSize: 18,
+    color: '#820ad1',
+    textDecorationLine: 'underline',
   },
 });
