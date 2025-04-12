@@ -1,126 +1,134 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Dimensions } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+  Dimensions,
+} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
-
 const { width, height } = Dimensions.get('window');
 
 export default function HomeScreen() {
-  const [mostrar, setMostrar] = useState(true);
-  const [screen, setScreen] = useState('Home');
+  const [mostrar, setMostrar] = useState(true); // Controle para mostrar/ocultar saldo
+  const [screen, setScreen] = useState('Home'); // Controle da tela ativa
+  const [darkMode, setDarkMode] = useState(true); // Controle do tema (escuro ou claro)
 
-  const navigateTo = (screenName: React.SetStateAction<string>) => {
-    setScreen(screenName); // muda para a tela clicada
+  // Função para alternar entre tema claro e escuro
+  const toggleTheme = () => setDarkMode(!darkMode);
+
+  // Definindo as cores para o tema baseado no estado do darkMode
+  const theme = {
+    background: darkMode ? '#121212' : '#fff', // Cor de fundo da tela
+    card: darkMode ? '#1e1e1e' : '#fff', // Cor dos cards
+    textPrimary: darkMode ? '#fff' : '#000', // Cor do texto principal
+    textSecondary: darkMode ? '#aaa' : '#555', // Cor do texto secundário
+    accent: '#820ad1', // Cor de destaque (botões e ícones)
   };
 
-  return (
-    <ScrollView style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigateTo('Perfil')}>
-          <Ionicons name="person-outline" size={28} color="#fff" />
-        </TouchableOpacity>
-
-        <Text style={styles.meunome}>Olá, Bryan</Text>
-
-        <TouchableOpacity onPress={() => setMostrar(!mostrar)}>
-          <Ionicons name={mostrar ? "eye-outline" : "eye-off-outline"} size={28} color="#ffffff" />
-        </TouchableOpacity>
-      </View>
-
-      {screen === 'Home' && (
+  // Função que renderiza o conteúdo baseado na tela ativa
+  const renderScreen = () => {
+    if (screen === 'Home') {
+      return (
         <>
-          <View style={styles.saldototal}>
-            <Text style={styles.textsaldo}>Seu saldo</Text>
-            <Text style={styles.valordosaldo}>
+          {/* Card de saldo */}
+          <View style={[styles.card, { backgroundColor: theme.card }]}>
+            <Text style={[styles.label, { color: theme.textSecondary }]}>Seu saldo</Text>
+            <Text style={[styles.saldo, { color: theme.textPrimary }]}>
               {mostrar ? 'R$ 100.000' : '******'}
             </Text>
           </View>
 
+          {/* Botões de ação (Pix, Pagar, Transferir, Recarga) */}
           <View style={styles.actions}>
-            <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.actionsContainer}>
-              <TouchableOpacity style={styles.botoes} onPress={() => navigateTo('Pix')}>
-                <FontAwesome6 name="pix" size={24} color="#820ad1" />
-                <Text style={styles.texto}>Pix</Text>
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={styles.actionsContainer}>
+              <TouchableOpacity style={[styles.button, { backgroundColor: theme.card }]} onPress={() => setScreen('Pix')}>
+                <FontAwesome6 name="pix" size={24} color={theme.accent} />
+                <Text style={[styles.buttonText, { color: theme.accent }]}>Pix</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.botoes} onPress={() => navigateTo('Pagar')}>
-                <Ionicons name="barcode-outline" size={24} color="#820ad1" />
-                <Text style={styles.texto}>Pagar</Text>
+
+              <TouchableOpacity style={[styles.button, { backgroundColor: theme.card }]} onPress={() => setScreen('Pagar')}>
+                <Ionicons name="barcode-outline" size={24} color={theme.accent} />
+                <Text style={[styles.buttonText, { color: theme.accent }]}>Pagar</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.botoes} onPress={() => navigateTo('Transferir')}>
-                <Ionicons name="swap-horizontal-outline" size={24} color="#820ad1" />
-                <Text style={styles.texto}>Transferir</Text>
+
+              <TouchableOpacity style={[styles.button, { backgroundColor: theme.card }]} onPress={() => setScreen('Transferir')}>
+                <Ionicons name="swap-horizontal-outline" size={24} color={theme.accent} />
+                <Text style={[styles.buttonText, { color: theme.accent }]}>Transferir</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.botoes} onPress={() => navigateTo('Recarga')}>
-                <MaterialIcons name="4g-mobiledata" size={24} color="#820ad1" />
-                <Text style={styles.texto}>Recarga</Text>
+
+              <TouchableOpacity style={[styles.button, { backgroundColor: theme.card }]} onPress={() => setScreen('Recarga')}>
+                <MaterialIcons name="4g-mobiledata" size={24} color={theme.accent} />
+                <Text style={[styles.buttonText, { color: theme.accent }]}>Recarga</Text>
               </TouchableOpacity>
             </ScrollView>
           </View>
 
-          <View style={styles.cartoes}>
-            <Text style={styles.textcard}>Meus cartões</Text>
-            <Ionicons  name="card" size={30} color="#820ad1" style={styles.iconcard} />
-          </View>
-
+          {/* Card de cartões */}
+          <TouchableOpacity
+            style={[styles.card, { backgroundColor: theme.card }]}
+            onPress={() => setScreen('Cartoes')} // Ao clicar, muda para a tela de Cartões
+          >
+            <Text style={[styles.cardText, { color: theme.textPrimary }]}>Meus cartões</Text>
+            <Ionicons name="card" size={30} color={theme.accent} style={styles.iconcard} />
+          </TouchableOpacity>
         </>
-
-      )}
-      {screen === 'Perfil' && ( // tela de quando clicarem no perfil
-        <View style={styles.screenContainer}>
-          <Text style={styles.text}>Área do Perfil</Text>
+      );
+    } else {
+      // Renderiza outras telas (Pix, Pagar, etc.)
+      return (
+        <View style={[styles.screenContainer, { backgroundColor: theme.card }]}>
+          <Text style={[styles.screenTitle, { color: theme.accent }]}>Área de {screen}</Text>
           <TouchableOpacity onPress={() => setScreen('Home')}>
-            <Text style={styles.backButton}>Voltar</Text>
+            <Text style={[styles.backButton, { color: theme.accent }]}>Voltar</Text>
           </TouchableOpacity>
         </View>
-      )}
+      );
+    }
+  };
 
-      {screen === 'Pix' && ( // tela de quando clicarem no pix
-        <View style={styles.screenContainer}>
-          <Text style={styles.text}>Área Pix</Text>
-          <TouchableOpacity onPress={() => setScreen('Home')}>
-            <Text style={styles.backButton}>Voltar</Text>
+  return (
+    <ScrollView style={{ flex: 1, backgroundColor: theme.background }}>
+      {/* Header */}
+      <View style={styles.header}>
+        <TouchableOpacity onPress={() => setScreen('Perfil')}>
+          <Ionicons name="person-outline" size={28} color={theme.textPrimary} />
+        </TouchableOpacity>
+
+        <Text style={[styles.meunome, { color: theme.textPrimary }]}>Olá, Bryan</Text>
+
+        <View style={styles.headerRight}>
+          {/* Botão para alternar tema */}
+          <TouchableOpacity onPress={toggleTheme}>
+            <Ionicons
+              name={darkMode ? 'sunny-outline' : 'moon-outline'} // Ícone do tema (sol ou lua)
+              size={24}
+              color={theme.textPrimary}
+              style={{ marginRight: 10 }}
+            />
+          </TouchableOpacity>
+
+          {/* Botão para mostrar/ocultar saldo */}
+          <TouchableOpacity onPress={() => setMostrar(!mostrar)}>
+            <Ionicons name={mostrar ? 'eye-outline' : 'eye-off-outline'} size={28} color={theme.textPrimary} />
           </TouchableOpacity>
         </View>
-      )}
+      </View>
 
-      {screen === 'Pagar' && ( // tela de quando clicarem no pagar
-        <View style={styles.screenContainer}>
-          <Text style={styles.text}>Área de Pagamentos</Text>
-          <TouchableOpacity onPress={() => setScreen('Home')}>
-            <Text style={styles.backButton}>Voltar</Text>
-          </TouchableOpacity>
-        </View>
-      )}
-
-      {screen === 'Transferir' && ( // tela de quando clicarem no transferir
-        <View style={styles.screenContainer}>
-          <Text style={styles.text}>Área de Transferências</Text>
-          <TouchableOpacity onPress={() => setScreen('Home')}>
-            <Text style={styles.backButton}>Voltar</Text>
-          </TouchableOpacity>
-        </View>
-      )}
-
-      {screen === 'Recarga' && ( // tela de quando clicarem na recarga
-        <View style={styles.screenContainer}>
-          <Text style={styles.text}>Área de Recarga</Text>
-          <TouchableOpacity onPress={() => setScreen('Home')}>
-            <Text style={styles.backButton}>Voltar</Text>
-          </TouchableOpacity>
-        </View>
-      )}
-
+      {/* Renderiza a tela ativa */}
+      {renderScreen()}
     </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#820ad1',
-  },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -130,26 +138,26 @@ const styles = StyleSheet.create({
     marginBottom: height * 0.04,
   },
   meunome: {
-    color: '#fff',
     fontSize: width * 0.05,
     fontWeight: '600',
   },
-  saldototal: {
-    backgroundColor: '#fff',
+  headerRight: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  card: {
     marginHorizontal: width * 0.05,
     borderRadius: 8,
     padding: height * 0.03,
     marginBottom: height * 0.035,
   },
-  textsaldo: {
-    color: '#aaa',
+  label: {
     fontSize: width * 0.04,
     marginBottom: 5,
   },
-  valordosaldo: {
+  saldo: {
     fontSize: width * 0.07,
     fontWeight: 'bold',
-    color: '#000',
   },
   actions: {
     justifyContent: 'center',
@@ -161,54 +169,42 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: width * 0.05,
   },
-  botoes: {
-    backgroundColor: '#ffffff',
+  button: {
     padding: 10,
     borderRadius: 25,
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 10,
     width: width * 0.2,
-    left: 5,
     marginHorizontal: -1,
   },
-  texto: {
+  buttonText: {
     marginTop: 8,
-    color: '#820ad1',
     fontWeight: '600',
   },
   screenContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#fff',
     padding: 20,
+    borderRadius: 10,
+    minHeight: height * 0.4,
   },
-  text: {
+  screenTitle: {
     fontSize: 24,
-    color: '#820ad1',
     marginBottom: 20,
   },
   backButton: {
     fontSize: 18,
-    color: '#820ad1',
     textDecorationLine: 'underline',
   },
-  cartoes: {
-    backgroundColor: '#fff',
-    marginHorizontal: width * 0.05,
-    borderRadius: 8,
-    padding: height * 0.02,
-    marginBottom: height * 0.035,
-  },
-  textcard: {
+  cardText: {
     fontSize: 20,
     left: 40,
     bottom: -16,
   },
   iconcard: {
-top: -10,
-left: -5,
+    top: -10,
+    left: -5,
   },
-
 });
