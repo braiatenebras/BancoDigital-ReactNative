@@ -21,7 +21,6 @@ export default function HomeScreen() {
   const [saldo, setSaldo] = useState(15000); // Saldo inicial em reais (R$)
   const [mostrarConversoes, setMostrarConversoes] = useState(false);
 
-
   // Função para alternar entre tema claro e escuro
   const toggleTheme = () => setDarkMode(!darkMode);
 
@@ -32,7 +31,6 @@ export default function HomeScreen() {
     textSecondary: darkMode ? '#aaa' : '#555',
     accent: '#820ad1',
     border: darkMode ? '#444' : '#fff',
-    cardText: darkMode ? '#ffff' : '#100',
   };
 
   // Função que busca as taxas de câmbio
@@ -63,6 +61,30 @@ export default function HomeScreen() {
     if (screen === 'Home') {
       return (
         <>
+          {/* Header */}
+          <View style={styles.header}>
+            <TouchableOpacity onPress={() => setScreen('Perfil')}>
+              <Ionicons name="person-outline" size={28} color={theme.textPrimary} />
+            </TouchableOpacity>
+
+            <Text style={[styles.meunome, { color: theme.textPrimary }]}>Olá, Bryan</Text>
+
+            <View style={styles.headerRight}>
+              <TouchableOpacity onPress={toggleTheme}>
+                <Ionicons
+                  name={darkMode ? 'sunny-outline' : 'moon-outline'}
+                  size={24}
+                  color={theme.textPrimary}
+                  style={{ marginRight: 10 }}
+                />
+              </TouchableOpacity>
+
+              <TouchableOpacity onPress={() => setMostrar(!mostrar)}>
+                <Ionicons name={mostrar ? 'eye-outline' : 'eye-off-outline'} size={28} color={theme.textPrimary} />
+              </TouchableOpacity>
+            </View>
+          </View>
+
           {/* Card de saldo */}
           <View style={[styles.card, { backgroundColor: theme.card }]}>
             <Text style={[styles.label, { color: theme.textSecondary }]}>Seu saldo</Text>
@@ -77,22 +99,30 @@ export default function HomeScreen() {
               horizontal
               showsHorizontalScrollIndicator={false}
               contentContainerStyle={styles.actionsContainer}>
-              <TouchableOpacity style={[styles.button, { backgroundColor: theme.card }]}>
+              <TouchableOpacity
+                style={[styles.button, { backgroundColor: theme.card }]}
+                onPress={() => setScreen('Pix')}>
                 <FontAwesome6 name="pix" size={24} color={theme.accent} />
                 <Text style={[styles.buttonText, { color: theme.accent }]}>Pix</Text>
               </TouchableOpacity>
 
-              <TouchableOpacity style={[styles.button, { backgroundColor: theme.card }]}>
+              <TouchableOpacity
+                style={[styles.button, { backgroundColor: theme.card }]}
+                onPress={() => setScreen('Pagar')}>
                 <Ionicons name="barcode-outline" size={24} color={theme.accent} />
                 <Text style={[styles.buttonText, { color: theme.accent }]}>Pagar</Text>
               </TouchableOpacity>
 
-              <TouchableOpacity style={[styles.button, { backgroundColor: theme.card }]}>
+              <TouchableOpacity
+                style={[styles.button, { backgroundColor: theme.card }]}
+                onPress={() => setScreen('Transferir')}>
                 <Ionicons name="swap-horizontal-outline" size={24} color={theme.accent} />
                 <Text style={[styles.buttonText, { color: theme.accent }]}>Transferir</Text>
               </TouchableOpacity>
 
-              <TouchableOpacity style={[styles.button, { backgroundColor: theme.card }]}>
+              <TouchableOpacity
+                style={[styles.button, { backgroundColor: theme.card }]}
+                onPress={() => setScreen('Recarga')}>
                 <MaterialIcons name="4g-mobiledata" size={24} color={theme.accent} />
                 <Text style={[styles.buttonText, { color: theme.accent }]}>Recarga</Text>
               </TouchableOpacity>
@@ -101,12 +131,14 @@ export default function HomeScreen() {
 
           {/* Tela de cartões */}
           <TouchableOpacity
-            style={[styles.card, { backgroundColor: theme.card }]}
-            onPress={() => setScreen('Cartoes')}
-          >
+            style={[styles.card1, { backgroundColor: theme.card }]}
+            onPress={() => setScreen('Cartões')}>
             <Text style={[styles.cardText, { color: theme.textPrimary }]}>Meus cartões</Text>
-            <Ionicons name="card" size={30} color={theme.accent} style={styles.iconcard} />
+            <Ionicons name="card" size={35} color={theme.accent} style={styles.iconcard} />
           </TouchableOpacity>
+
+          <Text style={[styles.conversor, { color: theme.textPrimary }]}>Conversor de moedas</Text>
+          <Text style={[styles.conversor2, { color: theme.textPrimary }]}>Com o saldo atual</Text>
 
           {/* Botão para mostrar/ocultar conversões */}
           <View style={[styles.card, { backgroundColor: theme.card }]}>
@@ -117,56 +149,89 @@ export default function HomeScreen() {
             </TouchableOpacity>
           </View>
 
-         {/* Conversões de moeda */}
-{/* Conversões de moeda */}
-{/* Conversões de moeda */}
-{/* Conversões de moeda */}
-{mostrarConversoes && exchangeRates && (
-  <View style={[styles.card, { backgroundColor: theme.card }]}>
-    <Text style={[styles.label, { color: theme.textSecondary }]}>Saldo em outras moedas:</Text>
+          {/* Conversões de moeda */}
+          {mostrarConversoes && exchangeRates && (
+            <View style={[styles.card, { backgroundColor: theme.card }]}>
+              <Text style={[styles.label, { color: theme.textSecondary }]}>Saldo em outras moedas:</Text>
 
-    {/* Dólar Americano */}
-    <Text style={[styles.saldo, { color: theme.textPrimary, marginBottom: 10 }]}>
-      USD (Dólar Americano): ${convertCurrency('USD').toFixed(2)}
-    </Text>
+              {/* Dólar Americano */}
+              <Text style={[styles.saldo, { color: theme.textPrimary, marginBottom: 10 }]}>
+                USD (Dólar Americano): ${convertCurrency('USD').toFixed(2)}
+              </Text>
 
-    {/* Euro */}
-    <Text style={[styles.saldo, { color: theme.textPrimary, marginBottom: 10 }]}>
-      EUR (Euro): €{convertCurrency('EUR').toFixed(2)}
-    </Text>
+              {/* Euro */}
+              <Text style={[styles.saldo, { color: theme.textPrimary, marginBottom: 10 }]}>
+                EUR (Euro): €{convertCurrency('EUR').toFixed(2)}
+              </Text>
 
-    {/* Libra Esterlina */}
-    <Text style={[styles.saldo, { color: theme.textPrimary, marginBottom: 10 }]}>
-      GBP (Libra Esterlina): £{convertCurrency('GBP').toFixed(2)}
-    </Text>
+              {/* Libra Esterlina */}
+              <Text style={[styles.saldo, { color: theme.textPrimary, marginBottom: 10 }]}>
+                GBP (Libra Esterlina): £{convertCurrency('GBP').toFixed(2)}
+              </Text>
 
-    {/* Iene Japonês */}
-    <Text style={[styles.saldo, { color: theme.textPrimary, marginBottom: 10 }]}>
-      JPY (Iene Japonês): ¥{convertCurrency('JPY').toFixed(2)}
-    </Text>
+              {/* Iene Japonês */}
+              <Text style={[styles.saldo, { color: theme.textPrimary, marginBottom: 10 }]}>
+                JPY (Iene Japonês): ¥{convertCurrency('JPY').toFixed(2)}
+              </Text>
 
-    {/* Dólar Canadense */}
-    <Text style={[styles.saldo, { color: theme.textPrimary, marginBottom: 10 }]}>
-      CAD (Dólar Canadense): C${convertCurrency('CAD').toFixed(2)}
-    </Text>
+              {/* Dólar Canadense */}
+              <Text style={[styles.saldo, { color: theme.textPrimary, marginBottom: 10 }]}>
+                CAD (Dólar Canadense): C${convertCurrency('CAD').toFixed(2)}
+              </Text>
 
-    {/* Dólar Australiano */}
-    <Text style={[styles.saldo, { color: theme.textPrimary, marginBottom: 10 }]}>
-      AUD (Dólar Australiano): A${convertCurrency('AUD').toFixed(2)}
-    </Text>
+              {/* Dólar Australiano */}
+              <Text style={[styles.saldo, { color: theme.textPrimary, marginBottom: 10 }]}>
+                AUD (Dólar Australiano): A${convertCurrency('AUD').toFixed(2)}
+              </Text>
 
-    {/* Franco Suíço */}
-    <Text style={[styles.saldo, { color: theme.textPrimary }]}>
-      CHF (Franco Suíço): Fr.{convertCurrency('CHF').toFixed(2)}
-    </Text>
-  </View>
-)}
-
-
-
-
-
+              {/* Franco Suíço */}
+              <Text style={[styles.saldo, { color: theme.textPrimary }]}>
+                CHF (Franco Suíço): Fr.{convertCurrency('CHF').toFixed(2)}
+              </Text>
+            </View>
+          )}
         </>
+      );
+    } else if (screen === 'Pix') {
+      return (
+        <View style={[styles.screenContainer, { backgroundColor: theme.card }]}>
+          <Text style={[styles.screenTitle, { color: theme.accent }]}>Pix</Text>
+          <Text style={{ color: theme.textPrimary }}>Transferência rápida e segura via Pix.</Text>
+          <Text style={{ color: theme.textPrimary }}>Digite a chave Pix do destinatário.</Text>
+          <TouchableOpacity onPress={() => setScreen('Home')}>
+            <Text style={[styles.backButton, { color: theme.accent }]}>Voltar</Text>
+          </TouchableOpacity>
+        </View>
+      );
+    } else if (screen === 'Recarga') {
+      return (
+        <View style={[styles.screenContainer, { backgroundColor: theme.card }]}>
+          <Text style={[styles.screenTitle, { color: theme.accent }]}>Recarga</Text>
+          <Text style={{ color: theme.textPrimary }}>Faça uma recarga no seu celular.</Text>
+          <TouchableOpacity onPress={() => setScreen('Home')}>
+            <Text style={[styles.backButton, { color: theme.accent }]}>Voltar</Text>
+          </TouchableOpacity>
+        </View>
+      );
+    } else if (screen === 'Pagar') {
+      return (
+        <View style={[styles.screenContainer, { backgroundColor: theme.card }]}>
+          <Text style={[styles.screenTitle, { color: theme.accent }]}>Pagar</Text>
+          <Text style={{ color: theme.textPrimary }}>Escaneie o código de barras para realizar o pagamento.</Text>
+          <TouchableOpacity onPress={() => setScreen('Home')}>
+            <Text style={[styles.backButton, { color: theme.accent }]}>Voltar</Text>
+          </TouchableOpacity>
+        </View>
+      );
+    } else if (screen === 'Transferir') {
+      return (
+        <View style={[styles.screenContainer, { backgroundColor: theme.card }]}>
+          <Text style={[styles.screenTitle, { color: theme.accent }]}>Transferir</Text>
+          <Text style={{ color: theme.textPrimary }}>Escolha a conta e o valor para transferir.</Text>
+          <TouchableOpacity onPress={() => setScreen('Home')}>
+            <Text style={[styles.backButton, { color: theme.accent }]}>Voltar</Text>
+          </TouchableOpacity>
+        </View>
       );
     } else {
       return (
@@ -182,34 +247,10 @@ export default function HomeScreen() {
 
   return (
     <ScrollView style={{ flex: 1, backgroundColor: theme.background }}>
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => setScreen('Perfil')}>
-          <Ionicons name="person-outline" size={28} color={theme.textPrimary} />
-        </TouchableOpacity>
-
-        <Text style={[styles.meunome, { color: theme.textPrimary }]}>Olá, Bryan</Text>
-
-        <View style={styles.headerRight}>
-          <TouchableOpacity onPress={toggleTheme}>
-            <Ionicons
-              name={darkMode ? 'sunny-outline' : 'moon-outline'}
-              size={24}
-              color={theme.textPrimary}
-              style={{ marginRight: 10 }}
-            />
-          </TouchableOpacity>
-
-          <TouchableOpacity onPress={() => setMostrar(!mostrar)}>
-            <Ionicons name={mostrar ? 'eye-outline' : 'eye-off-outline'} size={28} color={theme.textPrimary} />
-          </TouchableOpacity>
-        </View>
-      </View>
-
       {renderScreen()}
     </ScrollView>
   );
 }
-
 
 const styles = StyleSheet.create({
   header: {
@@ -223,6 +264,7 @@ const styles = StyleSheet.create({
   meunome: {
     fontSize: width * 0.05,
     fontWeight: '600',
+    textAlign: 'center',
   },
   headerRight: {
     flexDirection: 'row',
@@ -231,17 +273,25 @@ const styles = StyleSheet.create({
   card: {
     marginHorizontal: width * 0.05,
     borderRadius: 15,
-    padding: height * 0.023,
-    marginBottom: height * 0.035,
+    padding: height * 0.020,
+    marginBottom: height * 0.025,
+    borderWidth: 0.1,
+  },
+  card1: {
+    marginHorizontal: width * 0.05,
+    borderRadius: 15,
+    marginBottom: height * 0.025,
     borderWidth: 0.1,
   },
   label: {
     fontSize: width * 0.04,
     marginBottom: 5,
+    textAlign: 'center',
   },
   saldo: {
     fontSize: width * 0.07,
     fontWeight: 'bold',
+    textAlign: 'center',
   },
   actions: {
     justifyContent: 'center',
@@ -272,25 +322,38 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 20,
-    borderRadius: 10,
-    minHeight: height * 0.4,
+    paddingHorizontal: width * 0.05,
   },
   screenTitle: {
-    fontSize: 24,
-    marginBottom: 20,
+    fontSize: width * 0.08,
+    fontWeight: '700',
+    marginBottom: height * 0.02,
   },
   backButton: {
-    fontSize: 18,
-    textDecorationLine: 'underline',
+    marginTop: height * 0.03,
+    fontSize: width * 0.05,
+    color: '#820ad1',
+    fontWeight: 'bold',
+  },
+  iconcard: {
+    top: -15,
+    textAlign: 'center',
+    left: -90,
   },
   cardText: {
     fontSize: 20,
-    left: 40,
     bottom: -16,
+    textAlign: 'center',
   },
-  iconcard: {
-    top: -12,
-    left: -5,
+  conversor: {
+    fontSize: width * 0.05,
+    textAlign: 'center',
+    fontWeight: '700',
+  },
+  conversor2: {
+    textAlign: 'center',
+    marginBottom: height * 0.02,
+    fontSize: width * 0.04,
+    fontWeight: '500',
   },
 });
