@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Dimensions, TextInput, Picker, Alert, KeyboardAvoidingView, Platform } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Dimensions, TextInput, Picker, Alert, KeyboardAvoidingView, Platform, Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
@@ -319,10 +319,12 @@ export default function HomeScreen() {
           )}
         </>
       );
+
+      // Tela de pix
     } else if (screen === 'Pix') {
       return (
-        <View style={[styles.screenContainer, { backgroundColor: theme.background }]}>
-          <Text style={[styles.screenTitle, { color: theme.accent, marginTop: 30 }]}>Pix</Text>
+        <View style={[styles.screenContainer, { backgroundColor: theme.background, padding: 20, marginBottom: -200, marginTop: -100 }]}>
+          <Text style={[styles.screenTitle, { color: theme.accent, marginTop: -100, }]}>Pix</Text>
           <Text style={{ color: theme.textPrimary, marginBottom: 20, textAlign: 'center' }}>Transferência rápida e segura via Pix</Text>
 
           <View style={[styles.pixInputContainer, { backgroundColor: theme.card }]}>
@@ -330,7 +332,9 @@ export default function HomeScreen() {
               style={{
                 color: theme.textPrimary,
                 height: 50,
-                width: '100%'
+                width: '100%',
+                backgroundColor: theme.card,
+
               }}
               selectedValue={pixKeyType}
               onValueChange={(itemValue: React.SetStateAction<string>) => setPixKeyType(itemValue)}>
@@ -390,9 +394,12 @@ export default function HomeScreen() {
           </TouchableOpacity>
         </View>
       );
+
+      // Tela de Recarga
+
     } else if (screen === 'Recarga') {
       return (
-        <View style={[styles.screenContainer, { backgroundColor: theme.background, padding: 20 }]}>
+        <View style={[styles.screenContainer, { backgroundColor: theme.background, padding: 20, marginBottom: -200, marginTop: -100 }]}>
           <Text style={[styles.screenTitle, { color: theme.accent, fontSize: 24, marginBottom: 20 }]}>Recarga de Celular</Text>
 
           <View style={{ borderWidth: 1, borderColor: theme.accent, borderRadius: 10, padding: 15, marginBottom: 20, backgroundColor: theme.card }}>
@@ -468,7 +475,7 @@ export default function HomeScreen() {
 
     } else if (screen === 'Pagar') {
       return (
-        <View style={[styles.screenContainer, { backgroundColor: theme.background, padding: 20 }]}>
+        <View style={[styles.screenContainer, { backgroundColor: theme.background, padding: 20, marginBottom: -200, marginTop: -100 }]}>
           <Text style={[styles.screenTitle, { color: theme.accent, fontSize: 24, marginBottom: 20 }]}>Pagamento</Text>
 
           <View style={{ alignItems: 'center', marginBottom: 30 }}>
@@ -521,10 +528,11 @@ export default function HomeScreen() {
         </View>
       );
 
-      // Tela de transferir
+      // Tela de Transferir 
+
     } else if (screen === 'Transferir') {
       return (
-        <View style={[styles.screenContainer, { backgroundColor: theme.background, padding: 20 }]}>
+        <View style={[styles.screenContainer, { backgroundColor: theme.background, padding: 20, marginBottom: -200, marginTop: -100 }]}>
           <Text style={[styles.screenTitle, { color: theme.accent, fontSize: 24, marginBottom: 20 }]}>Transferência</Text>
 
           <TextInput
@@ -559,20 +567,42 @@ export default function HomeScreen() {
           <View style={{ marginBottom: 20 }}>
             <Text style={{ color: theme.textPrimary, marginBottom: 10, fontWeight: '500' }}>Contatos recentes:</Text>
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+
+
+
+              {/* Giovane - com foto */}
               <TouchableOpacity style={{ marginRight: 15, alignItems: 'center' }}>
-                <View style={{
-                  width: 60,
-                  height: 60,
-                  borderRadius: 30,
-                  backgroundColor: theme.primary,
-                  marginBottom: 5,
-                  justifyContent: 'center',
-                  alignItems: 'center'
-                }}>
-                  <Text style={{ color: 'white', fontSize: 20 }}>J</Text>
-                </View>
-                <Text style={{ color: theme.textPrimary, fontSize: 12 }}>João</Text>
+                <Image
+                  source={require('../../assets/images/giovane.png')}
+                  style={{
+                    width: 60,
+                    height: 60,
+                    borderRadius: 30,
+                    marginBottom: 5,
+                    borderWidth: 2,
+                    borderColor: theme.accent
+                  }}
+                />
+                <Text style={{ color: theme.textPrimary, fontSize: 12 }}>Giovane</Text>
               </TouchableOpacity>
+
+
+              {/* Professor Maidel - com foto */}
+              <TouchableOpacity style={{ marginRight: 15, alignItems: 'center' }}>
+                <Image
+                  source={require('../../assets/images/maidel.jpg')}
+                  style={{
+                    width: 60,
+                    height: 60,
+                    borderRadius: 30,
+                    marginBottom: 5,
+                    borderWidth: 2,
+                    borderColor: theme.accent
+                  }}
+                />
+                <Text style={{ color: theme.textPrimary, fontSize: 12 }}>Maidel</Text>
+              </TouchableOpacity>
+              {/* Maria - com inicial */}
               <TouchableOpacity style={{ marginRight: 15, alignItems: 'center' }}>
                 <View style={{
                   width: 60,
@@ -587,20 +617,7 @@ export default function HomeScreen() {
                 </View>
                 <Text style={{ color: theme.textPrimary, fontSize: 12 }}>Maria</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={{ marginRight: 15, alignItems: 'center' }}>
-                <View style={{
-                  width: 60,
-                  height: 60,
-                  borderRadius: 30,
-                  backgroundColor: theme.primary,
-                  marginBottom: 5,
-                  justifyContent: 'center',
-                  alignItems: 'center'
-                }}>
-                  <Text style={{ color: 'white', fontSize: 20 }}>E</Text>
-                </View>
-                <Text style={{ color: theme.textPrimary, fontSize: 12 }}>Empresa X</Text>
-              </TouchableOpacity>
+
             </ScrollView>
           </View>
 
@@ -618,7 +635,9 @@ export default function HomeScreen() {
             }}
             onPress={() => Alert.alert('Transferência', 'Transferência realizada com sucesso!')}
           >
-            <Text style={{ color: 'white', textAlign: 'center', fontWeight: 'bold', fontSize: 16 }}>Confirmar Transferência</Text>
+            <Text style={{ color: 'white', textAlign: 'center', fontWeight: 'bold', fontSize: 16 }}>
+              Confirmar Transferência
+            </Text>
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -629,12 +648,13 @@ export default function HomeScreen() {
           </TouchableOpacity>
         </View>
       );
+    }
+    // Tela dos cartões
 
-      // Tela dos cartões
-    } else if (screen === 'Cartões') {
+    else if (screen === 'Cartões') {
       return (
-        <View style={[styles.screenContainer, { backgroundColor: theme.background, padding: 20 }]}>
-          <Text style={[styles.screenTitle, { color: theme.accent, fontSize: 24, marginBottom: 20 }]}>Meus Cartões</Text>
+        <View style={[styles.screenContainer, { backgroundColor: theme.background, padding: 20, marginBottom: -200, marginTop: -60 }]}>
+          <Text style={[styles.screenTitle, { color: theme.accent, fontSize: 24, marginBottom: 20, top: -40, }]}>Meus Cartões</Text>
 
           <View style={{
             borderWidth: 1,
