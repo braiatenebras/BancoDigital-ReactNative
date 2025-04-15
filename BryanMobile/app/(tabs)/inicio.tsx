@@ -31,6 +31,15 @@ export default function HomeScreen() {
   ]);
   const [userInput, setUserInput] = useState('');
   const [loading, setLoading] = useState(false);
+  
+  // Novos estados para operações
+  const [recargaValue, setRecargaValue] = useState('');
+  const [recargaOperadora, setRecargaOperadora] = useState('Claro');
+  const [recargaNumero, setRecargaNumero] = useState('');
+  const [pagamentoValue, setPagamentoValue] = useState('');
+  const [pagamentoCodigo, setPagamentoCodigo] = useState('');
+  const [transferenciaValue, setTransferenciaValue] = useState('');
+  const [transferenciaDestinatario, setTransferenciaDestinatario] = useState('');
 
   const toggleTheme = () => setDarkMode(!darkMode);
 
@@ -88,6 +97,82 @@ export default function HomeScreen() {
     setScreen('Home');
   };
 
+  // Recarga
+  const handleRecarga = () => {
+    if (!recargaNumero || recargaNumero.length < 11) {
+      Alert.alert('Erro', 'Por favor, insira um número válido (11 dígitos)');
+      return;
+    }
+
+    if (!recargaValue || isNaN(parseFloat(recargaValue))) {
+      Alert.alert('Erro', 'Por favor, insira um valor válido');
+      return;
+    }
+
+    const value = parseFloat(recargaValue);
+    if (value > saldo) {
+      Alert.alert('Erro', 'Saldo insuficiente');
+      return;
+    }
+
+    Alert.alert('Sucesso', `Recarga de R$ ${value.toFixed(2)} (${recargaOperadora}) realizada!`);
+    setSaldo(saldo - value);
+    setRecargaValue('');
+    setRecargaNumero('');
+    setScreen('Home');
+  };
+
+  // Pagamento
+  const handlePagamento = () => {
+    if (!pagamentoCodigo) {
+      Alert.alert('Erro', 'Por favor, insira um código válido');
+      return;
+    }
+
+    if (!pagamentoValue || isNaN(parseFloat(pagamentoValue))) {
+      Alert.alert('Erro', 'Por favor, insira um valor válido');
+      return;
+    }
+
+    const value = parseFloat(pagamentoValue);
+    if (value > saldo) {
+      Alert.alert('Erro', 'Saldo insuficiente');
+      return;
+    }
+
+    Alert.alert('Sucesso', `Pagamento de R$ ${value.toFixed(2)} realizado!`);
+    setSaldo(saldo - value);
+    setPagamentoValue('');
+    setPagamentoCodigo('');
+    setScreen('Home');
+  };
+
+  // Transferência
+  const handleTransferencia = () => {
+    if (!transferenciaDestinatario) {
+      Alert.alert('Erro', 'Por favor, insira um destinatário válido');
+      return;
+    }
+
+    if (!transferenciaValue || isNaN(parseFloat(transferenciaValue))) {
+      Alert.alert('Erro', 'Por favor, insira um valor válido');
+      return;
+    }
+
+    const value = parseFloat(transferenciaValue);
+    if (value > saldo) {
+      Alert.alert('Erro', 'Saldo insuficiente');
+      return;
+    }
+
+    Alert.alert('Sucesso', `Transferência de R$ ${value.toFixed(2)} realizada!`);
+    setSaldo(saldo - value);
+    setTransferenciaValue('');
+    setTransferenciaDestinatario('');
+    setScreen('Home');
+  };
+
+  // Chatbot
   const getAIResponse = (userMessage: string): { response: string, showBackButton?: boolean } => {
     const lowerMessage = userMessage.toLowerCase();
 
@@ -396,7 +481,6 @@ export default function HomeScreen() {
       );
 
       // Tela de Recarga
-
     } else if (screen === 'Recarga') {
       return (
         <View style={[styles.screenContainer, { backgroundColor: theme.background, padding: 20, marginBottom: -200, marginTop: -100 }]}>
@@ -404,14 +488,49 @@ export default function HomeScreen() {
 
           <View style={{ borderWidth: 1, borderColor: theme.accent, borderRadius: 10, padding: 15, marginBottom: 20, backgroundColor: theme.card }}>
             <Text style={{ color: theme.textPrimary, marginBottom: 10, fontWeight: 'bold' }}>Operadoras:</Text>
-            <TouchableOpacity style={{ backgroundColor: theme.accent, padding: 12, borderRadius: 8, marginBottom: 10 }}>
-              <Text style={{ color: 'white', textAlign: 'center', fontWeight: '500' }}>Claro</Text>
+            <TouchableOpacity 
+              style={{ 
+                backgroundColor: recargaOperadora === 'Claro' ? theme.accent : theme.card, 
+                padding: 12, 
+                borderRadius: 8, 
+                marginBottom: 10 
+              }}
+              onPress={() => setRecargaOperadora('Claro')}
+            >
+              <Text style={{ 
+                color: recargaOperadora === 'Claro' ? 'white' : theme.textPrimary, 
+                textAlign: 'center', 
+                fontWeight: '500' 
+              }}>Claro</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={{ backgroundColor: theme.accent, padding: 12, borderRadius: 8, marginBottom: 10 }}>
-              <Text style={{ color: 'white', textAlign: 'center', fontWeight: '500' }}>Vivo</Text>
+            <TouchableOpacity 
+              style={{ 
+                backgroundColor: recargaOperadora === 'Vivo' ? theme.accent : theme.card, 
+                padding: 12, 
+                borderRadius: 8, 
+                marginBottom: 10 
+              }}
+              onPress={() => setRecargaOperadora('Vivo')}
+            >
+              <Text style={{ 
+                color: recargaOperadora === 'Vivo' ? 'white' : theme.textPrimary, 
+                textAlign: 'center', 
+                fontWeight: '500' 
+              }}>Vivo</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={{ backgroundColor: theme.accent, padding: 12, borderRadius: 8 }}>
-              <Text style={{ color: 'white', textAlign: 'center', fontWeight: '500' }}>Tim</Text>
+            <TouchableOpacity 
+              style={{ 
+                backgroundColor: recargaOperadora === 'Tim' ? theme.accent : theme.card, 
+                padding: 12, 
+                borderRadius: 8 
+              }}
+              onPress={() => setRecargaOperadora('Tim')}
+            >
+              <Text style={{ 
+                color: recargaOperadora === 'Tim' ? 'white' : theme.textPrimary, 
+                textAlign: 'center', 
+                fontWeight: '500' 
+              }}>Tim</Text>
             </TouchableOpacity>
           </View>
 
@@ -428,6 +547,8 @@ export default function HomeScreen() {
               borderRadius: 8
             }}
             keyboardType="phone-pad"
+            value={recargaNumero}
+            onChangeText={setRecargaNumero}
           />
 
           <TextInput
@@ -443,6 +564,8 @@ export default function HomeScreen() {
               borderRadius: 8
             }}
             keyboardType="numeric"
+            value={recargaValue}
+            onChangeText={setRecargaValue}
           />
 
           <TouchableOpacity
@@ -457,7 +580,7 @@ export default function HomeScreen() {
               shadowRadius: 4,
               elevation: 5
             }}
-            onPress={() => Alert.alert('Recarga', 'Recarga realizada com sucesso!')}
+            onPress={handleRecarga}
           >
             <Text style={{ color: 'white', textAlign: 'center', fontWeight: 'bold', fontSize: 16 }}>Confirmar Recarga</Text>
           </TouchableOpacity>
@@ -467,13 +590,13 @@ export default function HomeScreen() {
             style={{ alignSelf: 'center' }}
           >
             <Text style={[styles.backButton, { color: theme.accent }]}>Voltar</Text>
-          </TouchableOpacity>
-        </View>
-      );
+      </TouchableOpacity>
+    </View>
+  );
+} 
 
-      // Tela de pagamentos
-
-    } else if (screen === 'Pagar') {
+// Tela de Pagamentos
+else if (screen === 'Pagar') {
       return (
         <View style={[styles.screenContainer, { backgroundColor: theme.background, padding: 20, marginBottom: -200, marginTop: -100 }]}>
           <Text style={[styles.screenTitle, { color: theme.accent, fontSize: 24, marginBottom: 20 }]}>Pagamento</Text>
@@ -496,28 +619,55 @@ export default function HomeScreen() {
             <Text style={{ color: theme.textPrimary, textAlign: 'center' }}>Aponte a câmera para o código QR ou digite o código manualmente</Text>
           </View>
 
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 20 }}>
-            <TouchableOpacity style={{
-              borderWidth: 1,
+          <TextInput
+            placeholder="Código de barras"
+            placeholderTextColor={theme.textSecondary}
+            style={{
+              borderBottomWidth: 1,
               borderColor: theme.accent,
-              padding: 12,
-              borderRadius: 8,
-              width: '48%',
-              backgroundColor: theme.card
-            }}>
-              <Text style={{ color: theme.accent, textAlign: 'center', fontWeight: '500' }}>Digitar Código</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={{
-              borderWidth: 1,
+              color: theme.textPrimary,
+              padding: 10,
+              marginBottom: 20,
+              backgroundColor: theme.card,
+              borderRadius: 8
+            }}
+            value={pagamentoCodigo}
+            onChangeText={setPagamentoCodigo}
+          />
+
+          <TextInput
+            placeholder="Valor (R$)"
+            placeholderTextColor={theme.textSecondary}
+            style={{
+              borderBottomWidth: 1,
               borderColor: theme.accent,
-              padding: 12,
+              color: theme.textPrimary,
+              padding: 10,
+              marginBottom: 20,
+              backgroundColor: theme.card,
+              borderRadius: 8
+            }}
+            keyboardType="numeric"
+            value={pagamentoValue}
+            onChangeText={setPagamentoValue}
+          />
+
+          <TouchableOpacity
+            style={{
+              backgroundColor: theme.accent,
+              padding: 15,
               borderRadius: 8,
-              width: '48%',
-              backgroundColor: theme.card
-            }}>
-              <Text style={{ color: theme.accent, textAlign: 'center', fontWeight: '500' }}>Histórico</Text>
-            </TouchableOpacity>
-          </View>
+              marginBottom: 15,
+              shadowColor: theme.accent,
+              shadowOffset: { width: 0, height: 2 },
+              shadowOpacity: 0.3,
+              shadowRadius: 4,
+              elevation: 5
+            }}
+            onPress={handlePagamento}
+          >
+            <Text style={{ color: 'white', textAlign: 'center', fontWeight: 'bold', fontSize: 16 }}>Confirmar Pagamento</Text>
+          </TouchableOpacity>
 
           <TouchableOpacity
             onPress={() => setScreen('Home')}
@@ -528,7 +678,6 @@ export default function HomeScreen() {
         </View>
       );
 
-      // Tela de Transferir 
 
     } else if (screen === 'Transferir') {
       return (
@@ -547,6 +696,8 @@ export default function HomeScreen() {
               backgroundColor: theme.card,
               borderRadius: 8
             }}
+            value={transferenciaDestinatario}
+            onChangeText={setTransferenciaDestinatario}
           />
 
           <TextInput
@@ -562,16 +713,20 @@ export default function HomeScreen() {
               backgroundColor: theme.card,
               borderRadius: 8
             }}
+            value={transferenciaValue}
+            onChangeText={setTransferenciaValue}
           />
 
           <View style={{ marginBottom: 20 }}>
             <Text style={{ color: theme.textPrimary, marginBottom: 10, fontWeight: '500' }}>Contatos recentes:</Text>
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-
-
-
-              {/* Giovane - com foto */}
-              <TouchableOpacity style={{ marginRight: 15, alignItems: 'center' }}>
+              <TouchableOpacity 
+                style={{ marginRight: 15, alignItems: 'center' }}
+                onPress={() => {
+                  setTransferenciaDestinatario('Giovane');
+                  Alert.alert('Giovane selecionado', 'Digite o valor e confirme a transferência');
+                }}
+              >
                 <Image
                   source={require('../../assets/images/giovane.png')}
                   style={{
@@ -586,9 +741,13 @@ export default function HomeScreen() {
                 <Text style={{ color: theme.textPrimary, fontSize: 12 }}>Giovane</Text>
               </TouchableOpacity>
 
-
-              {/* Professor Maidel - com foto */}
-              <TouchableOpacity style={{ marginRight: 15, alignItems: 'center' }}>
+              <TouchableOpacity 
+                style={{ marginRight: 15, alignItems: 'center' }}
+                onPress={() => {
+                  setTransferenciaDestinatario('Maidel');
+                  Alert.alert('Maidel selecionado', 'Digite o valor e confirme a transferência');
+                }}
+              >
                 <Image
                   source={require('../../assets/images/maidel.jpg')}
                   style={{
@@ -602,22 +761,27 @@ export default function HomeScreen() {
                 />
                 <Text style={{ color: theme.textPrimary, fontSize: 12 }}>Maidel</Text>
               </TouchableOpacity>
-              {/* Maria - com inicial */}
-              <TouchableOpacity style={{ marginRight: 15, alignItems: 'center' }}>
-                <View style={{
-                  width: 60,
-                  height: 60,
-                  borderRadius: 30,
-                  backgroundColor: theme.primary,
-                  marginBottom: 5,
-                  justifyContent: 'center',
-                  alignItems: 'center'
-                }}>
-                  <Text style={{ color: 'white', fontSize: 20 }}>M</Text>
-                </View>
-                <Text style={{ color: theme.textPrimary, fontSize: 12 }}>Maria</Text>
-              </TouchableOpacity>
 
+              <TouchableOpacity 
+                style={{ marginRight: 15, alignItems: 'center' }}
+                onPress={() => {
+                  setTransferenciaDestinatario('Jiane');
+                  Alert.alert('Jiane selecionado', 'Digite o valor e confirme a transferência');
+                }}
+              >
+                <Image
+                  source={require('../../assets/images/jiane.jpg')}
+                  style={{
+                    width: 60,
+                    height: 60,
+                    borderRadius: 30,
+                    marginBottom: 5,
+                    borderWidth: 2,
+                    borderColor: theme.accent
+                  }}
+                />
+                <Text style={{ color: theme.textPrimary, fontSize: 12 }}>Jiane</Text>
+              </TouchableOpacity>
             </ScrollView>
           </View>
 
@@ -633,7 +797,7 @@ export default function HomeScreen() {
               shadowRadius: 4,
               elevation: 5
             }}
-            onPress={() => Alert.alert('Transferência', 'Transferência realizada com sucesso!')}
+            onPress={handleTransferencia}
           >
             <Text style={{ color: 'white', textAlign: 'center', fontWeight: 'bold', fontSize: 16 }}>
               Confirmar Transferência
@@ -648,9 +812,9 @@ export default function HomeScreen() {
           </TouchableOpacity>
         </View>
       );
-    }
-    // Tela dos cartões
+    } 
 
+    // Tela dos cartões
     else if (screen === 'Cartões') {
       return (
         <View style={[styles.screenContainer, { backgroundColor: theme.background, padding: 20, marginBottom: -200, marginTop: -60 }]}>
@@ -746,31 +910,33 @@ export default function HomeScreen() {
       // Tela do perfil
     } else if (screen === 'Perfil') {
       return (
-        <View style={[styles.screenContainer, { backgroundColor: theme.background, padding: 20 }]}>
-          <Text style={[styles.screenTitle, { color: theme.accent, fontSize: 24, marginBottom: 20 }]}>Meu Perfil</Text>
+        <View style={[styles.screenContainer, { backgroundColor: theme.background, padding: 20, marginTop: -100, top: 40, }]}>
+          <Text style={[styles.screenTitle, { color: theme.accent, fontSize: 24, top: 0 }]}>Meu Perfil</Text>
 
           <View style={{
             alignItems: 'center',
-            marginBottom: 30,
+            marginBottom: 20,
             backgroundColor: theme.card,
             padding: 20,
             borderRadius: 10,
             borderWidth: 1,
-            borderColor: theme.border
+            borderColor: theme.border,
+            marginTop: -40,
+            top: 55
           }}>
-            <View style={{
-              width: 100,
-              height: 100,
-              borderRadius: 50,
-              backgroundColor: theme.primary,
-              justifyContent: 'center',
-              alignItems: 'center',
-              marginBottom: 15
-            }}>
-              <Text style={{ color: 'white', fontSize: 40 }}>B</Text>
-            </View>
+            <Image
+              source={require('../../assets/images/bryan.jpg')}
+              style={{
+                width: 100,
+                height: 100,
+                borderRadius: 50,
+                marginBottom: 15,
+                borderWidth: 2,
+                borderColor: theme.accent,
+              }}
+            />
             <Text style={{ color: theme.textPrimary, fontSize: 20, fontWeight: 'bold' }}>Bryan Kauan Fagundes</Text>
-            <Text style={{ color: theme.textSecondary, marginTop: 5 }}>3°D - Desenvolvimento</Text>
+            <Text style={{ color: theme.textSecondary, marginTop: 5 }}>3°D - Desenvolvimento de Sistemas</Text>
           </View>
 
           <View style={{
@@ -779,10 +945,10 @@ export default function HomeScreen() {
             borderWidth: 1,
             borderColor: theme.border,
             padding: 15,
-            marginBottom: 20
+            marginBottom: 20,
+            top: 55
           }}>
             <Text style={{ color: theme.textPrimary, fontWeight: 'bold', marginBottom: 10 }}>Informações Pessoais</Text>
-
             <View style={{ marginBottom: 15 }}>
               <Text style={{ color: theme.textSecondary, fontSize: 12 }}>CPF</Text>
               <Text style={{ color: theme.textPrimary }}>123.456.789-00</Text>
@@ -804,7 +970,8 @@ export default function HomeScreen() {
               backgroundColor: theme.accent,
               padding: 15,
               borderRadius: 8,
-              marginBottom: 15
+              marginBottom: 15,
+              top: 55
             }}
             onPress={() => Alert.alert('Configurações', 'Abrir configurações')}
           >
@@ -818,7 +985,8 @@ export default function HomeScreen() {
               borderColor: theme.border,
               padding: 15,
               borderRadius: 8,
-              marginBottom: 15
+              marginBottom: 10,
+              top: 55
             }}
             onPress={() => Alert.alert('Ajuda', 'Abrir ajuda')}
           >
@@ -829,10 +997,12 @@ export default function HomeScreen() {
             onPress={() => setScreen('Home')}
             style={{ alignSelf: 'center' }}
           >
-            <Text style={[styles.backButton, { color: theme.accent }]}>Voltar</Text>
+            <Text style={[styles.backButton, { color: theme.accent, top: 60, }]}>Voltar</Text>
           </TouchableOpacity>
         </View>
       );
+
+      // Tela de chatbot
     } else if (screen === 'Chatbot') {
       return (
         <KeyboardAvoidingView
