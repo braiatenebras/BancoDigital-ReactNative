@@ -94,18 +94,18 @@ export default function HomeScreen() {
   // Pix
   const handlePixTransfer = () => {
     if (!pixKey) {
-      showModal('Erro', 'Por favor, insira uma chave Pix válida', () => {});
+      showModal('Erro', 'Por favor, insira uma chave Pix válida', () => { });
       return;
     }
 
     if (!pixValue || isNaN(parseFloat(pixValue))) {
-      showModal('Erro', 'Por favor, insira um valor válido', () => {});
+      showModal('Erro', 'Por favor, insira um valor válido', () => { });
       return;
     }
 
     const value = parseFloat(pixValue);
     if (value > saldo) {
-      showModal('Erro', 'Saldo insuficiente', () => {});
+      showModal('Erro', 'Saldo insuficiente', () => { });
       return;
     }
 
@@ -119,18 +119,18 @@ export default function HomeScreen() {
   // Recarga
   const handleRecarga = () => {
     if (!recargaNumero || recargaNumero.length < 11) {
-      showModal('Erro', 'Por favor, insira um número válido (11 dígitos)', () => {});
+      showModal('Erro', 'Por favor, insira um número válido (11 dígitos)', () => { });
       return;
     }
 
     if (!recargaValue || isNaN(parseFloat(recargaValue))) {
-      showModal('Erro', 'Por favor, insira um valor válido', () => {});
+      showModal('Erro', 'Por favor, insira um valor válido', () => { });
       return;
     }
 
     const value = parseFloat(recargaValue);
     if (value > saldo) {
-      showModal('Erro', 'Saldo insuficiente', () => {});
+      showModal('Erro', 'Saldo insuficiente', () => { });
       return;
     }
 
@@ -144,18 +144,18 @@ export default function HomeScreen() {
   // Pagamento
   const handlePagamento = () => {
     if (!pagamentoCodigo) {
-      showModal('Erro', 'Por favor, insira um código válido', () => {});
+      showModal('Erro', 'Por favor, insira um código válido', () => { });
       return;
     }
 
     if (!pagamentoValue || isNaN(parseFloat(pagamentoValue))) {
-      showModal('Erro', 'Por favor, insira um valor válido', () => {});
+      showModal('Erro', 'Por favor, insira um valor válido', () => { });
       return;
     }
 
     const value = parseFloat(pagamentoValue);
     if (value > saldo) {
-      showModal('Erro', 'Saldo insuficiente', () => {});
+      showModal('Erro', 'Saldo insuficiente', () => { });
       return;
     }
 
@@ -169,18 +169,18 @@ export default function HomeScreen() {
   // Transferência
   const handleTransferencia = () => {
     if (!transferenciaDestinatario) {
-      showModal('Erro', 'Por favor, insira um destinatário válido', () => {});
+      showModal('Erro', 'Por favor, insira um destinatário válido', () => { });
       return;
     }
 
     if (!transferenciaValue || isNaN(parseFloat(transferenciaValue))) {
-      showModal('Erro', 'Por favor, insira um valor válido', () => {});
+      showModal('Erro', 'Por favor, insira um valor válido', () => { });
       return;
     }
 
     const value = parseFloat(transferenciaValue);
     if (value > saldo) {
-      showModal('Erro', 'Saldo insuficiente', () => {});
+      showModal('Erro', 'Saldo insuficiente', () => { });
       return;
     }
 
@@ -785,7 +785,7 @@ export default function HomeScreen() {
                 style={{ marginRight: 15, alignItems: 'center' }}
                 onPress={() => {
                   setTransferenciaDestinatario('Jiane');
-                  showSuccess('Jiane selecionado. Digite o valor e confirme a transferência');
+                  showSuccess('Jiane selecionada. Digite o valor e confirme a transferência');
                 }}
               >
                 <Image
@@ -865,10 +865,10 @@ export default function HomeScreen() {
               <Text style={{ color: 'white', marginTop: 10, fontSize: 12 }}>Validade: 12/25</Text>
             </View>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-              <TouchableOpacity 
+              <TouchableOpacity
                 style={{ padding: 8 }}
                 onPress={() => showModal(
-                  'Bloquear Cartão', 
+                  'Bloquear Cartão',
                   'Tem certeza que deseja bloquear este cartão?',
                   () => {
                     setModalVisible(false);
@@ -878,7 +878,7 @@ export default function HomeScreen() {
               >
                 <Text style={{ color: theme.accent }}>Bloquear</Text>
               </TouchableOpacity>
-              <TouchableOpacity 
+              <TouchableOpacity
                 style={{ padding: 8 }}
                 onPress={() => setScreen('DetalhesCartao')}
               >
@@ -914,7 +914,7 @@ export default function HomeScreen() {
             <Text style={{ color: theme.textPrimary, marginBottom: 10, fontWeight: '500' }}>Cartões salvos:</Text>
             <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
               <View style={{ width: '48%', marginRight: '4%', marginBottom: 10 }}>
-                <TouchableOpacity 
+                <TouchableOpacity
                   style={{
                     borderWidth: 1,
                     borderColor: theme.border,
@@ -929,7 +929,7 @@ export default function HomeScreen() {
                 </TouchableOpacity>
               </View>
               <View style={{ width: '48%' }}>
-                <TouchableOpacity 
+                <TouchableOpacity
                   style={{
                     borderWidth: 1,
                     borderColor: theme.border,
