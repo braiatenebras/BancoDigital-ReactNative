@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Dimensions, TextInput, Picker, Alert, KeyboardAvoidingView, Platform, Image, Modal } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Dimensions, TextInput, Picker, KeyboardAvoidingView, Platform, Image, Modal } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
@@ -18,7 +18,7 @@ export default function HomeScreen() {
   const [screen, setScreen] = useState('Home');
   const [darkMode, setDarkMode] = useState(true);
   const [exchangeRates, setExchangeRates] = useState<any>(null);
-  const [saldo, setSaldo] = useState(25000);
+  const [saldo, setSaldo] = useState(250000);
   const [mostrarConversoes, setMostrarConversoes] = useState(false);
   const [pixKeyType, setPixKeyType] = useState('cpf');
   const [pixKey, setPixKey] = useState('');
@@ -44,6 +44,8 @@ export default function HomeScreen() {
   const [modalTitle, setModalTitle] = useState('');
   const [modalMessage, setModalMessage] = useState('');
   const [modalAction, setModalAction] = useState(() => () => { });
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
 
   const toggleTheme = () => setDarkMode(!darkMode);
 
@@ -66,6 +68,12 @@ export default function HomeScreen() {
     setModalVisible(true);
   };
 
+  const showSuccess = (message: string) => {
+    setSuccessMessage(message);
+    setShowSuccessModal(true);
+    setTimeout(() => setShowSuccessModal(false), 3000);
+  };
+
   // Api do conversor
   const fetchExchangeRates = async () => {
     try {
@@ -86,22 +94,22 @@ export default function HomeScreen() {
   // Pix
   const handlePixTransfer = () => {
     if (!pixKey) {
-      Alert.alert('Erro', 'Por favor, insira uma chave Pix válida');
+      showModal('Erro', 'Por favor, insira uma chave Pix válida', () => {});
       return;
     }
 
     if (!pixValue || isNaN(parseFloat(pixValue))) {
-      Alert.alert('Erro', 'Por favor, insira um valor válido');
+      showModal('Erro', 'Por favor, insira um valor válido', () => {});
       return;
     }
 
     const value = parseFloat(pixValue);
     if (value > saldo) {
-      Alert.alert('Erro', 'Saldo insuficiente');
+      showModal('Erro', 'Saldo insuficiente', () => {});
       return;
     }
 
-    Alert.alert('Sucesso', `Transferência Pix de R$ ${value.toFixed(2)} realizada com sucesso!`);
+    showSuccess(`Transferência Pix de R$ ${value.toFixed(2)} realizada com sucesso!`);
     setSaldo(saldo - value);
     setPixKey('');
     setPixValue('');
@@ -111,22 +119,22 @@ export default function HomeScreen() {
   // Recarga
   const handleRecarga = () => {
     if (!recargaNumero || recargaNumero.length < 11) {
-      Alert.alert('Erro', 'Por favor, insira um número válido (11 dígitos)');
+      showModal('Erro', 'Por favor, insira um número válido (11 dígitos)', () => {});
       return;
     }
 
     if (!recargaValue || isNaN(parseFloat(recargaValue))) {
-      Alert.alert('Erro', 'Por favor, insira um valor válido');
+      showModal('Erro', 'Por favor, insira um valor válido', () => {});
       return;
     }
 
     const value = parseFloat(recargaValue);
     if (value > saldo) {
-      Alert.alert('Erro', 'Saldo insuficiente');
+      showModal('Erro', 'Saldo insuficiente', () => {});
       return;
     }
 
-    Alert.alert('Sucesso', `Recarga de R$ ${value.toFixed(2)} (${recargaOperadora}) realizada!`);
+    showSuccess(`Recarga de R$ ${value.toFixed(2)} (${recargaOperadora}) realizada!`);
     setSaldo(saldo - value);
     setRecargaValue('');
     setRecargaNumero('');
@@ -136,22 +144,22 @@ export default function HomeScreen() {
   // Pagamento
   const handlePagamento = () => {
     if (!pagamentoCodigo) {
-      Alert.alert('Erro', 'Por favor, insira um código válido');
+      showModal('Erro', 'Por favor, insira um código válido', () => {});
       return;
     }
 
     if (!pagamentoValue || isNaN(parseFloat(pagamentoValue))) {
-      Alert.alert('Erro', 'Por favor, insira um valor válido');
+      showModal('Erro', 'Por favor, insira um valor válido', () => {});
       return;
     }
 
     const value = parseFloat(pagamentoValue);
     if (value > saldo) {
-      Alert.alert('Erro', 'Saldo insuficiente');
+      showModal('Erro', 'Saldo insuficiente', () => {});
       return;
     }
 
-    Alert.alert('Sucesso', `Pagamento de R$ ${value.toFixed(2)} realizado!`);
+    showSuccess(`Pagamento de R$ ${value.toFixed(2)} realizado!`);
     setSaldo(saldo - value);
     setPagamentoValue('');
     setPagamentoCodigo('');
@@ -161,22 +169,22 @@ export default function HomeScreen() {
   // Transferência
   const handleTransferencia = () => {
     if (!transferenciaDestinatario) {
-      Alert.alert('Erro', 'Por favor, insira um destinatário válido');
+      showModal('Erro', 'Por favor, insira um destinatário válido', () => {});
       return;
     }
 
     if (!transferenciaValue || isNaN(parseFloat(transferenciaValue))) {
-      Alert.alert('Erro', 'Por favor, insira um valor válido');
+      showModal('Erro', 'Por favor, insira um valor válido', () => {});
       return;
     }
 
     const value = parseFloat(transferenciaValue);
     if (value > saldo) {
-      Alert.alert('Erro', 'Saldo insuficiente');
+      showModal('Erro', 'Saldo insuficiente', () => {});
       return;
     }
 
-    Alert.alert('Sucesso', `Transferência de R$ ${value.toFixed(2)} realizada!`);
+    showSuccess(`Transferência de R$ ${value.toFixed(2)} realizada!`);
     setSaldo(saldo - value);
     setTransferenciaValue('');
     setTransferenciaDestinatario('');
@@ -735,7 +743,7 @@ export default function HomeScreen() {
                 style={{ marginRight: 15, alignItems: 'center' }}
                 onPress={() => {
                   setTransferenciaDestinatario('Giovane');
-                  Alert.alert('Giovane selecionado', 'Digite o valor e confirme a transferência');
+                  showSuccess('Giovane selecionado. Digite o valor e confirme a transferência');
                 }}
               >
                 <Image
@@ -756,7 +764,7 @@ export default function HomeScreen() {
                 style={{ marginRight: 15, alignItems: 'center' }}
                 onPress={() => {
                   setTransferenciaDestinatario('Maidel');
-                  Alert.alert('Maidel selecionado', 'Digite o valor e confirme a transferência');
+                  showSuccess('Maidel selecionado. Digite o valor e confirme a transferência');
                 }}
               >
                 <Image
@@ -777,7 +785,7 @@ export default function HomeScreen() {
                 style={{ marginRight: 15, alignItems: 'center' }}
                 onPress={() => {
                   setTransferenciaDestinatario('Jiane');
-                  Alert.alert('Jiane selecionado', 'Digite o valor e confirme a transferência');
+                  showSuccess('Jiane selecionado. Digite o valor e confirme a transferência');
                 }}
               >
                 <Image
@@ -825,157 +833,130 @@ export default function HomeScreen() {
       );
     }
 
+    // Tela de Cartões
+    else if (screen === 'Cartões') {
+      return (
+        <View style={[styles.screenContainer, { backgroundColor: theme.background, padding: 20, marginBottom: -200, marginTop: -60 }]}>
+          <Text style={[styles.screenTitle, { color: theme.accent, fontSize: 24, marginBottom: 20, top: -40 }]}>Meus Cartões</Text>
 
-// Tela de Cartões
-else if (screen === 'Cartões') {
-  return (
-    <View style={[styles.screenContainer, { backgroundColor: theme.background, padding: 20, marginBottom: -200, marginTop: -60 }]}>
-      <Text style={[styles.screenTitle, { color: theme.accent, fontSize: 24, marginBottom: 20, top: -40 }]}>Meus Cartões</Text>
-
-      {/* Cartão Principal */}
-      <View style={{
-        borderWidth: 1,
-        borderColor: theme.accent,
-        borderRadius: 10,
-        padding: 15,
-        marginBottom: 20,
-        backgroundColor: theme.card
-      }}>
-        <Text style={{ color: theme.textPrimary, fontWeight: 'bold', marginBottom: 10 }}>Cartão Principal</Text>
-        <View style={{
-          backgroundColor: theme.primary,
-          padding: 15,
-          borderRadius: 8,
-          marginBottom: 15,
-          shadowColor: '#000',
-          shadowOffset: { width: 0, height: 2 },
-          shadowOpacity: 0.2,
-          shadowRadius: 4,
-          elevation: 3
-        }}>
-          <Text style={{ color: 'white', marginBottom: 5, fontSize: 16 }}>•••• •••• •••• 1234</Text>
-          <Text style={{ color: 'white', fontSize: 14 }}>VISA • Bryan K. Fagundes</Text>
-          <Text style={{ color: 'white', marginTop: 10, fontSize: 12 }}>Validade: 12/25</Text>
-        </View>
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-          <TouchableOpacity 
-            style={{ padding: 8 }}
-            onPress={() => showModal(
-              'Bloquear Cartão', 
-              'Tem certeza que deseja bloquear este cartão?',
-              () => setScreen('Home')
-            )}
-          >
-            <Text style={{ color: theme.accent }}>Bloquear</Text>
-          </TouchableOpacity>
-          <TouchableOpacity 
-            style={{ padding: 8 }}
-            onPress={() => setScreen('Home')}
-          >
-            <Text style={{ color: theme.accent }}>Detalhes</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-
-      {/* Adicionar novo cartão */}
-      <TouchableOpacity
-        style={{
-          borderWidth: 1,
-          borderColor: theme.accent,
-          padding: 15,
-          borderRadius: 8,
-          marginBottom: 15,
-          backgroundColor: theme.card
-        }}
-        onPress={() => showModal(
-          'Novo Cartão',
-          'Escolha o tipo de cartão:',
-          () => setScreen('Home')
-        )}
-      >
-        <Text style={{ color: theme.accent, textAlign: 'center', fontWeight: '500' }}>+ Adicionar novo cartão</Text>
-      </TouchableOpacity>
-
-      {/* Cartões salvos */}
-      <View style={{ marginBottom: 20 }}>
-        <Text style={{ color: theme.textPrimary, marginBottom: 10, fontWeight: '500' }}>Cartões salvos:</Text>
-        <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
-          <View style={{ width: '48%', marginRight: '4%', marginBottom: 10 }}>
-            <TouchableOpacity 
-              style={{
-                borderWidth: 1,
-                borderColor: theme.border,
-                borderRadius: 8,
-                padding: 12,
-                backgroundColor: theme.card
-              }}
-              onPress={() => setScreen('Home')}
-            >
-              <Text style={{ color: theme.textPrimary, fontWeight: '500' }}>Mastercard</Text>
-              <Text style={{ color: theme.textSecondary, fontSize: 12 }}>•••• 5678</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={{ width: '48%' }}>
-            <TouchableOpacity 
-              style={{
-                borderWidth: 1,
-                borderColor: theme.border,
-                borderRadius: 8,
-                padding: 12,
-                backgroundColor: theme.card
-              }}
-              onPress={() => setScreen('Home')}
-            >
-              <Text style={{ color: theme.textPrimary, fontWeight: '500' }}>Elo</Text>
-              <Text style={{ color: theme.textSecondary, fontSize: 12 }}>•••• 9012</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </View>
-
-      <TouchableOpacity
-        onPress={() => setScreen('Home')}
-        style={{ alignSelf: 'center' }}
-      >
-        <Text style={[styles.backButton, { color: theme.accent }]}>Voltar</Text>
-      </TouchableOpacity>
-
-      {/* Modal */}
-      <Modal
-        animationType="fade"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => setModalVisible(false)}
-      >
-        <View style={[styles.modalOverlay, { backgroundColor: 'rgba(0,0,0,0.5)' }]}>
-          <View style={[styles.modalContainer, { backgroundColor: theme.card }]}>
-            <Text style={[styles.modalTitle, { color: theme.textPrimary }]}>{modalTitle}</Text>
-            <Text style={[styles.modalMessage, { color: theme.textSecondary }]}>{modalMessage}</Text>
-            <View style={styles.modalButtons}>
-              <TouchableOpacity
-                style={[styles.modalButton, { backgroundColor: theme.accent }]}
-                onPress={() => {
-                  modalAction();
-                  setModalVisible(false);
-                }}
+          {/* Cartão Principal */}
+          <View style={{
+            borderWidth: 1,
+            borderColor: theme.accent,
+            borderRadius: 10,
+            padding: 15,
+            marginBottom: 20,
+            backgroundColor: theme.card
+          }}>
+            <Text style={{ color: theme.textPrimary, fontWeight: 'bold', marginBottom: 10 }}>Cartão Principal</Text>
+            <View style={{
+              backgroundColor: theme.primary,
+              padding: 15,
+              borderRadius: 8,
+              marginBottom: 15,
+              shadowColor: '#000',
+              shadowOffset: { width: 0, height: 2 },
+              shadowOpacity: 0.2,
+              shadowRadius: 4,
+              elevation: 3
+            }}>
+              <Text style={{ color: 'white', marginBottom: 5, fontSize: 16 }}>•••• •••• •••• 1234</Text>
+              <Text style={{ color: 'white', fontSize: 14 }}>VISA • Bryan K. Fagundes</Text>
+              <Text style={{ color: 'white', marginTop: 10, fontSize: 12 }}>Validade: 12/25</Text>
+            </View>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+              <TouchableOpacity 
+                style={{ padding: 8 }}
+                onPress={() => showModal(
+                  'Bloquear Cartão', 
+                  'Tem certeza que deseja bloquear este cartão?',
+                  () => {
+                    setModalVisible(false);
+                    showSuccess('Cartão bloqueado com sucesso!');
+                  }
+                )}
               >
-                <Text style={{ color: 'white' }}>Confirmar</Text>
+                <Text style={{ color: theme.accent }}>Bloquear</Text>
               </TouchableOpacity>
-              <TouchableOpacity
-                style={[styles.modalButton, { borderColor: theme.accent, borderWidth: 1 }]}
-                onPress={() => setModalVisible(false)}
+              <TouchableOpacity 
+                style={{ padding: 8 }}
+                onPress={() => setScreen('DetalhesCartao')}
               >
-                <Text style={{ color: theme.accent }}>Cancelar</Text>
+                <Text style={{ color: theme.accent }}>Detalhes</Text>
               </TouchableOpacity>
             </View>
           </View>
-        </View>
-      </Modal>
-    </View>
-  );
-}
 
-    // Tela de Detalhes do Cartão (adicione esta nova condição após a tela de Cartões)
+          {/* Adicionar novo cartão */}
+          <TouchableOpacity
+            style={{
+              borderWidth: 1,
+              borderColor: theme.accent,
+              padding: 15,
+              borderRadius: 8,
+              marginBottom: 15,
+              backgroundColor: theme.card
+            }}
+            onPress={() => showModal(
+              'Novo Cartão',
+              'Escolha o tipo de cartão:',
+              () => {
+                setModalVisible(false);
+                showSuccess('Novo cartão solicitado com sucesso!');
+              }
+            )}
+          >
+            <Text style={{ color: theme.accent, textAlign: 'center', fontWeight: '500' }}>+ Adicionar novo cartão</Text>
+          </TouchableOpacity>
+
+          {/* Cartões salvos */}
+          <View style={{ marginBottom: 20 }}>
+            <Text style={{ color: theme.textPrimary, marginBottom: 10, fontWeight: '500' }}>Cartões salvos:</Text>
+            <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+              <View style={{ width: '48%', marginRight: '4%', marginBottom: 10 }}>
+                <TouchableOpacity 
+                  style={{
+                    borderWidth: 1,
+                    borderColor: theme.border,
+                    borderRadius: 8,
+                    padding: 12,
+                    backgroundColor: theme.card
+                  }}
+                  onPress={() => setScreen('DetalhesCartao')}
+                >
+                  <Text style={{ color: theme.textPrimary, fontWeight: '500' }}>Mastercard</Text>
+                  <Text style={{ color: theme.textSecondary, fontSize: 12 }}>•••• 5678</Text>
+                </TouchableOpacity>
+              </View>
+              <View style={{ width: '48%' }}>
+                <TouchableOpacity 
+                  style={{
+                    borderWidth: 1,
+                    borderColor: theme.border,
+                    borderRadius: 8,
+                    padding: 12,
+                    backgroundColor: theme.card
+                  }}
+                  onPress={() => setScreen('DetalhesCartao')}
+                >
+                  <Text style={{ color: theme.textPrimary, fontWeight: '500' }}>Elo</Text>
+                  <Text style={{ color: theme.textSecondary, fontSize: 12 }}>•••• 9012</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+
+          <TouchableOpacity
+            onPress={() => setScreen('Home')}
+            style={{ alignSelf: 'center' }}
+          >
+            <Text style={[styles.backButton, { color: theme.accent }]}>Voltar</Text>
+          </TouchableOpacity>
+        </View>
+      );
+    }
+
+    // Tela de Detalhes do Cartão
     else if (screen === 'DetalhesCartao') {
       return (
         <View style={[styles.screenContainer, { backgroundColor: theme.background, padding: 20, marginBottom: -200, marginTop: -60 }]}>
@@ -1029,7 +1010,9 @@ else if (screen === 'Cartões') {
                 width: '48%',
                 alignItems: 'center'
               }}
-              onPress={() => Alert.alert('Pagar Fatura', 'Fatura paga com sucesso!')}
+              onPress={() => {
+                showSuccess('Fatura paga com sucesso!');
+              }}
             >
               <Text style={{ color: 'white', fontWeight: '500' }}>Pagar Fatura</Text>
             </TouchableOpacity>
@@ -1044,7 +1027,16 @@ else if (screen === 'Cartões') {
                 width: '48%',
                 alignItems: 'center'
               }}
-              onPress={() => Alert.alert('Bloquear Cartão', 'Cartão bloqueado temporariamente')}
+              onPress={() => {
+                showModal(
+                  'Bloquear Cartão',
+                  'Tem certeza que deseja bloquear este cartão?',
+                  () => {
+                    setModalVisible(false);
+                    showSuccess('Cartão bloqueado com sucesso!');
+                  }
+                );
+              }}
             >
               <Text style={{ color: theme.accent, fontWeight: '500' }}>Bloquear</Text>
             </TouchableOpacity>
@@ -1126,7 +1118,9 @@ else if (screen === 'Cartões') {
               marginBottom: 15,
               top: 55
             }}
-            onPress={() => Alert.alert('Configurações', 'Abrir configurações')}
+            onPress={() => {
+              showSuccess('Configurações abertas');
+            }}
           >
             <Text style={{ color: 'white', textAlign: 'center', fontWeight: 'bold' }}>Configurações</Text>
           </TouchableOpacity>
@@ -1141,7 +1135,9 @@ else if (screen === 'Cartões') {
               marginBottom: 10,
               top: 55
             }}
-            onPress={() => Alert.alert('Ajuda', 'Abrir ajuda')}
+            onPress={() => {
+              showSuccess('Ajuda e suporte abertos');
+            }}
           >
             <Text style={{ color: theme.textPrimary, textAlign: 'center' }}>Ajuda e Suporte</Text>
           </TouchableOpacity>
@@ -1265,6 +1261,52 @@ else if (screen === 'Cartões') {
   return (
     <ScrollView style={{ flex: 1, backgroundColor: theme.background }}>
       {renderScreen()}
+
+      {/* Modal de confirmação */}
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <View style={[styles.modalOverlay, { backgroundColor: 'rgba(0,0,0,0.5)' }]}>
+          <View style={[styles.modalContainer, { backgroundColor: theme.card }]}>
+            <Text style={[styles.modalTitle, { color: theme.textPrimary }]}>{modalTitle}</Text>
+            <Text style={[styles.modalMessage, { color: theme.textSecondary }]}>{modalMessage}</Text>
+            <View style={styles.modalButtons}>
+              <TouchableOpacity
+                style={[styles.modalButton, { backgroundColor: theme.accent }]}
+                onPress={() => {
+                  modalAction();
+                  setModalVisible(false);
+                }}
+              >
+                <Text style={{ color: 'white' }}>Confirmar</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.modalButton, { borderColor: theme.accent, borderWidth: 1 }]}
+                onPress={() => setModalVisible(false)}
+              >
+                <Text style={{ color: theme.accent }}>Cancelar</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
+
+      {/* Modal de sucesso */}
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={showSuccessModal}
+        onRequestClose={() => setShowSuccessModal(false)}
+      >
+        <View style={[styles.modalOverlay, { backgroundColor: 'rgba(0,0,0,0.5)' }]}>
+          <View style={[styles.modalContainer, { backgroundColor: theme.card, padding: 15 }]}>
+            <Text style={[styles.modalMessage, { color: theme.textPrimary, textAlign: 'center' }]}>{successMessage}</Text>
+          </View>
+        </View>
+      </Modal>
     </ScrollView>
   );
 }
@@ -1447,7 +1489,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0,0,0,0.5)',
   },
   modalContainer: {
     width: '80%',
