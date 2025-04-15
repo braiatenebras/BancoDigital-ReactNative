@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Dimensions, TextInput, Picker, Alert, KeyboardAvoidingView, Platform, Image } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Dimensions, TextInput, Picker, Alert, KeyboardAvoidingView, Platform, Image, Modal } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
@@ -31,7 +31,7 @@ export default function HomeScreen() {
   ]);
   const [userInput, setUserInput] = useState('');
   const [loading, setLoading] = useState(false);
-  
+
   // Novos estados para operações
   const [recargaValue, setRecargaValue] = useState('');
   const [recargaOperadora, setRecargaOperadora] = useState('Claro');
@@ -40,6 +40,10 @@ export default function HomeScreen() {
   const [pagamentoCodigo, setPagamentoCodigo] = useState('');
   const [transferenciaValue, setTransferenciaValue] = useState('');
   const [transferenciaDestinatario, setTransferenciaDestinatario] = useState('');
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalTitle, setModalTitle] = useState('');
+  const [modalMessage, setModalMessage] = useState('');
+  const [modalAction, setModalAction] = useState(() => () => { });
 
   const toggleTheme = () => setDarkMode(!darkMode);
 
@@ -53,6 +57,13 @@ export default function HomeScreen() {
     primary: '#6200ee',
     border: darkMode ? '#444' : '#ddd',
     buttonText: darkMode ? '#fff' : '#fff',
+  };
+
+  const showModal = (title: string, message: string, action: () => void) => {
+    setModalTitle(title);
+    setModalMessage(message);
+    setModalAction(() => action);
+    setModalVisible(true);
   };
 
   // Api do conversor
@@ -488,48 +499,48 @@ export default function HomeScreen() {
 
           <View style={{ borderWidth: 1, borderColor: theme.accent, borderRadius: 10, padding: 15, marginBottom: 20, backgroundColor: theme.card }}>
             <Text style={{ color: theme.textPrimary, marginBottom: 10, fontWeight: 'bold' }}>Operadoras:</Text>
-            <TouchableOpacity 
-              style={{ 
-                backgroundColor: recargaOperadora === 'Claro' ? theme.accent : theme.card, 
-                padding: 12, 
-                borderRadius: 8, 
-                marginBottom: 10 
+            <TouchableOpacity
+              style={{
+                backgroundColor: recargaOperadora === 'Claro' ? theme.accent : theme.card,
+                padding: 12,
+                borderRadius: 8,
+                marginBottom: 10
               }}
               onPress={() => setRecargaOperadora('Claro')}
             >
-              <Text style={{ 
-                color: recargaOperadora === 'Claro' ? 'white' : theme.textPrimary, 
-                textAlign: 'center', 
-                fontWeight: '500' 
+              <Text style={{
+                color: recargaOperadora === 'Claro' ? 'white' : theme.textPrimary,
+                textAlign: 'center',
+                fontWeight: '500'
               }}>Claro</Text>
             </TouchableOpacity>
-            <TouchableOpacity 
-              style={{ 
-                backgroundColor: recargaOperadora === 'Vivo' ? theme.accent : theme.card, 
-                padding: 12, 
-                borderRadius: 8, 
-                marginBottom: 10 
+            <TouchableOpacity
+              style={{
+                backgroundColor: recargaOperadora === 'Vivo' ? theme.accent : theme.card,
+                padding: 12,
+                borderRadius: 8,
+                marginBottom: 10
               }}
               onPress={() => setRecargaOperadora('Vivo')}
             >
-              <Text style={{ 
-                color: recargaOperadora === 'Vivo' ? 'white' : theme.textPrimary, 
-                textAlign: 'center', 
-                fontWeight: '500' 
+              <Text style={{
+                color: recargaOperadora === 'Vivo' ? 'white' : theme.textPrimary,
+                textAlign: 'center',
+                fontWeight: '500'
               }}>Vivo</Text>
             </TouchableOpacity>
-            <TouchableOpacity 
-              style={{ 
-                backgroundColor: recargaOperadora === 'Tim' ? theme.accent : theme.card, 
-                padding: 12, 
-                borderRadius: 8 
+            <TouchableOpacity
+              style={{
+                backgroundColor: recargaOperadora === 'Tim' ? theme.accent : theme.card,
+                padding: 12,
+                borderRadius: 8
               }}
               onPress={() => setRecargaOperadora('Tim')}
             >
-              <Text style={{ 
-                color: recargaOperadora === 'Tim' ? 'white' : theme.textPrimary, 
-                textAlign: 'center', 
-                fontWeight: '500' 
+              <Text style={{
+                color: recargaOperadora === 'Tim' ? 'white' : theme.textPrimary,
+                textAlign: 'center',
+                fontWeight: '500'
               }}>Tim</Text>
             </TouchableOpacity>
           </View>
@@ -590,13 +601,13 @@ export default function HomeScreen() {
             style={{ alignSelf: 'center' }}
           >
             <Text style={[styles.backButton, { color: theme.accent }]}>Voltar</Text>
-      </TouchableOpacity>
-    </View>
-  );
-} 
+          </TouchableOpacity>
+        </View>
+      );
+    }
 
-// Tela de Pagamentos
-else if (screen === 'Pagar') {
+    // Tela de Pagamentos
+    else if (screen === 'Pagar') {
       return (
         <View style={[styles.screenContainer, { backgroundColor: theme.background, padding: 20, marginBottom: -200, marginTop: -100 }]}>
           <Text style={[styles.screenTitle, { color: theme.accent, fontSize: 24, marginBottom: 20 }]}>Pagamento</Text>
@@ -720,7 +731,7 @@ else if (screen === 'Pagar') {
           <View style={{ marginBottom: 20 }}>
             <Text style={{ color: theme.textPrimary, marginBottom: 10, fontWeight: '500' }}>Contatos recentes:</Text>
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-              <TouchableOpacity 
+              <TouchableOpacity
                 style={{ marginRight: 15, alignItems: 'center' }}
                 onPress={() => {
                   setTransferenciaDestinatario('Giovane');
@@ -741,7 +752,7 @@ else if (screen === 'Pagar') {
                 <Text style={{ color: theme.textPrimary, fontSize: 12 }}>Giovane</Text>
               </TouchableOpacity>
 
-              <TouchableOpacity 
+              <TouchableOpacity
                 style={{ marginRight: 15, alignItems: 'center' }}
                 onPress={() => {
                   setTransferenciaDestinatario('Maidel');
@@ -762,7 +773,7 @@ else if (screen === 'Pagar') {
                 <Text style={{ color: theme.textPrimary, fontSize: 12 }}>Maidel</Text>
               </TouchableOpacity>
 
-              <TouchableOpacity 
+              <TouchableOpacity
                 style={{ marginRight: 15, alignItems: 'center' }}
                 onPress={() => {
                   setTransferenciaDestinatario('Jiane');
@@ -812,103 +823,245 @@ else if (screen === 'Pagar') {
           </TouchableOpacity>
         </View>
       );
-    } 
+    }
 
-    // Tela dos cartões
-    else if (screen === 'Cartões') {
+
+// Tela de Cartões
+else if (screen === 'Cartões') {
+  return (
+    <View style={[styles.screenContainer, { backgroundColor: theme.background, padding: 20, marginBottom: -200, marginTop: -60 }]}>
+      <Text style={[styles.screenTitle, { color: theme.accent, fontSize: 24, marginBottom: 20, top: -40 }]}>Meus Cartões</Text>
+
+      {/* Cartão Principal */}
+      <View style={{
+        borderWidth: 1,
+        borderColor: theme.accent,
+        borderRadius: 10,
+        padding: 15,
+        marginBottom: 20,
+        backgroundColor: theme.card
+      }}>
+        <Text style={{ color: theme.textPrimary, fontWeight: 'bold', marginBottom: 10 }}>Cartão Principal</Text>
+        <View style={{
+          backgroundColor: theme.primary,
+          padding: 15,
+          borderRadius: 8,
+          marginBottom: 15,
+          shadowColor: '#000',
+          shadowOffset: { width: 0, height: 2 },
+          shadowOpacity: 0.2,
+          shadowRadius: 4,
+          elevation: 3
+        }}>
+          <Text style={{ color: 'white', marginBottom: 5, fontSize: 16 }}>•••• •••• •••• 1234</Text>
+          <Text style={{ color: 'white', fontSize: 14 }}>VISA • Bryan K. Fagundes</Text>
+          <Text style={{ color: 'white', marginTop: 10, fontSize: 12 }}>Validade: 12/25</Text>
+        </View>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+          <TouchableOpacity 
+            style={{ padding: 8 }}
+            onPress={() => showModal(
+              'Bloquear Cartão', 
+              'Tem certeza que deseja bloquear este cartão?',
+              () => setScreen('Home')
+            )}
+          >
+            <Text style={{ color: theme.accent }}>Bloquear</Text>
+          </TouchableOpacity>
+          <TouchableOpacity 
+            style={{ padding: 8 }}
+            onPress={() => setScreen('Home')}
+          >
+            <Text style={{ color: theme.accent }}>Detalhes</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+
+      {/* Adicionar novo cartão */}
+      <TouchableOpacity
+        style={{
+          borderWidth: 1,
+          borderColor: theme.accent,
+          padding: 15,
+          borderRadius: 8,
+          marginBottom: 15,
+          backgroundColor: theme.card
+        }}
+        onPress={() => showModal(
+          'Novo Cartão',
+          'Escolha o tipo de cartão:',
+          () => setScreen('Home')
+        )}
+      >
+        <Text style={{ color: theme.accent, textAlign: 'center', fontWeight: '500' }}>+ Adicionar novo cartão</Text>
+      </TouchableOpacity>
+
+      {/* Cartões salvos */}
+      <View style={{ marginBottom: 20 }}>
+        <Text style={{ color: theme.textPrimary, marginBottom: 10, fontWeight: '500' }}>Cartões salvos:</Text>
+        <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+          <View style={{ width: '48%', marginRight: '4%', marginBottom: 10 }}>
+            <TouchableOpacity 
+              style={{
+                borderWidth: 1,
+                borderColor: theme.border,
+                borderRadius: 8,
+                padding: 12,
+                backgroundColor: theme.card
+              }}
+              onPress={() => setScreen('Home')}
+            >
+              <Text style={{ color: theme.textPrimary, fontWeight: '500' }}>Mastercard</Text>
+              <Text style={{ color: theme.textSecondary, fontSize: 12 }}>•••• 5678</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={{ width: '48%' }}>
+            <TouchableOpacity 
+              style={{
+                borderWidth: 1,
+                borderColor: theme.border,
+                borderRadius: 8,
+                padding: 12,
+                backgroundColor: theme.card
+              }}
+              onPress={() => setScreen('Home')}
+            >
+              <Text style={{ color: theme.textPrimary, fontWeight: '500' }}>Elo</Text>
+              <Text style={{ color: theme.textSecondary, fontSize: 12 }}>•••• 9012</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </View>
+
+      <TouchableOpacity
+        onPress={() => setScreen('Home')}
+        style={{ alignSelf: 'center' }}
+      >
+        <Text style={[styles.backButton, { color: theme.accent }]}>Voltar</Text>
+      </TouchableOpacity>
+
+      {/* Modal */}
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <View style={[styles.modalOverlay, { backgroundColor: 'rgba(0,0,0,0.5)' }]}>
+          <View style={[styles.modalContainer, { backgroundColor: theme.card }]}>
+            <Text style={[styles.modalTitle, { color: theme.textPrimary }]}>{modalTitle}</Text>
+            <Text style={[styles.modalMessage, { color: theme.textSecondary }]}>{modalMessage}</Text>
+            <View style={styles.modalButtons}>
+              <TouchableOpacity
+                style={[styles.modalButton, { backgroundColor: theme.accent }]}
+                onPress={() => {
+                  modalAction();
+                  setModalVisible(false);
+                }}
+              >
+                <Text style={{ color: 'white' }}>Confirmar</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.modalButton, { borderColor: theme.accent, borderWidth: 1 }]}
+                onPress={() => setModalVisible(false)}
+              >
+                <Text style={{ color: theme.accent }}>Cancelar</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
+    </View>
+  );
+}
+
+    // Tela de Detalhes do Cartão (adicione esta nova condição após a tela de Cartões)
+    else if (screen === 'DetalhesCartao') {
       return (
         <View style={[styles.screenContainer, { backgroundColor: theme.background, padding: 20, marginBottom: -200, marginTop: -60 }]}>
-          <Text style={[styles.screenTitle, { color: theme.accent, fontSize: 24, marginBottom: 20, top: -40, }]}>Meus Cartões</Text>
+          <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20 }}>
+            <TouchableOpacity onPress={() => setScreen('Cartões')}>
+              <Ionicons name="arrow-back" size={24} color={theme.textPrimary} />
+            </TouchableOpacity>
+            <Text style={[styles.screenTitle, { color: theme.accent, fontSize: 24, marginLeft: 10 }]}>Detalhes do Cartão</Text>
+          </View>
 
           <View style={{
-            borderWidth: 1,
-            borderColor: theme.accent,
+            backgroundColor: theme.primary,
+            padding: 20,
             borderRadius: 10,
-            padding: 15,
             marginBottom: 20,
-            backgroundColor: theme.card
+            shadowColor: '#000',
+            shadowOffset: { width: 0, height: 2 },
+            shadowOpacity: 0.2,
+            shadowRadius: 4,
+            elevation: 3
           }}>
-            <Text style={{ color: theme.textPrimary, fontWeight: 'bold', marginBottom: 10 }}>Cartão Principal</Text>
-            <View style={{
-              backgroundColor: theme.primary,
-              padding: 15,
-              borderRadius: 8,
-              marginBottom: 15,
-              shadowColor: '#000',
-              shadowOffset: { width: 0, height: 2 },
-              shadowOpacity: 0.2,
-              shadowRadius: 4,
-              elevation: 3
-            }}>
-              <Text style={{ color: 'white', marginBottom: 5, fontSize: 16 }}>•••• •••• •••• 1234</Text>
-              <Text style={{ color: 'white', fontSize: 14 }}>VISA • Bryan K. Fagundes</Text>
-              <Text style={{ color: 'white', marginTop: 10, fontSize: 12 }}>Validade: 12/25</Text>
+            <Text style={{ color: 'white', fontSize: 18, marginBottom: 15 }}>•••• •••• •••• 1234</Text>
+
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10 }}>
+              <Text style={{ color: 'white', fontSize: 14 }}>Titular:</Text>
+              <Text style={{ color: 'white', fontSize: 14 }}>Bryan K. Fagundes</Text>
             </View>
+
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10 }}>
+              <Text style={{ color: 'white', fontSize: 14 }}>Validade:</Text>
+              <Text style={{ color: 'white', fontSize: 14 }}>12/25</Text>
+            </View>
+
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10 }}>
+              <Text style={{ color: 'white', fontSize: 14 }}>Limite disponível:</Text>
+              <Text style={{ color: 'white', fontSize: 14 }}>R$ 4.250,00</Text>
+            </View>
+
             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-              <TouchableOpacity style={{ padding: 8 }}>
-                <Text style={{ color: theme.accent }}>Bloquear</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={{ padding: 8 }}>
-                <Text style={{ color: theme.accent }}>Detalhes</Text>
-              </TouchableOpacity>
+              <Text style={{ color: 'white', fontSize: 14 }}>Fatura atual:</Text>
+              <Text style={{ color: 'white', fontSize: 14 }}>R$ 750,00</Text>
             </View>
           </View>
 
-          <TouchableOpacity
-            style={{
-              borderWidth: 1,
-              borderColor: theme.accent,
-              padding: 15,
-              borderRadius: 8,
-              marginBottom: 15,
-              backgroundColor: theme.card
-            }}
-            onPress={() => Alert.alert('Cartão', 'Adicionar novo cartão')}
-          >
-            <Text style={{ color: theme.accent, textAlign: 'center', fontWeight: '500' }}>+ Adicionar novo cartão</Text>
-          </TouchableOpacity>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 20 }}>
+            <TouchableOpacity
+              style={{
+                backgroundColor: theme.accent,
+                padding: 12,
+                borderRadius: 8,
+                width: '48%',
+                alignItems: 'center'
+              }}
+              onPress={() => Alert.alert('Pagar Fatura', 'Fatura paga com sucesso!')}
+            >
+              <Text style={{ color: 'white', fontWeight: '500' }}>Pagar Fatura</Text>
+            </TouchableOpacity>
 
-          <View style={{ marginBottom: 20 }}>
-            <Text style={{ color: theme.textPrimary, marginBottom: 10, fontWeight: '500' }}>Cartões salvos:</Text>
-            <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
-              <View style={{ width: '48%', marginRight: '4%', marginBottom: 10 }}>
-                <TouchableOpacity style={{
-                  borderWidth: 1,
-                  borderColor: theme.border,
-                  borderRadius: 8,
-                  padding: 12,
-                  backgroundColor: theme.card
-                }}>
-                  <Text style={{ color: theme.textPrimary, fontWeight: '500' }}>Mastercard</Text>
-                  <Text style={{ color: theme.textSecondary, fontSize: 12 }}>•••• 5678</Text>
-                </TouchableOpacity>
-              </View>
-              <View style={{ width: '48%' }}>
-                <TouchableOpacity style={{
-                  borderWidth: 1,
-                  borderColor: theme.border,
-                  borderRadius: 8,
-                  padding: 12,
-                  backgroundColor: theme.card
-                }}>
-                  <Text style={{ color: theme.textPrimary, fontWeight: '500' }}>Elo</Text>
-                  <Text style={{ color: theme.textSecondary, fontSize: 12 }}>•••• 9012</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
+            <TouchableOpacity
+              style={{
+                backgroundColor: theme.card,
+                borderWidth: 1,
+                borderColor: theme.accent,
+                padding: 12,
+                borderRadius: 8,
+                width: '48%',
+                alignItems: 'center'
+              }}
+              onPress={() => Alert.alert('Bloquear Cartão', 'Cartão bloqueado temporariamente')}
+            >
+              <Text style={{ color: theme.accent, fontWeight: '500' }}>Bloquear</Text>
+            </TouchableOpacity>
           </View>
 
           <TouchableOpacity
-            onPress={() => setScreen('Home')}
+            onPress={() => setScreen('Cartões')}
             style={{ alignSelf: 'center' }}
           >
             <Text style={[styles.backButton, { color: theme.accent }]}>Voltar</Text>
           </TouchableOpacity>
         </View>
       );
+    }
 
-      // Tela do perfil
-    } else if (screen === 'Perfil') {
+    // Tela do perfil
+    else if (screen === 'Perfil') {
       return (
         <View style={[styles.screenContainer, { backgroundColor: theme.background, padding: 20, marginTop: -100, top: 40, }]}>
           <Text style={[styles.screenTitle, { color: theme.accent, fontSize: 24, top: 0 }]}>Meu Perfil</Text>
@@ -1288,6 +1441,38 @@ const styles = StyleSheet.create({
     height: 40,
     borderRadius: 20,
     justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalOverlay: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0,0,0,0.5)',
+  },
+  modalContainer: {
+    width: '80%',
+    padding: 20,
+    borderRadius: 10,
+  },
+  modalTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 10,
+    textAlign: 'center',
+  },
+  modalMessage: {
+    fontSize: 16,
+    marginBottom: 20,
+    textAlign: 'center',
+  },
+  modalButtons: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  modalButton: {
+    padding: 10,
+    borderRadius: 5,
+    width: '48%',
     alignItems: 'center',
   },
 });
