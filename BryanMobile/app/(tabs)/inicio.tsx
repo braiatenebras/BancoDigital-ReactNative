@@ -6,13 +6,14 @@ import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
 const { width, height } = Dimensions.get('window');
 
+// Interface ChatBot
 interface ChatMessage {
   role: 'user' | 'assistant';
   content: string;
+  showBackButton?: boolean;
 }
 
 export default function HomeScreen() {
-  // Estados existentes
   const [mostrar, setMostrar] = useState(true);
   const [screen, setScreen] = useState('Home');
   const [darkMode, setDarkMode] = useState(true);
@@ -22,9 +23,9 @@ export default function HomeScreen() {
   const [pixKeyType, setPixKeyType] = useState('cpf');
   const [pixKey, setPixKey] = useState('');
   const [pixValue, setPixValue] = useState('');
-
-  // Estados do Chatbot
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([
+
+    // ChatBot
     {
       role: 'assistant',
       content: 'Olá! Sou seu assistente bancário virtual. Como posso ajudar?'
@@ -35,7 +36,7 @@ export default function HomeScreen() {
 
   const toggleTheme = () => setDarkMode(!darkMode);
 
-  // Sistema de temas
+  // Tema escuro estilos 
   const theme = {
     background: darkMode ? '#121212' : '#fff',
     card: darkMode ? '#1e1e1e' : '#fff',
@@ -46,7 +47,7 @@ export default function HomeScreen() {
     buttonText: darkMode ? '#fff' : '#fff',
   };
 
-  // Busca taxas de câmbio
+  // Api do conversor
   const fetchExchangeRates = async () => {
     try {
       const response = await fetch('https://v6.exchangerate-api.com/v6/5c91ee70a1644e990cc95d25/latest/BRL');
@@ -57,14 +58,13 @@ export default function HomeScreen() {
     }
   };
 
-  // Conversão de moeda
   const convertCurrency = (currencyCode: string) => {
     if (!exchangeRates) return 0;
     const rate = exchangeRates[currencyCode];
     return saldo * rate;
   };
 
-  // Transferência Pix
+  // Pix
   const handlePixTransfer = () => {
     if (!pixKey) {
       Alert.alert('Erro', 'Por favor, insira uma chave Pix válida');
@@ -89,66 +89,105 @@ export default function HomeScreen() {
     setScreen('Home');
   };
 
-  const getAIResponse = (userMessage: string): string => {
+  const getAIResponse = (userMessage: string): { response: string, showBackButton?: boolean } => {
     const lowerMessage = userMessage.toLowerCase();
 
-    // Fluxos de conversa
+    // Mensagens no chatbot
 
+    if (/sair|voltar|home|início|inicio/.test(lowerMessage)) {
+      return {
+        response: 'Clique no botão abaixo para voltar à tela inicial:',
+        showBackButton: true
+      };
+    }
     if (/site|bryan|criação/.test(lowerMessage)) {
-      return `Esse site em React Native foi criado e configurado por Bryan Kauan Fagundes! (3°D).`;
+      return {
+        response: `Esse site em React Native foi criado e configurado por Bryan Kauan Fagundes! (3°D).`
+      };
     }
 
     if (/oi|olá|ola|bom dia|boa tarde|boa noite/.test(lowerMessage)) {
-      return 'Olá! Sou seu assistente bancário. Posso te ajudar com:\n\n• Saldo \n• Transferências Pix\n• Pagamentos\n• Cartões\n• Recargas';
+      return {
+        response: 'Olá! Sou seu assistente bancário. Posso te ajudar com:\n\n• Saldo \n• Transferências Pix\n• Pagamentos\n• Cartões\n• Recargas'
+      };
     }
 
     if (/saldo|dinheiro|disponível/.test(lowerMessage)) {
-      return `Seu saldo atual é R$ ${saldo.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}.`;
+      return {
+        response: `Seu saldo atual é R$ ${saldo.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}.`
+      };
     }
 
-
     if (/pix|transferência|transferencia|enviar dinheiro/.test(lowerMessage)) {
-      return 'Para fazer um Pix:\n1. Acesse a aba "Pix"\n2. Escolha o tipo de chave\n3. Digite o valor\n4. Confirme os dados\n\n';
+      return {
+        response: 'Para fazer um Pix:\n1. Acesse a aba "Pix"\n2. Escolha o tipo de chave\n3. Digite o valor\n4. Confirme os dados\n\n'
+      };
     }
 
     if (/cartão|cartao|crédito|credito|débito|cartões| debito/.test(lowerMessage)) {
-      return 'Na seção "Meus cartões" você pode:\n• Ver seus cartões\n• Bloquear cartões\n• Ajustar limites\n• Solicitar novos';
+      return {
+        response: 'Na seção "Meus cartões" você pode:\n• Ver seus cartões\n• Bloquear cartões\n• Ajustar limites\n• Solicitar novos'
+      };
     }
 
     if (/pagar|conta|boleto|qr code/.test(lowerMessage)) {
-      return 'Para pagamentos:\n1. Toque em "Pagar"\n2. Escaneie o código\n3. Confirme os dados\n4. Autorize o pagamento';
+      return {
+        response: 'Para pagamentos:\n1. Toque em "Pagar"\n2. Escaneie o código\n3. Confirme os dados\n4. Autorize o pagamento'
+      };
     }
 
     if (/recarga|celular|créditos/.test(lowerMessage)) {
-      return 'Recarregue seu celular:\n1. Vá em "Recarga"\n2. Digite o número\n3. Escolha o valor\n4. Confirme';
+      return {
+        response: 'Recarregue seu celular:\n1. Vá em "Recarga"\n2. Digite o número\n3. Escolha o valor\n4. Confirme'
+      };
     }
 
     if (/câmbio|cambio|moeda|dólar|dolar|euro/.test(lowerMessage)) {
-      return `Seu saldo em outras moedas:\n\nDólar: $${convertCurrency('USD').toFixed(2)}\nEuro: €${convertCurrency('EUR').toFixed(2)}\nLibra: £${convertCurrency('GBP').toFixed(2)}`;
+      return {
+        response: `Seu saldo em outras moedas:\n\nDólar: $${convertCurrency('USD').toFixed(2)}\nEuro: €${convertCurrency('EUR').toFixed(2)}\nLibra: £${convertCurrency('GBP').toFixed(2)}`
+      };
     }
 
     if (/ajuda|comandos|opções|o que você faz/.test(lowerMessage)) {
-      return 'Posso ajudar com:\n\n• Consultas de saldo\n• Instruções sobre Pix\n• Informações de cartões\n• Pagamento de contas\n• Recarga de celular\n• Conversão de moedas';
+      return {
+        response: 'Posso ajudar com:\n\n• Consultas de saldo\n• Instruções sobre Pix\n• Informações de cartões\n• Pagamento de contas\n• Recarga de celular\n• Conversão de moedas'
+      };
     }
 
     if (/obrigado|obrigada|valeu|tchau/.test(lowerMessage)) {
-      return 'Por nada! Estou aqui sempre que precisar. Tenha um ótimo dia!';
+      return {
+        response: 'Por nada! Estou aqui sempre que precisar. Tenha um ótimo dia!'
+      };
     }
-
-    return 'Não entendi completamente. Posso te ajudar com:\n\n• Saldo\n• Pix\n• Cartões\n• Pagamentos\n• Recargas\n\nO que você precisa?';
+    // Texto de não entender
+    return {
+      response: 'Não entendi completamente. Posso te ajudar com:\n• Site\n• Saldo\n• Pix\n• Cartões\n• Pagamentos\n• Recargas\n• Conversão de saldo  \n\n O que você precisa?'
+    };
   };
 
   const handleSendMessage = () => {
     if (!userInput.trim()) return;
 
-    const userMessage: ChatMessage = { role: 'user', content: userInput };
+    const userMessage: ChatMessage = {
+      role: 'user',
+      content: userInput
+    };
+
     setChatMessages(prev => [...prev, userMessage]);
     setUserInput('');
     setLoading(true);
 
     setTimeout(() => {
-      const aiResponse = getAIResponse(userInput);
-      setChatMessages(prev => [...prev, { role: 'assistant', content: aiResponse }]);
+      const { response, showBackButton } = getAIResponse(userInput);
+
+      setChatMessages(prev => [
+        ...prev,
+        {
+          role: 'assistant',
+          content: response,
+          showBackButton
+        }
+      ]);
       setLoading(false);
     }, 800);
   };
@@ -157,18 +196,23 @@ export default function HomeScreen() {
     fetchExchangeRates();
   }, []);
 
-  // Renderização das telas
   const renderScreen = () => {
     if (screen === 'Home') {
       return (
         <>
-          {/* Cabeçalho */}
+          {/* Cabeçalho com botão de ajuda integrado */}
           <View style={styles.header}>
             <TouchableOpacity onPress={() => setScreen('Perfil')}>
               <Ionicons name="person-outline" size={28} color={theme.textPrimary} />
             </TouchableOpacity>
 
-            <Text style={[styles.meunome, { color: theme.textPrimary }]}>Olá, Bryan</Text>
+            <View style={{ flexDirection: 'row', alignItems: 'center', left: 35 }}>
+              <Text style={[styles.meunome, { color: theme.textPrimary }]}>Olá, Bryan</Text>
+
+              <TouchableOpacity onPress={() => setScreen('Chatbot')} style={{ marginLeft: 10, right: 170, }}>
+                <Ionicons name="help-circle-outline" size={28} color={theme.textPrimary} />
+              </TouchableOpacity>
+            </View>
 
             <View style={styles.headerRight}>
               <TouchableOpacity onPress={toggleTheme}>
@@ -176,7 +220,7 @@ export default function HomeScreen() {
                   name={darkMode ? 'sunny-outline' : 'moon-outline'}
                   size={24}
                   color={theme.textPrimary}
-                  style={{ marginRight: 10 }}
+                  style={{ marginRight: 10, right: 10 }}
                 />
               </TouchableOpacity>
 
@@ -194,7 +238,7 @@ export default function HomeScreen() {
             </Text>
           </View>
 
-          {/* Ações Rápidas */}
+          {/* Ações Rápidas (sem botão de ajuda) */}
           <View style={styles.actions}>
             <ScrollView
               horizontal
@@ -226,14 +270,6 @@ export default function HomeScreen() {
                 onPress={() => setScreen('Recarga')}>
                 <MaterialIcons name="4g-mobiledata" size={24} color={theme.accent} />
                 <Text style={[styles.buttonText, { color: theme.accent }]}>Recarga</Text>
-              </TouchableOpacity>
-
-              {/* Botão do Chatbot */}
-              <TouchableOpacity
-                style={[styles.button, { backgroundColor: theme.card }]}
-                onPress={() => setScreen('Chatbot')}>
-                <Ionicons name="chatbubble-ellipses-outline" size={24} color={theme.accent} />
-                <Text style={[styles.buttonText, { color: theme.accent }]}>Ajuda</Text>
               </TouchableOpacity>
             </ScrollView>
           </View>
@@ -421,20 +457,38 @@ export default function HomeScreen() {
             }}
           >
             {chatMessages.map((msg, index) => (
-              <View
-                key={index}
-                style={[
-                  styles.messageBubble,
-                  {
-                    alignSelf: msg.role === 'user' ? 'flex-end' : 'flex-start',
-                    backgroundColor: msg.role === 'user' ? theme.accent : theme.card,
-                  }
-                ]}
-              >
-                <Text style={{ color: msg.role === 'user' ? '#fff' : theme.textPrimary }}>
-                  {msg.content}
-                </Text>
-              </View>
+              <React.Fragment key={index}>
+                <View
+                  style={[
+                    styles.messageBubble,
+                    {
+                      alignSelf: msg.role === 'user' ? 'flex-end' : 'flex-start',
+                      backgroundColor: msg.role === 'user' ? theme.accent : theme.card,
+                    }
+                  ]}
+                >
+                  <Text style={{ color: msg.role === 'user' ? '#fff' : theme.textPrimary }}>
+                    {msg.content}
+                  </Text>
+                </View>
+                {msg.showBackButton && (
+                  <TouchableOpacity
+                    style={[
+                      styles.backButton,
+                      {
+                        alignSelf: 'center',
+                        backgroundColor: theme.accent,
+                        padding: 10,
+                        borderRadius: 8,
+                        marginTop: 10
+                      }
+                    ]}
+                    onPress={() => setScreen('Home')}
+                  >
+                    <Text style={{ color: '#fff', fontWeight: 'bold' }}>Voltar à Tela Inicial</Text>
+                  </TouchableOpacity>
+                )}
+              </React.Fragment>
             ))}
             {loading && (
               <View style={[styles.messageBubble, { alignSelf: 'flex-start', backgroundColor: theme.card }]}>
@@ -491,15 +545,14 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
     paddingTop: height * 0.075,
     paddingHorizontal: width * 0.07,
-    alignItems: 'center',
     marginBottom: height * 0.04,
   },
   meunome: {
     fontSize: width * 0.05,
     fontWeight: '600',
-    textAlign: 'center',
   },
   headerRight: {
     flexDirection: 'row',
@@ -624,7 +677,7 @@ const styles = StyleSheet.create({
     borderBottomColor: '#444',
   },
   chatTitle: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: 'bold',
   },
   chatContainer: {
