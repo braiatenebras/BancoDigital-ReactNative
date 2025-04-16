@@ -57,7 +57,7 @@ export default function HomeScreen() {
     textSecondary: darkMode ? '#aaa' : '#555',
     accent: '#820ad1',
     primary: '#6200ee',
-    border: darkMode ? '#444' : '#ddd',
+    border: darkMode ? '#444' : 'fff',
     buttonText: darkMode ? '#fff' : '#fff',
   };
 
@@ -396,57 +396,57 @@ export default function HomeScreen() {
           </View>
 
           {mostrarConversoes && exchangeRates && (
-  <View style={[styles.card, { 
-    backgroundColor: theme.card, 
-    borderColor: theme.border,
-    padding: 20,
-    borderRadius: 12
-  }]}>
-    <Text style={[
-      styles.label, { 
-        color: theme.textSecondary, 
-        fontSize: 22,
-        fontFamily: 'Inter-SemiBold', // Ou outra fonte premium
-        marginBottom: 15
-      }
-    ]}>
-      Saldo em outras moedas
-    </Text>
-    
-    {[
-      { code: 'USD', symbol: '$', name: 'Dólar Americano' },
-      { code: 'EUR', symbol: '€', name: 'Euro' },
-      { code: 'GBP', symbol: '£', name: 'Libra Esterlina' },
-      { code: 'JPY', symbol: '¥', name: 'Iene Japonês' },
-      { code: 'CAD', symbol: 'C$', name: 'Dólar Canadense' },
-      { code: 'AUD', symbol: 'A$', name: 'Dólar Australiano' },
-      { code: 'CHF', symbol: 'Fr.', name: 'Franco Suíço' }
-    ].map((currency) => (
-      <View key={currency.code} style={{ 
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        marginBottom: 12
-      }}>
-        <Text style={{
-          color: theme.textSecondary,
-          fontSize: 16,
-          fontFamily: 'Inter-Regular',
-          flex: 1
-        }}>
-          {currency.code} ({currency.name})
-        </Text>
-        <Text style={{
-          color: theme.textPrimary,
-          fontSize: 16,
-          fontFamily: 'Inter-Medium',
-          textAlign: 'right'
-        }}>
-          {currency.symbol}{convertCurrency(currency.code).toFixed(2)}
-        </Text>
-      </View>
-    ))}
-  </View>
-)}
+            <View style={[styles.card, {
+              backgroundColor: theme.card,
+              borderColor: theme.border,
+              padding: 20,
+              borderRadius: 12
+            }]}>
+              <Text style={[
+                styles.label, {
+                  color: theme.textSecondary,
+                  fontSize: 22,
+                  fontFamily: 'Inter-SemiBold', // Ou outra fonte premium
+                  marginBottom: 15
+                }
+              ]}>
+                Saldo em outras moedas
+              </Text>
+
+              {[
+                { code: 'USD', symbol: '$', name: 'Dólar Americano' },
+                { code: 'EUR', symbol: '€', name: 'Euro' },
+                { code: 'GBP', symbol: '£', name: 'Libra Esterlina' },
+                { code: 'JPY', symbol: '¥', name: 'Iene Japonês' },
+                { code: 'CAD', symbol: 'C$', name: 'Dólar Canadense' },
+                { code: 'AUD', symbol: 'A$', name: 'Dólar Australiano' },
+                { code: 'CHF', symbol: 'Fr.', name: 'Franco Suíço' }
+              ].map((currency) => (
+                <View key={currency.code} style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  marginBottom: 12
+                }}>
+                  <Text style={{
+                    color: theme.textSecondary,
+                    fontSize: 16,
+                    fontFamily: 'Inter-Regular',
+                    flex: 1
+                  }}>
+                    {currency.code} ({currency.name})
+                  </Text>
+                  <Text style={{
+                    color: theme.textPrimary,
+                    fontSize: 16,
+                    fontFamily: 'Inter-Medium',
+                    textAlign: 'right'
+                  }}>
+                    {currency.symbol}{convertCurrency(currency.code).toFixed(2)}
+                  </Text>
+                </View>
+              ))}
+            </View>
+          )}
         </>
       );
 
