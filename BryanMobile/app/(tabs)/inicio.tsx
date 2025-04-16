@@ -1178,10 +1178,7 @@ export default function HomeScreen() {
               marginBottom: 15,
               top: 55,
             }}
-            onPress={() => {
-              // Redireciona para a página de login
-              window.location.href = '/login'; // Substitua pelo caminho correto do login.tsx
-            }}
+            onPress={() => setModalVisible(true)} // Exibe o modal de confirmação
           >
             <Text style={{ color: 'white', textAlign: 'center', fontWeight: 'bold' }}>Sair da Conta</Text>
           </TouchableOpacity>
@@ -1348,6 +1345,40 @@ export default function HomeScreen() {
         <View style={[styles.modalOverlay, { backgroundColor: 'rgba(0,0,0,0.5)' }]}>
           <View style={[styles.modalContainer, { backgroundColor: theme.card, padding: 15 }]}>
             <Text style={[styles.modalMessage, { color: theme.textPrimary, textAlign: 'center' }]}>{successMessage}</Text>
+          </View>
+        </View>
+      </Modal>
+
+      {/* Modal de confirmação de logout */}
+      <Modal
+        transparent={true}
+        visible={modalVisible}
+        animationType="fade"
+        onRequestClose={() => setModalVisible(false)} // Fecha o modal ao pressionar fora
+      >
+        <View style={styles.modalOverlay}>
+          <View style={[styles.modalContainer, { backgroundColor: theme.card }]}>
+            <Text style={[styles.modalTitle, { color: theme.textPrimary }]}>Confirmar Logout</Text>
+            <Text style={[styles.modalMessage, { color: theme.textSecondary }]}>
+              Tem certeza que deseja sair da sua conta?
+            </Text>
+            <View style={styles.modalButtons}>
+              <TouchableOpacity
+                style={[styles.modalButton, { backgroundColor: theme.accent }]}
+                onPress={() => {
+                  setModalVisible(false);
+                  window.location.href = '/login'; // Redireciona para a página de login
+                }}
+              >
+                <Text style={{ color: 'white', fontWeight: 'bold' }}>Sim</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.modalButton, { backgroundColor: theme.border }]}
+                onPress={() => setModalVisible(false)} // Fecha o modal
+              >
+                <Text style={{ color: theme.textPrimary, fontWeight: 'bold' }}>Não</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
       </Modal>
