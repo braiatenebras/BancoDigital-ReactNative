@@ -71,7 +71,7 @@ export default function HomeScreen() {
   const showSuccess = (message: string) => {
     setSuccessMessage(message);
     setShowSuccessModal(true);
-    setTimeout(() => setShowSuccessModal(false), 3000);
+    setTimeout(() => setShowSuccessModal(false), 1500);
   };
 
   // Api do conversor
@@ -274,14 +274,14 @@ export default function HomeScreen() {
       content: userInput
     };
 
-    setChatMessages(prev => [...prev, userMessage]);
+    setChatMessages((prev: any) => [...prev, userMessage]);
     setUserInput('');
     setLoading(true);
 
     setTimeout(() => {
       const { response, showBackButton } = getAIResponse(userInput);
 
-      setChatMessages(prev => [
+      setChatMessages((prev: any) => [
         ...prev,
         {
           role: 'assistant',
@@ -396,31 +396,57 @@ export default function HomeScreen() {
           </View>
 
           {mostrarConversoes && exchangeRates && (
-            <View style={[styles.card, { backgroundColor: theme.card, borderColor: theme.border }]}>
-              <Text style={[styles.label, { color: theme.textSecondary }]}>Saldo em outras moedas:</Text>
-              <Text style={[styles.saldo, { color: theme.textPrimary, marginBottom: 10, fontSize: 16 }]}>
-                USD (Dólar Americano): ${convertCurrency('USD').toFixed(2)}
-              </Text>
-              <Text style={[styles.saldo, { color: theme.textPrimary, marginBottom: 10, fontSize: 16 }]}>
-                EUR (Euro): €${convertCurrency('EUR').toFixed(2)}
-              </Text>
-              <Text style={[styles.saldo, { color: theme.textPrimary, marginBottom: 10, fontSize: 16 }]}>
-                GBP (Libra Esterlina): £${convertCurrency('GBP').toFixed(2)}
-              </Text>
-              <Text style={[styles.saldo, { color: theme.textPrimary, marginBottom: 10, fontSize: 16 }]}>
-                JPY (Iene Japonês): ¥${convertCurrency('JPY').toFixed(2)}
-              </Text>
-              <Text style={[styles.saldo, { color: theme.textPrimary, marginBottom: 10, fontSize: 16 }]}>
-                CAD (Dólar Canadense): C$${convertCurrency('CAD').toFixed(2)}
-              </Text>
-              <Text style={[styles.saldo, { color: theme.textPrimary, marginBottom: 10, fontSize: 16 }]}>
-                AUD (Dólar Australiano): A$${convertCurrency('AUD').toFixed(2)}
-              </Text>
-              <Text style={[styles.saldo, { color: theme.textPrimary, marginBottom: 10, fontSize: 16 }]}>
-                CHF (Franco Suíço): Fr.${convertCurrency('CHF').toFixed(2)}
-              </Text>
-            </View>
-          )}
+  <View style={[styles.card, { 
+    backgroundColor: theme.card, 
+    borderColor: theme.border,
+    padding: 20,
+    borderRadius: 12
+  }]}>
+    <Text style={[
+      styles.label, { 
+        color: theme.textSecondary, 
+        fontSize: 22,
+        fontFamily: 'Inter-SemiBold', // Ou outra fonte premium
+        marginBottom: 15
+      }
+    ]}>
+      Saldo em outras moedas
+    </Text>
+    
+    {[
+      { code: 'USD', symbol: '$', name: 'Dólar Americano' },
+      { code: 'EUR', symbol: '€', name: 'Euro' },
+      { code: 'GBP', symbol: '£', name: 'Libra Esterlina' },
+      { code: 'JPY', symbol: '¥', name: 'Iene Japonês' },
+      { code: 'CAD', symbol: 'C$', name: 'Dólar Canadense' },
+      { code: 'AUD', symbol: 'A$', name: 'Dólar Australiano' },
+      { code: 'CHF', symbol: 'Fr.', name: 'Franco Suíço' }
+    ].map((currency) => (
+      <View key={currency.code} style={{ 
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginBottom: 12
+      }}>
+        <Text style={{
+          color: theme.textSecondary,
+          fontSize: 16,
+          fontFamily: 'Inter-Regular',
+          flex: 1
+        }}>
+          {currency.code} ({currency.name})
+        </Text>
+        <Text style={{
+          color: theme.textPrimary,
+          fontSize: 16,
+          fontFamily: 'Inter-Medium',
+          textAlign: 'right'
+        }}>
+          {currency.symbol}{convertCurrency(currency.code).toFixed(2)}
+        </Text>
+      </View>
+    ))}
+  </View>
+)}
         </>
       );
 
@@ -464,7 +490,7 @@ export default function HomeScreen() {
                   pixKeyType === 'email' ? 'email-address' : 'default'
               }
               value={pixKey}
-              onChangeText={(text) => setPixKey(text)}
+              onChangeText={(text: any) => setPixKey(text)}
             />
 
             <TextInput
@@ -481,7 +507,7 @@ export default function HomeScreen() {
               placeholderTextColor={theme.textSecondary}
               keyboardType="numeric"
               value={pixValue}
-              onChangeText={(text) => setPixValue(text)}
+              onChangeText={(text: any) => setPixValue(text)}
             />
           </View>
 
@@ -1169,13 +1195,13 @@ export default function HomeScreen() {
           <ScrollView
             style={styles.chatContainer}
             contentContainerStyle={{ paddingBottom: 80 }}
-            ref={ref => {
+            ref={(ref: { scrollToEnd: (arg0: { animated: boolean; }) => any; }) => {
               if (ref) {
                 setTimeout(() => ref.scrollToEnd({ animated: true }), 100);
               }
             }}
           >
-            {chatMessages.map((msg, index) => (
+            {chatMessages.map((msg: { role: string; content: any; showBackButton: any; }, index: any) => (
               <React.Fragment key={index}>
                 <View
                   style={[
