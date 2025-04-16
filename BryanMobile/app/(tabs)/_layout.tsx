@@ -34,6 +34,16 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
+        name="login"
+        options={{
+          title: 'Login',
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="menu" size={22} color={color} />
+          ),
+        }}
+      />
+
+      <Tabs.Screen
         name="inicio"
         options={{
           title: 'Inicio',
@@ -42,15 +52,7 @@ export default function TabLayout() {
           ),
         }}
       />
-      <Tabs.Screen
-        name="terceira"
-        options={{
-          title: 'Menu',
-          tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="menu" size={22} color={color} />
-          ),
-        }}
-      />
+
     </Tabs>
   );
 }

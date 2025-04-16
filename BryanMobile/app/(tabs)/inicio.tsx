@@ -48,6 +48,7 @@ export default function HomeScreen() {
   const [successMessage, setSuccessMessage] = useState('');
 
   const toggleTheme = () => setDarkMode(!darkMode);
+  
 
   // Tema escuro estilos 
   const theme = {
@@ -1083,7 +1084,7 @@ export default function HomeScreen() {
       return (
         <View style={[styles.screenContainer, { backgroundColor: theme.background, padding: 20, marginTop: -100, top: 40, }]}>
           <Text style={[styles.screenTitle, { color: theme.accent, fontSize: 24, top: 0 }]}>Meu Perfil</Text>
-
+    
           <View style={{
             alignItems: 'center',
             marginBottom: 20,
@@ -1109,7 +1110,7 @@ export default function HomeScreen() {
             <Text style={{ color: theme.textPrimary, fontSize: 20, fontWeight: 'bold' }}>Bryan Kauan Fagundes</Text>
             <Text style={{ color: theme.textSecondary, marginTop: 5 }}>3°D - Desenvolvimento de Sistemas</Text>
           </View>
-
+    
           <View style={{
             backgroundColor: theme.card,
             borderRadius: 10,
@@ -1124,18 +1125,18 @@ export default function HomeScreen() {
               <Text style={{ color: theme.textSecondary, fontSize: 12 }}>CPF</Text>
               <Text style={{ color: theme.textPrimary }}>123.456.789-00</Text>
             </View>
-
+    
             <View style={{ marginBottom: 15 }}>
               <Text style={{ color: theme.textSecondary, fontSize: 12 }}>E-mail</Text>
               <Text style={{ color: theme.textPrimary }}>bryan@escola.com</Text>
             </View>
-
+    
             <View style={{ marginBottom: 15 }}>
               <Text style={{ color: theme.textSecondary, fontSize: 12 }}>Telefone</Text>
               <Text style={{ color: theme.textPrimary }}>(11) 98765-4321</Text>
             </View>
           </View>
-
+    
           <TouchableOpacity
             style={{
               backgroundColor: theme.accent,
@@ -1150,7 +1151,7 @@ export default function HomeScreen() {
           >
             <Text style={{ color: 'white', textAlign: 'center', fontWeight: 'bold' }}>Configurações</Text>
           </TouchableOpacity>
-
+    
           <TouchableOpacity
             style={{
               backgroundColor: theme.card,
@@ -1167,7 +1168,24 @@ export default function HomeScreen() {
           >
             <Text style={{ color: theme.textPrimary, textAlign: 'center' }}>Ajuda e Suporte</Text>
           </TouchableOpacity>
-
+    
+          {/* Botão de Logout adicionado aqui */}
+          <TouchableOpacity
+            style={{
+              backgroundColor: '#e74c3c', // Vermelho para destacar ação de logout
+              padding: 15,
+              borderRadius: 8,
+              marginBottom: 15,
+              top: 55,
+            }}
+            onPress={() => {
+              // Redireciona para a página de login
+              window.location.href = '/login'; // Substitua pelo caminho correto do login.tsx
+            }}
+          >
+            <Text style={{ color: 'white', textAlign: 'center', fontWeight: 'bold' }}>Sair da Conta</Text>
+          </TouchableOpacity>
+    
           <TouchableOpacity
             onPress={() => setScreen('Home')}
             style={{ alignSelf: 'center' }}
@@ -1176,9 +1194,9 @@ export default function HomeScreen() {
           </TouchableOpacity>
         </View>
       );
-
+    }
       // Tela de chatbot
-    } else if (screen === 'Chatbot') {
+     else if (screen === 'Chatbot') {
       return (
         <KeyboardAvoidingView
           style={{ flex: 1, backgroundColor: theme.background }}
@@ -1195,13 +1213,13 @@ export default function HomeScreen() {
           <ScrollView
             style={styles.chatContainer}
             contentContainerStyle={{ paddingBottom: 80 }}
-            ref={(ref: { scrollToEnd: (arg0: { animated: boolean; }) => any; }) => {
+            ref={(ref: ScrollView | null) => {
               if (ref) {
                 setTimeout(() => ref.scrollToEnd({ animated: true }), 100);
               }
             }}
           >
-            {chatMessages.map((msg: { role: string; content: any; showBackButton: any; }, index: any) => (
+            {chatMessages.map((msg: ChatMessage, index: number) => (
               <React.Fragment key={index}>
                 <View
                   style={[
