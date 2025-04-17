@@ -42,6 +42,19 @@ const LoginScreen: React.FC = () => {
     setCpf(formattedValue);
   };
 
+  const validateCpfOrEmail = (value: string) => {
+    const email = 'bryan@escola.com';
+  
+    // Valida se é o e-mail correto
+    if (value === email) {
+      return true;
+    }
+  
+    // Valida se é um CPF válido
+    const cpfRegex = /^\d{3}\.\d{3}\.\d{3}-\d{2}$/; // Formato de CPF: 000.000.000-00
+    return cpfRegex.test(value);
+  };
+
   const handleLogin = () => {
     // Verifica se os campos CPF e Senha estão preenchidos
     if (!cpf || !senha) {
@@ -88,12 +101,12 @@ const LoginScreen: React.FC = () => {
 
       {/* Conteúdo centralizado */}
       <View style={styles.content}>
-        {/* Cabeçalho com botão de alternância de tema */}
-        <View style={styles.header}>
+        {/* botao do tema */}
+        <View style={styles.header }>
           <TouchableOpacity onPress={toggleTheme}>
             <Ionicons
               name={darkMode ? 'sunny-outline' : 'moon-outline'}
-              size={24}
+              size={30}
               color={theme.textPrimary}
             />
           </TouchableOpacity>
@@ -111,6 +124,8 @@ const LoginScreen: React.FC = () => {
           <View style={styles.inputGroup}>
             <Text style={[styles.label, { color: theme.textPrimary }]}>CPF</Text>
             <TextInput
+              placeholder="Digite seu CPF ou E-mail"
+              placeholderTextColor={theme.textSecondary}
               style={[
                 styles.input,
                 {
@@ -119,11 +134,9 @@ const LoginScreen: React.FC = () => {
                   borderColor: theme.border,
                 },
               ]}
-              placeholder="Digite seu CPF"
-              placeholderTextColor={theme.textSecondary}
-              keyboardType="numeric"
+              keyboardType="default" // Permite entrada de texto e números
               value={cpf}
-              onChangeText={formatCpf} // Formata o CPF automaticamente
+              onChangeText={(text) => setCpf(text)} // Atualiza o estado com o valor digitado
             />
           </View>
 
@@ -161,7 +174,33 @@ const LoginScreen: React.FC = () => {
 
           <TouchableOpacity
             style={[styles.loginButton, { backgroundColor: theme.accent }]}
-            onPress={handleLogin}
+            onPress={() => {
+              if (!validateCpfOrEmail(cpf)) {
+                setModalMessage('Por favor, insira um CPF ou email válido');
+                setModalVisible(true);
+                setTimeout(() => {
+                  setModalVisible(false); // Fecha o modal automaticamente após 1 segundo
+                }, 1000);
+                return;
+              }
+          
+              if (!senha) {
+                setModalMessage('Por favor, insira sua senha.');
+                setModalVisible(true);
+                setTimeout(() => {
+                  setModalVisible(false); // Fecha o modal automaticamente após 1 segundo
+                }, 1000);
+                return;
+              }
+          
+              // Lógica de login bem-sucedido
+              setModalMessage('Login realizado com sucesso!');
+              setModalVisible(true);
+              setTimeout(() => {
+                setModalVisible(false);
+                setLogado(true); // Define o estado como logado
+              }, 1500);
+            }}
           >
             <Text style={styles.loginButtonText}>Entrar</Text>
           </TouchableOpacity>
@@ -187,6 +226,8 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     width: '100%',
     padding: 20,
+    top: -100,
+    left: -300,
   },
   logoContainer: {
     alignItems: 'center',

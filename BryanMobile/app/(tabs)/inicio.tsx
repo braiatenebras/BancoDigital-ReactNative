@@ -48,7 +48,6 @@ export default function HomeScreen() {
   const [successMessage, setSuccessMessage] = useState('');
 
   const toggleTheme = () => setDarkMode(!darkMode);
-  
 
   // Tema escuro estilos 
   const theme = {
@@ -226,13 +225,13 @@ export default function HomeScreen() {
       };
     }
 
-    if (/cartão|cartao|crédito|credito|débito|cartões| debito/.test(lowerMessage)) {
+    if (/cartão|cartao|crédito|credito|débito|cartões|cartoes|debito/.test(lowerMessage)) {
       return {
         response: 'Na seção "Meus cartões" você pode:\n• Ver seus cartões\n• Bloquear cartões\n• Ajustar limites\n• Solicitar novos'
       };
     }
 
-    if (/pagar|conta|boleto|qr code/.test(lowerMessage)) {
+    if (/pagar|conta|boleto|pagamentos|qr code/.test(lowerMessage)) {
       return {
         response: 'Para pagamentos:\n1. Toque em "Pagar"\n2. Escaneie o código\n3. Confirme os dados\n4. Autorize o pagamento'
       };
@@ -244,7 +243,7 @@ export default function HomeScreen() {
       };
     }
 
-    if (/câmbio|cambio|moeda|dólar|dolar|euro/.test(lowerMessage)) {
+    if (/câmbio|conversão|conversao|cambio|moeda|dólar|dolar|euro/.test(lowerMessage)) {
       return {
         response: `Seu saldo em outras moedas:\n\nDólar: $${convertCurrency('USD').toFixed(2)}\nEuro: €${convertCurrency('EUR').toFixed(2)}\nLibra: £${convertCurrency('GBP').toFixed(2)}`
       };
@@ -252,7 +251,7 @@ export default function HomeScreen() {
 
     if (/ajuda|comandos|opções|o que você faz/.test(lowerMessage)) {
       return {
-        response: 'Posso ajudar com:\n\n• Consultas de saldo\n• Instruções sobre Pix\n• Informações de cartões\n• Pagamento de contas\n• Recarga de celular\n• Conversão de moedas'
+        response: 'Posso ajudar com:\n\n• Consultas de saldo\n• Instruções sobre Pix\n• Informações de cartões\n• Pagamento de contas\n• Recarga de celular\n• Conversão de moedas \n• Sair para a tela inicial\n\nSe precisar de mais ajuda, é só usar esses comandos!'
       };
     }
 
@@ -263,7 +262,7 @@ export default function HomeScreen() {
     }
 
     return {
-      response: 'Não entendi completamente. Posso te ajudar com:\n• Site\n• Saldo\n• Pix\n• Cartões\n• Pagamentos\n• Recargas\n• Conversão de saldo\n\nO que você precisa?'
+      response: 'Não entendi completamente. Posso te ajudar com:\n• Site\n• Saldo\n• Pix\n• Cartões\n• Pagamentos\n• Recargas\n• Conversão de moedas (saldo) \n\nUse "ajuda" para ver todas as opções de comandos.'
     };
   };
 
@@ -297,6 +296,21 @@ export default function HomeScreen() {
   useEffect(() => {
     fetchExchangeRates();
   }, []);
+
+  const formatPhoneNumber = (value: string) => {
+    // Remove todos os caracteres que não são números
+    const numericValue = value.replace(/\D/g, '');
+
+    // Limita o número a 11 dígitos
+    const limitedValue = numericValue.slice(0, 11);
+
+    // Aplica o formato (XX) XXXX-XXXX ou (XX) XXXXX-XXXX
+    if (limitedValue.length <= 10) {
+      return limitedValue.replace(/(\d{2})(\d{4})(\d{0,4})/, '($1) $2-$3');
+    } else {
+      return limitedValue.replace(/(\d{2})(\d{5})(\d{0,4})/, '($1) $2-$3');
+    }
+  };
 
   const renderScreen = () => {
     if (screen === 'Home') {
@@ -590,11 +604,11 @@ export default function HomeScreen() {
               padding: 10,
               marginBottom: 20,
               backgroundColor: theme.card,
-              borderRadius: 8
+              borderRadius: 8,
             }}
             keyboardType="phone-pad"
             value={recargaNumero}
-            onChangeText={setRecargaNumero}
+            onChangeText={(text) => setRecargaNumero(formatPhoneNumber(text))} // Formata o número automaticamente
           />
 
           <TextInput
@@ -1084,7 +1098,7 @@ export default function HomeScreen() {
       return (
         <View style={[styles.screenContainer, { backgroundColor: theme.background, padding: 20, marginTop: -100, top: 40, }]}>
           <Text style={[styles.screenTitle, { color: theme.accent, fontSize: 24, top: 0 }]}>Meu Perfil</Text>
-    
+
           <View style={{
             alignItems: 'center',
             marginBottom: 20,
@@ -1110,7 +1124,7 @@ export default function HomeScreen() {
             <Text style={{ color: theme.textPrimary, fontSize: 20, fontWeight: 'bold' }}>Bryan Kauan Fagundes</Text>
             <Text style={{ color: theme.textSecondary, marginTop: 5 }}>3°D - Desenvolvimento de Sistemas</Text>
           </View>
-    
+
           <View style={{
             backgroundColor: theme.card,
             borderRadius: 10,
@@ -1123,20 +1137,20 @@ export default function HomeScreen() {
             <Text style={{ color: theme.textPrimary, fontWeight: 'bold', marginBottom: 10 }}>Informações Pessoais</Text>
             <View style={{ marginBottom: 15 }}>
               <Text style={{ color: theme.textSecondary, fontSize: 12 }}>CPF</Text>
-              <Text style={{ color: theme.textPrimary }}>123.456.789-00</Text>
+              <Text style={{ color: theme.textPrimary }}>123.456.789-10</Text>
             </View>
-    
+
             <View style={{ marginBottom: 15 }}>
               <Text style={{ color: theme.textSecondary, fontSize: 12 }}>E-mail</Text>
               <Text style={{ color: theme.textPrimary }}>bryan@escola.com</Text>
             </View>
-    
+
             <View style={{ marginBottom: 15 }}>
               <Text style={{ color: theme.textSecondary, fontSize: 12 }}>Telefone</Text>
               <Text style={{ color: theme.textPrimary }}>(11) 98765-4321</Text>
             </View>
           </View>
-    
+
           <TouchableOpacity
             style={{
               backgroundColor: theme.accent,
@@ -1146,12 +1160,12 @@ export default function HomeScreen() {
               top: 55
             }}
             onPress={() => {
-              showSuccess('Configurações abertas');
+              showSuccess('Essa tela não foi definida');
             }}
           >
             <Text style={{ color: 'white', textAlign: 'center', fontWeight: 'bold' }}>Configurações</Text>
           </TouchableOpacity>
-    
+
           <TouchableOpacity
             style={{
               backgroundColor: theme.card,
@@ -1160,16 +1174,13 @@ export default function HomeScreen() {
               padding: 15,
               borderRadius: 8,
               marginBottom: 10,
-              top: 55
+              top: 55,
             }}
-            onPress={() => {
-              showSuccess('Ajuda e suporte abertos');
-            }}
+            onPress={() => setScreen('Chatbot')} // Redireciona para a tela de Chatbot
           >
             <Text style={{ color: theme.textPrimary, textAlign: 'center' }}>Ajuda e Suporte</Text>
           </TouchableOpacity>
-    
-          {/* Botão de Logout adicionado aqui */}
+
           <TouchableOpacity
             style={{
               backgroundColor: '#e74c3c', // Vermelho para destacar ação de logout
@@ -1178,11 +1189,14 @@ export default function HomeScreen() {
               marginBottom: 15,
               top: 55,
             }}
-            onPress={() => setModalVisible(true)} // Exibe o modal de confirmação
+            onPress={() => {
+              // Redireciona para a página de login
+              window.location.href = '/login'; // Substitua pelo caminho correto do login.tsx
+            }}
           >
             <Text style={{ color: 'white', textAlign: 'center', fontWeight: 'bold' }}>Sair da Conta</Text>
           </TouchableOpacity>
-    
+
           <TouchableOpacity
             onPress={() => setScreen('Home')}
             style={{ alignSelf: 'center' }}
@@ -1191,9 +1205,9 @@ export default function HomeScreen() {
           </TouchableOpacity>
         </View>
       );
-    }
+
       // Tela de chatbot
-     else if (screen === 'Chatbot') {
+    } else if (screen === 'Chatbot') {
       return (
         <KeyboardAvoidingView
           style={{ flex: 1, backgroundColor: theme.background }}
@@ -1345,40 +1359,6 @@ export default function HomeScreen() {
         <View style={[styles.modalOverlay, { backgroundColor: 'rgba(0,0,0,0.5)' }]}>
           <View style={[styles.modalContainer, { backgroundColor: theme.card, padding: 15 }]}>
             <Text style={[styles.modalMessage, { color: theme.textPrimary, textAlign: 'center' }]}>{successMessage}</Text>
-          </View>
-        </View>
-      </Modal>
-
-      {/* Modal de confirmação de logout */}
-      <Modal
-        transparent={true}
-        visible={modalVisible}
-        animationType="fade"
-        onRequestClose={() => setModalVisible(false)} // Fecha o modal ao pressionar fora
-      >
-        <View style={styles.modalOverlay}>
-          <View style={[styles.modalContainer, { backgroundColor: theme.card }]}>
-            <Text style={[styles.modalTitle, { color: theme.textPrimary }]}>Confirmar Logout</Text>
-            <Text style={[styles.modalMessage, { color: theme.textSecondary }]}>
-              Tem certeza que deseja sair da sua conta?
-            </Text>
-            <View style={styles.modalButtons}>
-              <TouchableOpacity
-                style={[styles.modalButton, { backgroundColor: theme.accent }]}
-                onPress={() => {
-                  setModalVisible(false);
-                  window.location.href = '/login'; // Redireciona para a página de login
-                }}
-              >
-                <Text style={{ color: 'white', fontWeight: 'bold' }}>Sim</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={[styles.modalButton, { backgroundColor: theme.border }]}
-                onPress={() => setModalVisible(false)} // Fecha o modal
-              >
-                <Text style={{ color: theme.textPrimary, fontWeight: 'bold' }}>Não</Text>
-              </TouchableOpacity>
-            </View>
           </View>
         </View>
       </Modal>
