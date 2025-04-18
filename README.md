@@ -11,7 +11,7 @@ Aplicativo bancário completo desenvolvido em React Native com todas as funciona
 - Alternância entre temas claro e escuro
 
 ### 2. Tela Principal
-![Tela Principal](./assets/screenshots/home.jpg)
+![Tela Principal](BryanMobile/assets/screenshots/home.jpg)
 - Visão do saldo atual (com opção de ocultar)
 - Acesso rápido às principais funcionalidades
 - Conversor de moedas integrado
