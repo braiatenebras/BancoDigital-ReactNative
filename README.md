@@ -1,63 +1,69 @@
-# 📱 MEU SITE COM REACT NATIVE - README
+# Banco Digital - App React Native
 
-## 🌟 SOBRE O PROJETO
-App pessoal criado com React Native contendo:
-- 3 abas com conteúdos diferentes
-- Piadas via API
-- Receita de pudim completa para descontrair
-- Informações sobre mim e sobre meu professor
+Aplicativo bancário completo desenvolvido em React Native com todas as funcionalidades essenciais para gerenciamento financeiro.
 
-## 🎯 FUNCIONALIDADES
+## Telas do Aplicativo
 
-### 1️⃣ ABA 1 - SOBRE MIM
-- Meu nome: Bryan Kauan
-- Idade: 16 anos (nascido em 15/09/2008)
-- Escola: Colégio Estadual Cívico Militar Professor Guido Arzua
-- Minha foto
-- Objetivo: Me especializar em programação
-<img src="BryanMobile/assets/images/aba1.jpg" alt="imagemdaaba1">
+### 1. Tela de Login
+![Tela de Login](./assets/screenshots/login.jpg)
+- Autenticação segura com CPF/email e senha
+- Toggle para mostrar/esconder senha
+- Alternância entre temas claro e escuro
 
-### 2️⃣ ABA 2 - RECEITA DE PUDIM
-- Ingredientes e modo de preparo completo
-- Imagem ilustrativa
-- Layout que se adapta a celulares e PCs
-<img src="BryanMobile/assets/images/aba2.jpg" alt="imagemdaaba2">
+### 2. Tela Principal
+![Tela Principal](./assets/screenshots/home.jpg)
+- Visão do saldo atual (com opção de ocultar)
+- Acesso rápido às principais funcionalidades
+- Conversor de moedas integrado
 
+### 3. Transferência Pix
+![Tela Pix](./assets/screenshots/pix.jpg)
+- Envio via chave Pix (CPF, email, telefone ou aleatória)
+- Validação automática de campos
+- Confirmação segura de transações
 
-### 3️⃣ ABA 3 - PIADAS + PROFESSOR
-- Piadas nerds em português
-- 5 piadas locais + API online
-- Botões interativos:
-  - "Mostrar Resposta"
-  - "Nova Piada"
-- Seção humorada sobre o professor Maidel
-- Foto do professor
-<img src="BryanMobile/assets/images/aba3.jpg" alt="imagemdaaba2">
+### 4. Recarga de Celular
+![Tela Recarga](./assets/screenshots/recarga.jpg)
+- Recarga para todas operadoras (Claro, Vivo, Tim)
+- Formatação automática do número
+- Histórico de recargas recentes
 
-## 🛠 TECNOLOGIAS
+### 5. Pagamentos
+![Tela Pagamentos](./assets/screenshots/pagamentos.jpg)
+- Leitor de QR Code integrado
+- Pagamento por código de barras
+- Confirmação instantânea
+
+### 6. Cartões
+![Tela Cartões](./assets/screenshots/cartoes.jpg)
+- Gerenciamento de cartões virtuais
+- Bloqueio/desbloqueio com um toque
+- Detalhes completos de cada cartão
+
+### 7. Perfil
+![Tela Perfil](./assets/screenshots/perfil.jpg)
+- Informações pessoais protegidas
+- Foto do usuário
+- Configurações da conta
+
+## Como Usar
+
+1. Faça login com suas credenciais
+2. Navegue pelo menu principal
+3. Selecione a operação desejada
+4. Confirme as informações
+5. Operação realizada com sucesso!
+
+## Tecnologias Utilizadas
+
 - React Native
-- Expo
 - TypeScript
-- API de piadas
-- Componentes customizados
+- Expo
+- Styled Components
+- API de Conversão Monetária
 
-## 🚀 COMO RODAR
-```bash
-git clone <link do repositorio>
-abra o terminal do projeto e escreva os seguinte codigos!
-npm install
-npx expo start
-Escaneie o QR code pelo Expo Go para abrir no celular
-ou abre usando npm run web!
-```
-## 📝 OBSERVAÇÕES
-Projeto com humor descontraído
+## Autor
 
-Fotos incluídas na pasta assets
-
-Layout responsivo
-
-API com fallback para piadas locais
-
-# Por Bryan Kauan.
-![.](https://media.tenor.com/bwsMTQgoIw4AAAAe/gato-joia.png)
+**Bryan Kauan Fagundes**  
+3° Ano - Desenvolvimento de Sistemas  
+ETEC de Itanhaém
