@@ -5,10 +5,11 @@ Aplicativo bancário completo desenvolvido em React Native com todas as funciona
 ## Telas do Aplicativo
 
 ### 1. Tela de Login
-![Login](./assets/screenshots/login.jpg)
+<img src="BryanMobile/assets/images/inicio.jpg" alt="Tela Inicial">
 - Autenticação segura com CPF/email e senha
 - Toggle para mostrar/esconder senha
 - Alternância entre temas claro e escuro
+
 
 ### 2. Tela Principal
 ![Tela Principal](BryanMobile/assets/screenshots/home.jpg)
