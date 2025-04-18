@@ -33,7 +33,7 @@ Aplicativo bancário completo desenvolvido em React Native com todas as funciona
 ### 5. Transferência
 - Histórico de contatos recentes
 - Pagamento por CPF ou número da conta
-<img src="BryanMobile/assets/screenshots/recarga.jpg" alt="Tela de Transferir">
+<img src="BryanMobile/assets/screenshots/transferir.jpg" alt="Tela de Transferir">
 
 ### 6. Recarga de Celular
 - Recarga para todas operadoras (Claro, Vivo, Tim)
