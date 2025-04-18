@@ -52,7 +52,7 @@ Aplicativo bancário completo desenvolvido em React Native com todas as funciona
 - Foto do usuário
 - Configurações da conta (botão apenas visual, não leva para tela nenhuma)
 - Ajuda e suporte
-- Opção para sair e voltar para a tela de login
+- Opção para sair da conta e voltar para a tela de login
 <img src="BryanMobile/assets/screenshots/perfil.jpg" alt="Tela de Perfil">
 
 ### 8. Assistente Virtual
