@@ -44,12 +44,12 @@ const LoginScreen: React.FC = () => {
 
   const validateCpfOrEmail = (value: string) => {
     const email = 'bryan@escola.com';
-  
+
     // Valida se é o e-mail correto
     if (value === email) {
       return true;
     }
-  
+
     // Valida se é um CPF válido
     const cpfRegex = /^\d{3}\.\d{3}\.\d{3}-\d{2}$/; // Formato de CPF: 000.000.000-00
     return cpfRegex.test(value);
@@ -102,7 +102,7 @@ const LoginScreen: React.FC = () => {
       {/* Conteúdo centralizado */}
       <View style={styles.content}>
         {/* botao do tema */}
-        <View style={styles.header }>
+        <View style={styles.header}>
           <TouchableOpacity onPress={toggleTheme}>
             <Ionicons
               name={darkMode ? 'sunny-outline' : 'moon-outline'}
@@ -183,7 +183,7 @@ const LoginScreen: React.FC = () => {
                 }, 1000);
                 return;
               }
-          
+
               if (!senha) {
                 setModalMessage('Por favor, insira sua senha.');
                 setModalVisible(true);
@@ -192,7 +192,7 @@ const LoginScreen: React.FC = () => {
                 }, 1000);
                 return;
               }
-          
+
               // Lógica de login bem-sucedido
               setModalMessage('Login realizado com sucesso!');
               setModalVisible(true);
