@@ -5,47 +5,64 @@ Aplicativo bancário completo desenvolvido em React Native com todas as funciona
 ## Telas do Aplicativo
 
 ### 1. Tela de Login
-<img src="BryanMobile/assets/images/inicio.jpg" alt="Tela Inicial">
 - Autenticação segura com CPF/email e senha
 - Toggle para mostrar/esconder senha
 - Alternância entre temas claro e escuro
+<img src="BryanMobile/assets/screenshots/login.jpg" alt="Tela de Login">
+
 
 
 ### 2. Tela Principal
-![Tela Principal](BryanMobile/assets/screenshots/home.jpg)
 - Visão do saldo atual (com opção de ocultar)
 - Acesso rápido às principais funcionalidades
 - Conversor de moedas integrado
+<img src="BryanMobile/assets/screenshots/inicio.jpg" alt="Tela de Inicio">
 
-### 3. Transferência Pix
-![Tela Pix](./assets/screenshots/pix.jpg)
+### 3. Pix
 - Envio via chave Pix (CPF, email, telefone ou aleatória)
 - Validação automática de campos
 - Confirmação segura de transações
+<img src="BryanMobile/assets/screenshots/pix.jpg" alt="Tela de Pix">
 
-### 4. Recarga de Celular
-![Tela Recarga](./assets/screenshots/recarga.jpg)
-- Recarga para todas operadoras (Claro, Vivo, Tim)
-- Formatação automática do número
-- Histórico de recargas recentes
-
-### 5. Pagamentos
-![Tela Pagamentos](./assets/screenshots/pagamentos.jpg)
+### 4. Pagamentos
 - Leitor de QR Code integrado
 - Pagamento por código de barras
 - Confirmação instantânea
+<img src="BryanMobile/assets/screenshots/pagamentos.jpg" alt="Tela de Pagar">
+
+### 5. Transferência
+- Histórico de contatos recentes
+- Pagamento por CPF ou número da conta
+<img src="BryanMobile/assets/screenshots/recarga.jpg" alt="Tela de Transferir">
+
+### 6. Recarga de Celular
+- Recarga para todas operadoras (Claro, Vivo, Tim)
+- Formatação automática do número
+<img src="BryanMobile/assets/screenshots/recarga.jpg" alt="Tela de Recarga">
 
 ### 6. Cartões
-![Tela Cartões](./assets/screenshots/cartoes.jpg)
 - Gerenciamento de cartões virtuais
 - Bloqueio/desbloqueio com um toque
 - Detalhes completos de cada cartão
+<img src="BryanMobile/assets/screenshots/cartoes.jpg" alt="Tela de Cartões">
+
 
 ### 7. Perfil
-![Tela Perfil](./assets/screenshots/perfil.jpg)
 - Informações pessoais protegidas
 - Foto do usuário
 - Configurações da conta
+<img src="BryanMobile/assets/screenshots/perfil.jpg" alt="Tela de Perfil">
+
+### 8. Assistente Virtual
+<img src="BryanMobile/assets/screenshots/chatbot.jpg" alt="Tela do Chatbot">
+- Chatbot inteligente para tirar dúvidas
+- Respostas automáticas sobre:
+  - Saldo e extrato
+  - Operações bancárias
+  - Cartões e limites
+  - Configurações da conta
+- Suporte rápido às principais funcionalidades
+
 
 ## Como Usar
 
@@ -67,4 +84,3 @@ Aplicativo bancário completo desenvolvido em React Native com todas as funciona
 
 **Bryan Kauan Fagundes**  
 3° Ano - Desenvolvimento de Sistemas  
-ETEC de Itanhaém
