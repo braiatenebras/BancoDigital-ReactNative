@@ -5,7 +5,7 @@ Aplicativo bancário completo desenvolvido em React Native com todas as funciona
 ## Telas do Aplicativo
 
 ### 1. Tela de Login
-![Tela de Login](./assets/screenshots/login.jpg)
+![Login](./assets/screenshots/login.jpg)
 - Autenticação segura com CPF/email e senha
 - Toggle para mostrar/esconder senha
 - Alternância entre temas claro e escuro
