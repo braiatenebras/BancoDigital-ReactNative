@@ -54,7 +54,6 @@ Aplicativo bancário completo desenvolvido em React Native com todas as funciona
 <img src="BryanMobile/assets/screenshots/perfil.jpg" alt="Tela de Perfil">
 
 ### 8. Assistente Virtual
-<img src="BryanMobile/assets/screenshots/chatbot.jpg" alt="Tela do Chatbot">
 - Chatbot inteligente para tirar dúvidas
 - Respostas automáticas sobre:
   - Saldo e extrato
@@ -62,6 +61,8 @@ Aplicativo bancário completo desenvolvido em React Native com todas as funciona
   - Cartões e limites
   - Configurações da conta
 - Suporte rápido às principais funcionalidades
+<img src="BryanMobile/assets/screenshots/chatbot.jpg" alt="Tela do Chatbot">
+
 
 
 ## Como Usar
