@@ -50,8 +50,8 @@ Aplicativo bancário completo desenvolvido em React Native com todas as funciona
 ### 7. Perfil
 - Informações pessoais protegidas
 - Foto do usuário
-- Ajuda e suporte
 - Configurações da conta
+- Ajuda e suporte
 - Opção para sair e voltar para a tela de login
 <img src="BryanMobile/assets/screenshots/perfil.jpg" alt="Tela de Perfil">
 
