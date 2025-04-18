@@ -87,3 +87,5 @@ Aplicativo bancário completo desenvolvido em React Native com todas as funciona
 
 **Bryan Kauan Fagundes**  
 3° Ano - Desenvolvimento de Sistemas  
+<img src="https://media.tenor.com/hzFHhdvD3lAAAAAM/gato-joia.gif" alt="minhafoto">
+
