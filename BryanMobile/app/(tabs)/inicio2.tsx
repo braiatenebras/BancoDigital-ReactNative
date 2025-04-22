@@ -421,7 +421,7 @@ export default function HomeScreen() {
                 styles.label, {
                   color: theme.textSecondary,
                   fontSize: 22,
-                  fontFamily: 'Inter-SemiBold', 
+                  fontFamily: 'Inter-SemiBold',
                   marginBottom: 15
                 }
               ]}>
@@ -780,7 +780,7 @@ export default function HomeScreen() {
           <View style={{ marginBottom: 20 }}>
             <Text style={{ color: theme.textPrimary, marginBottom: 10, fontWeight: '500' }}>Contatos recentes:</Text>
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-            <TouchableOpacity
+              <TouchableOpacity
                 style={{ marginRight: 15, alignItems: 'center' }}
                 onPress={() => {
                   setTransferenciaDestinatario('Bryan');
@@ -822,7 +822,7 @@ export default function HomeScreen() {
                 <Text style={{ color: theme.textPrimary, fontSize: 12 }}>Giovane</Text>
               </TouchableOpacity>
 
-         
+
               <TouchableOpacity
                 style={{ marginRight: 15, alignItems: 'center' }}
                 onPress={() => {

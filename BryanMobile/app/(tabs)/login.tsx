@@ -6,6 +6,7 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import InicioScreen from './inicio'; // Importa a tela inicial para Bryan
 import Inicio2Screen from './inicio2'; // Importa a tela inicial para Maidel
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
 const { width, height } = Dimensions.get('window');
 
@@ -113,7 +114,7 @@ const LoginScreen: React.FC = () => {
 
         {/* Logo e título */}
         <View style={[styles.logoContainer, { top: -65, }]}>
-          <Image style={[styles.logo, { borderRadius: 50, }]} source={require('../../assets/images/bryan.jpg')} />
+          <MaterialIcons name="people-outline" size={94} color={theme.textPrimary} />
           <Text style={[styles.title, { color: theme.textPrimary }]}>Banco Digital</Text>
           <Text style={[styles.subtitle, { color: theme.textSecondary }]}>Acesse sua conta</Text>
         </View>
