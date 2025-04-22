@@ -4,7 +4,8 @@ import {
   KeyboardAvoidingView, Platform, Modal
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import InicioScreen from './inicio'; // Importa a tela inicial
+import InicioScreen from './inicio'; // Importa a tela inicial para Bryan
+import Inicio2Screen from './inicio2'; // Importa a tela inicial para Maidel
 
 const { width, height } = Dimensions.get('window');
 
@@ -16,6 +17,7 @@ const LoginScreen: React.FC = () => {
   const [modalVisible, setModalVisible] = useState(false); // Controla a exibição do modal
   const [modalMessage, setModalMessage] = useState(''); // Mensagem do modal
   const [logado, setLogado] = useState(false); // Controla se o usuário está logado
+  const [userEmail, setUserEmail] = useState(''); // Armazena o e-mail do usuário logado
 
   // Tema dinâmico baseado no estado `darkMode`
   const theme = {
@@ -31,53 +33,50 @@ const LoginScreen: React.FC = () => {
   // Função para alternar entre tema claro e escuro
   const toggleTheme = () => setDarkMode(!darkMode);
 
-  // Função para formatar o CPF automaticamente
-  const formatCpf = (value: string) => {
-    const numericValue = value.replace(/\D/g, ''); // Remove caracteres não numéricos
-    const limitedValue = numericValue.slice(0, 11); // Limita o CPF a 11 dígitos
-    const formattedValue = limitedValue.replace(
-      /(\d{3})(\d{3})(\d{3})(\d{0,2})/,
-      (_, p1, p2, p3, p4) => `${p1}.${p2}.${p3}${p4 ? `-${p4}` : ''}`
-    );
-    setCpf(formattedValue);
-  };
-
   const validateCpfOrEmail = (value: string) => {
-    const email = 'bryan@escola.com';
-
-    // Valida se é o e-mail correto
-    if (value === email) {
-      return true;
-    }
-
-    // Valida se é um CPF válido
-    const cpfRegex = /^\d{3}\.\d{3}\.\d{3}-\d{2}$/; // Formato de CPF: 000.000.000-00
-    return cpfRegex.test(value);
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Valida formato de e-mail
+    const cpfRegex = /^\d{3}\.\d{3}\.\d{3}-\d{2}$/; // Valida formato de CPF
+    return emailRegex.test(value) || cpfRegex.test(value);
   };
 
   const handleLogin = () => {
-    // Verifica se os campos CPF e Senha estão preenchidos
     if (!cpf || !senha) {
       setModalMessage('Por favor, preencha todos os campos antes de continuar.');
       setModalVisible(true);
-      setTimeout(() => {
-        setModalVisible(false); // Fecha o modal automaticamente após 1500ms
-      }, 1500);
+      setTimeout(() => setModalVisible(false), 1200);
       return;
     }
 
-    // Exibe o modal de sucesso ao logar
-    setModalMessage('Login realizado com sucesso!');
-    setModalVisible(true);
-    setTimeout(() => {
-      setModalVisible(false);
-      setLogado(true); // Define o estado como logado
-    }, 1500);
+    if (!validateCpfOrEmail(cpf)) {
+      setModalMessage('Por favor, insira um CPF ou email válido.');
+      setModalVisible(true);
+      setTimeout(() => setModalVisible(false), 1200);
+      return;
+    }
+
+    // Verifica se o e-mail é válido e define o estado do usuário logado
+    if (cpf.toLowerCase() === 'bryan@escola.com' || cpf.toLowerCase() === 'maidel@escola.com') {
+      setUserEmail(cpf.toLowerCase());
+      setModalMessage('Login realizado com sucesso!');
+      setModalVisible(true);
+      setTimeout(() => {
+        setModalVisible(false);
+        setLogado(true);
+      }, 1500);
+    } else {
+      setModalMessage('Usuário não encontrado.');
+      setModalVisible(true);
+      setTimeout(() => setModalVisible(false), 1500);
+    }
   };
 
-  // Se o usuário estiver logado, renderiza a tela inicial
+  // Renderiza a tela correspondente com base no e-mail do usuário logado
   if (logado) {
-    return <InicioScreen />;
+    if (userEmail === 'bryan@escola.com') {
+      return <InicioScreen />;
+    } else if (userEmail === 'maidel@escola.com') {
+      return <Inicio2Screen />;
+    }
   }
 
   return (
@@ -122,7 +121,7 @@ const LoginScreen: React.FC = () => {
         {/* Formulário de login */}
         <View style={[styles.formContainer, { backgroundColor: theme.card, top: -35 }]}>
           <View style={styles.inputGroup}>
-            <Text style={[styles.label, { color: theme.textPrimary }]}>CPF</Text>
+            <Text style={[styles.label, { color: theme.textPrimary }]}>CPF ou E-mail</Text>
             <TextInput
               placeholder="Digite seu CPF ou E-mail"
               placeholderTextColor={theme.textSecondary}
@@ -174,33 +173,7 @@ const LoginScreen: React.FC = () => {
 
           <TouchableOpacity
             style={[styles.loginButton, { backgroundColor: theme.accent }]}
-            onPress={() => {
-              if (!validateCpfOrEmail(cpf)) {
-                setModalMessage('Por favor, insira um CPF ou email válido');
-                setModalVisible(true);
-                setTimeout(() => {
-                  setModalVisible(false); // Fecha o modal automaticamente após 1 segundo
-                }, 1000);
-                return;
-              }
-
-              if (!senha) {
-                setModalMessage('Por favor, insira sua senha.');
-                setModalVisible(true);
-                setTimeout(() => {
-                  setModalVisible(false); // Fecha o modal automaticamente após 1 segundo
-                }, 1000);
-                return;
-              }
-
-              // Lógica de login bem-sucedido
-              setModalMessage('Login realizado com sucesso!');
-              setModalVisible(true);
-              setTimeout(() => {
-                setModalVisible(false);
-                setLogado(true); // Define o estado como logado
-              }, 1500);
-            }}
+            onPress={handleLogin}
           >
             <Text style={styles.loginButtonText}>Entrar</Text>
           </TouchableOpacity>
