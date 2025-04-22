@@ -18,7 +18,7 @@ export default function HomeScreen() {
   const [screen, setScreen] = useState('Home');
   const [darkMode, setDarkMode] = useState(true);
   const [exchangeRates, setExchangeRates] = useState<any>(null);
-  const [saldo, setSaldo] = useState(250000);
+  const [saldo, setSaldo] = useState(24000);
   const [mostrarConversoes, setMostrarConversoes] = useState(false);
   const [pixKeyType, setPixKeyType] = useState('cpf');
   const [pixKey, setPixKey] = useState('');
@@ -26,7 +26,7 @@ export default function HomeScreen() {
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([
     {
       role: 'assistant',
-      content: 'Olá Bryan! Sou seu assistente bancário virtual. Como posso ajudar?'
+      content: 'Olá Matheus! Sou seu assistente bancário virtual. Como posso ajudar?'
     }
   ]);
   const [userInput, setUserInput] = useState('');
@@ -323,7 +323,7 @@ export default function HomeScreen() {
             </TouchableOpacity>
 
             <View style={{ flexDirection: 'row', alignItems: 'center', left: 35 }}>
-              <Text style={[styles.meunome, { color: theme.textPrimary }]}>Olá, Bryan</Text>
+              <Text style={[styles.meunome, { color: theme.textPrimary }]}>Olá, Mateus</Text>
 
               <TouchableOpacity onPress={() => setScreen('Chatbot')} style={{ marginLeft: 10, right: 170 }}>
                 <Ionicons name="help-circle-outline" size={28} color={theme.textPrimary} />
@@ -421,7 +421,7 @@ export default function HomeScreen() {
                 styles.label, {
                   color: theme.textSecondary,
                   fontSize: 22,
-                  fontFamily: 'Inter-SemiBold', // Ou outra fonte premium
+                  fontFamily: 'Inter-SemiBold', 
                   marginBottom: 15
                 }
               ]}>
@@ -780,6 +780,27 @@ export default function HomeScreen() {
           <View style={{ marginBottom: 20 }}>
             <Text style={{ color: theme.textPrimary, marginBottom: 10, fontWeight: '500' }}>Contatos recentes:</Text>
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            <TouchableOpacity
+                style={{ marginRight: 15, alignItems: 'center' }}
+                onPress={() => {
+                  setTransferenciaDestinatario('Bryan');
+                  showSuccess('Bryan selecionado. Digite o valor e confirme a transferência');
+                }}
+              >
+                <Image
+                  source={require('../../assets/images/bryan.jpg')}
+                  style={{
+                    width: 60,
+                    height: 60,
+                    borderRadius: 30,
+                    marginBottom: 5,
+                    borderWidth: 2,
+                    borderColor: theme.accent
+                  }}
+                />
+                <Text style={{ color: theme.textPrimary, fontSize: 12 }}>Bryan</Text>
+              </TouchableOpacity>
+
               <TouchableOpacity
                 style={{ marginRight: 15, alignItems: 'center' }}
                 onPress={() => {
@@ -801,27 +822,7 @@ export default function HomeScreen() {
                 <Text style={{ color: theme.textPrimary, fontSize: 12 }}>Giovane</Text>
               </TouchableOpacity>
 
-              <TouchableOpacity
-                style={{ marginRight: 15, alignItems: 'center' }}
-                onPress={() => {
-                  setTransferenciaDestinatario('Maidel');
-                  showSuccess('Maidel selecionado. Digite o valor e confirme a transferência');
-                }}
-              >
-                <Image
-                  source={require('../../assets/images/maidel.jpg')}
-                  style={{
-                    width: 60,
-                    height: 60,
-                    borderRadius: 30,
-                    marginBottom: 5,
-                    borderWidth: 2,
-                    borderColor: theme.accent
-                  }}
-                />
-                <Text style={{ color: theme.textPrimary, fontSize: 12 }}>Maidel</Text>
-              </TouchableOpacity>
-
+         
               <TouchableOpacity
                 style={{ marginRight: 15, alignItems: 'center' }}
                 onPress={() => {
@@ -901,9 +902,9 @@ export default function HomeScreen() {
               shadowRadius: 4,
               elevation: 3
             }}>
-              <Text style={{ color: 'white', marginBottom: 5, fontSize: 16 }}>•••• •••• •••• 1234</Text>
-              <Text style={{ color: 'white', fontSize: 14 }}>VISA • Bryan K. Fagundes</Text>
-              <Text style={{ color: 'white', marginTop: 10, fontSize: 12 }}>Validade: 12/25</Text>
+              <Text style={{ color: 'white', marginBottom: 5, fontSize: 16 }}>•••• •••• •••• 4321</Text>
+              <Text style={{ color: 'white', fontSize: 14 }}>VISA • Mateus M. Alves</Text>
+              <Text style={{ color: 'white', marginTop: 10, fontSize: 12 }}>Validade: 06/27</Text>
             </View>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
               <TouchableOpacity
@@ -1023,22 +1024,22 @@ export default function HomeScreen() {
 
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10 }}>
               <Text style={{ color: 'white', fontSize: 14 }}>Titular:</Text>
-              <Text style={{ color: 'white', fontSize: 14 }}>Bryan K. Fagundes</Text>
+              <Text style={{ color: 'white', fontSize: 14 }}>Mateus Maidel Alves</Text>
             </View>
 
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10 }}>
               <Text style={{ color: 'white', fontSize: 14 }}>Validade:</Text>
-              <Text style={{ color: 'white', fontSize: 14 }}>12/25</Text>
+              <Text style={{ color: 'white', fontSize: 14 }}>06/27</Text>
             </View>
 
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10 }}>
               <Text style={{ color: 'white', fontSize: 14 }}>Limite disponível:</Text>
-              <Text style={{ color: 'white', fontSize: 14 }}>R$ 4.250,00</Text>
+              <Text style={{ color: 'white', fontSize: 14 }}>R$ 6.250,00</Text>
             </View>
 
             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
               <Text style={{ color: 'white', fontSize: 14 }}>Fatura atual:</Text>
-              <Text style={{ color: 'white', fontSize: 14 }}>R$ 750,00</Text>
+              <Text style={{ color: 'white', fontSize: 14 }}>R$ 1050,00</Text>
             </View>
           </View>
 
@@ -1111,7 +1112,7 @@ export default function HomeScreen() {
             top: 55
           }}>
             <Image
-              source={require('../../assets/images/bryan.jpg')}
+              source={require('../../assets/images/maidel.jpg')}
               style={{
                 width: 100,
                 height: 100,
@@ -1121,8 +1122,8 @@ export default function HomeScreen() {
                 borderColor: theme.accent,
               }}
             />
-            <Text style={{ color: theme.textPrimary, fontSize: 20, fontWeight: 'bold' }}>Bryan Kauan Fagundes</Text>
-            <Text style={{ color: theme.textSecondary, marginTop: 5 }}>3°D - Desenvolvimento de Sistemas</Text>
+            <Text style={{ color: theme.textPrimary, fontSize: 20, fontWeight: 'bold' }}>Mateus Maidel Alves da Silva </Text>
+            <Text style={{ color: theme.textSecondary, marginTop: 5 }}>Professor de Desenvolvimento de Sistemas</Text>
           </View>
 
           <View style={{
@@ -1137,17 +1138,17 @@ export default function HomeScreen() {
             <Text style={{ color: theme.textPrimary, fontWeight: 'bold', marginBottom: 10 }}>Informações Pessoais</Text>
             <View style={{ marginBottom: 15 }}>
               <Text style={{ color: theme.textSecondary, fontSize: 12 }}>CPF</Text>
-              <Text style={{ color: theme.textPrimary }}>123.456.789-10</Text>
+              <Text style={{ color: theme.textPrimary }}>242.424.242-69</Text>
             </View>
 
             <View style={{ marginBottom: 15 }}>
               <Text style={{ color: theme.textSecondary, fontSize: 12 }}>E-mail</Text>
-              <Text style={{ color: theme.textPrimary }}>bryan@escola.com</Text>
+              <Text style={{ color: theme.textPrimary }}>maidel@escola.com</Text>
             </View>
 
             <View style={{ marginBottom: 15 }}>
               <Text style={{ color: theme.textSecondary, fontSize: 12 }}>Telefone</Text>
-              <Text style={{ color: theme.textPrimary }}>(11) 98765-4321</Text>
+              <Text style={{ color: theme.textPrimary }}>(41) 99745-0819</Text>
             </View>
           </View>
 

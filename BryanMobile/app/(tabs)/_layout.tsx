@@ -52,6 +52,15 @@ export default function TabLayout() {
           ),
         }}
       />
+          <Tabs.Screen
+        name="inicio2"
+        options={{
+          title: 'Inicio2',
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="piggy-bank-outline" size={22} color={color} />
+          ),
+        }}
+      />
 
     </Tabs>
   );
