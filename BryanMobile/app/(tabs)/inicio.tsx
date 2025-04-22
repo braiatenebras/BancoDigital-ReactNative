@@ -1097,7 +1097,7 @@ export default function HomeScreen() {
     else if (screen === 'Perfil') {
       return (
         <View style={[styles.screenContainer, { backgroundColor: theme.background, padding: 20, marginTop: -100, top: 40, }]}>
-          <Text style={[styles.screenTitle, { color: theme.accent, fontSize: 24, top: 0 }]}>Meu Perfil</Text>
+          <Text style={[styles.screenTitle, { color: theme.accent, fontSize: 24, top: 10 }]}>Meu Perfil</Text>
 
           <View style={{
             alignItems: 'center',
@@ -1201,7 +1201,7 @@ export default function HomeScreen() {
             onPress={() => setScreen('Home')}
             style={{ alignSelf: 'center' }}
           >
-            <Text style={[styles.backButton, { color: theme.accent, top: 60, }]}>Voltar</Text>
+            <Text style={[styles.backButton, { color: theme.accent, top: 45, }]}>Voltar</Text>
           </TouchableOpacity>
         </View>
       );
