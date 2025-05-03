@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Dimensions, TextInput, Picker, KeyboardAvoidingView, Platform, Image, Modal } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Dimensions, TextInput, KeyboardAvoidingView, Platform, Image, Modal, Animated, Easing } from 'react-native';
+import { Picker } from '@react-native-picker/picker';
 import { Ionicons } from '@expo/vector-icons';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
@@ -18,7 +19,7 @@ export default function HomeScreen() {
   const [screen, setScreen] = useState('Home');
   const [darkMode, setDarkMode] = useState(true);
   const [exchangeRates, setExchangeRates] = useState<any>(null);
-  const [saldo, setSaldo] = useState(250000);
+  const [saldo, setSaldo] = useState(69000);
   const [mostrarConversoes, setMostrarConversoes] = useState(false);
   const [pixKeyType, setPixKeyType] = useState('cpf');
   const [pixKey, setPixKey] = useState('');
@@ -77,13 +78,14 @@ export default function HomeScreen() {
   // Api do conversor
   const fetchExchangeRates = async () => {
     try {
-      const response = await fetch('https://v6.exchangerate-api.com/v6/5c91ee70a1644e990cc95d25/latest/BRL');
+      const response = await fetch('https://v6.exchangerate-api.com/v6/578585127815f48b879257d0/latest/BRL');
       const data = await response.json();
       setExchangeRates(data.conversion_rates);
     } catch (error) {
       console.error('Erro ao buscar taxas de câmbio:', error);
     }
   };
+  
 
   const convertCurrency = (currencyCode: string) => {
     if (!exchangeRates) return 0;
@@ -324,9 +326,8 @@ export default function HomeScreen() {
 
             <View style={{ flexDirection: 'row', alignItems: 'center', left: 35 }}>
               <Text style={[styles.meunome, { color: theme.textPrimary }]}>Olá, Bryan</Text>
-
-              <TouchableOpacity onPress={() => setScreen('Chatbot')} style={{ marginLeft: 10, right: 170 }}>
-                <Ionicons name="help-circle-outline" size={28} color={theme.textPrimary} />
+              <TouchableOpacity onPress={() => setScreen('Chatbot')} >
+                <Ionicons name="help-circle-outline" size={28} color={theme.textPrimary} style={{ marginLeft: 1, right: 170 }} />
               </TouchableOpacity>
             </View>
 
@@ -421,7 +422,7 @@ export default function HomeScreen() {
                 styles.label, {
                   color: theme.textSecondary,
                   fontSize: 22,
-                  fontFamily: 'Inter-SemiBold', // Ou outra fonte premium
+                  fontFamily: 'Inter-SemiBold',
                   marginBottom: 15
                 }
               ]}>
@@ -1176,21 +1177,21 @@ export default function HomeScreen() {
               marginBottom: 10,
               top: 55,
             }}
-            onPress={() => setScreen('Chatbot')} 
+            onPress={() => setScreen('Chatbot')}
           >
             <Text style={{ color: theme.textPrimary, textAlign: 'center' }}>Ajuda e Suporte</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
             style={{
-              backgroundColor: '#e74c3c', 
+              backgroundColor: '#e74c3c',
               padding: 15,
               borderRadius: 8,
               marginBottom: 15,
               top: 55,
             }}
             onPress={() => {
-              window.location.href = '/login'; 
+              window.location.href = '/login';
             }}
           >
             <Text style={{ color: 'white', textAlign: 'center', fontWeight: 'bold' }}>Sair da Conta</Text>
