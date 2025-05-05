@@ -1,6 +1,7 @@
 # Banco Digital - App React Native
 
 Aplicativo bancário completo desenvolvido em React Native com todas as funcionalidades essenciais para gerenciamento financeiro.
+O readme acompanha de algumas partes contendo 2 imagens, sendo elas do site no perfil do Maidel e outra no perfil do Bryan.
 - Apenas para um projeto escolar, não é 100% funcional por tal motivo.
 
 ## Telas do Aplicativo
