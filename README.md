@@ -17,7 +17,7 @@ Aplicativo bancário completo desenvolvido em React Native com todas as funciona
 - Conversor de moedas integrado
 <p align="left">
   <img src="BryanMobile/assets/screenshots/inicio.jpg" alt="Tela Principal" width="250">
-  <img src="BryanMobile/assets/screenshots/telamaidel4.jpg" alt="Tela do Maidel" width="250">
+  <img src="BryanMobile/assets/screenshots/maideltela4.jpg" alt="Tela do Maidel" width="250">
 </p>
 
 ### 3) Pix
