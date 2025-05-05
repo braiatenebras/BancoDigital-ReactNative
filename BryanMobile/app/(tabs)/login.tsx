@@ -55,7 +55,7 @@ const LoginScreen: React.FC = () => {
       return;
     }
 
-    // Verifica se o e-mail é válido e define o estado do usuário logado
+    // verifica se o e-mail é válido e define o estado do usuário logado
     if (cpf.toLowerCase() === 'bryan@escola.com' || cpf.toLowerCase() === 'maidel@escola.com') {
       setUserEmail(cpf.toLowerCase());
       setModalMessage('Login realizado com sucesso!');
@@ -71,7 +71,7 @@ const LoginScreen: React.FC = () => {
     }
   };
 
-  // Renderiza a tela correspondente com base no e-mail do usuário logado
+  // renderiza a tela correspondente com base no e-mail do usuário logado
   if (logado) {
     if (userEmail === 'bryan@escola.com') {
       return <InicioScreen />;
@@ -134,9 +134,9 @@ const LoginScreen: React.FC = () => {
                   borderColor: theme.border,
                 },
               ]}
-              keyboardType="default" // Permite entrada de texto e números
+              keyboardType="default" // permite entrada de texto e números
               value={cpf}
-              onChangeText={(text) => setCpf(text)} // Atualiza o estado com o valor digitado
+              onChangeText={(text) => setCpf(text)} // atualiza o estado com o valor digitado
             />
           </View>
 

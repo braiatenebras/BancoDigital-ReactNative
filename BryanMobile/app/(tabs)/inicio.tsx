@@ -85,7 +85,7 @@ export default function HomeScreen() {
       console.error('Erro ao buscar taxas de câmbio:', error);
     }
   };
-  
+
 
   const convertCurrency = (currencyCode: string) => {
     if (!exchangeRates) return 0;
@@ -1276,14 +1276,14 @@ export default function HomeScreen() {
             )}
           </ScrollView>
 
-          <View style={[styles.inputContainer, { backgroundColor: theme.card }]}>
+          <View style={[styles.inputContainer, { backgroundColor: theme.card, }]}>
             <TextInput
               style={[
                 styles.chatInput,
                 {
                   color: theme.textPrimary,
                   backgroundColor: theme.card,
-                  borderColor: theme.border
+                  borderColor: theme.border,
                 }
               ]}
               placeholder="Digite sua mensagem..."
