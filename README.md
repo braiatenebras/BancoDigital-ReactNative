@@ -25,17 +25,20 @@ O readme acompanha de algumas partes contendo 2 imagens, sendo elas do site no p
 - Envio via chave Pix (CPF, email, telefone ou aleatória)
 - Validação automática de campos
 - Confirmação segura de transações
+- Desconta o valor enviado do saldo
 <img src="BryanMobile/assets/screenshots/pix.jpg" alt="Tela de Pix" width="250">
 
 ### 4) Pagamentos
 - Leitor de QR Code integrado
 - Pagamento por código de barras
 - Confirmação instantânea
+- Desconta o valor enviado do saldo
 <img src="BryanMobile/assets/screenshots/pagamentos.jpg" alt="Tela de Pagar" width="250">
 
 ### 5) Transferência
 - Histórico de contatos recentes
 - Pagamento por CPF ou número da conta
+- Desconta o valor enviado do saldo
 <p align="left">
   <img src="BryanMobile/assets/screenshots/transferir.jpg" alt="Tela de Transferencia" width="250">
   <img src="BryanMobile/assets/screenshots/telamaidel2.jpg" alt="Tela do Maidel" width="250">
@@ -44,6 +47,7 @@ O readme acompanha de algumas partes contendo 2 imagens, sendo elas do site no p
 ### 6) Recarga de Celular
 - Recarga para todas operadoras (Claro, Vivo, Tim)
 - Formatação automática do número
+- Desconta o valor enviado do saldo
 <img src="BryanMobile/assets/screenshots/recarga.jpg" alt="Tela de Recarga" width="250">
 
 ### 7) Cartões
