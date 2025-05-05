@@ -9,7 +9,7 @@ Aplicativo bancário completo desenvolvido em React Native com todas as funciona
 - Autenticação segura com CPF/email e senha
 - Toggle para mostrar/esconder senha
 - Alternância entre temas claro e escuro
-<img src="BryanMobile/assets/screenshots/login.jpg" alt="Tela de Login">
+<img src="BryanMobile/assets/screenshots/login.jpg" alt="Tela de Login"> 
 
 ### 2) Tela Principal
 - Visão do saldo atual (com opção de ocultar)
@@ -52,7 +52,10 @@ Aplicativo bancário completo desenvolvido em React Native com todas as funciona
 - Configurações da conta (botão apenas visual, não leva para tela nenhuma)
 - Ajuda e suporte
 - Opção para sair da conta e voltar para a tela de login
-<img src="BryanMobile/assets/screenshots/perfil.jpg" alt="Tela de Perfil">
+<p align="center">
+<img src="BryanMobile/assets/screenshots/perfil.jpg" alt="Tela de Login"> 
+<img src="BryanMobile/assets/screenshots/telamaidel1.jpg" alt="Tela de Login"> 
+</p>
 
 ### 9) Assistente Virtual
 - Chatbot inteligente para tirar dúvidas
