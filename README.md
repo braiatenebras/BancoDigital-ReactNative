@@ -4,6 +4,10 @@ Aplicativo bancário completo desenvolvido em React Native com todas as funciona
 O readme acompanha de algumas partes contendo 2 imagens, sendo elas do site no perfil do Mateus Maidel e outra no perfil do Bryan Kauan.
 - Apenas para um projeto escolar, não é 100% funcional por tal motivo.
 
+ # Para rodar
+Clone o repositorio, instale as dependencias (npm install) e rode "npm run web" no terminal.
+
+
 ## Telas do Aplicativo
 
 ### 1) Tela de Login
